@@ -513,6 +513,66 @@
     letter-spacing: 0.04em;
   }
 
+  /* ROADMAP */
+  .roadmap {
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--black);
+    border-top: 1px solid var(--black);
+  }
+
+  .roadmap-card {
+    background: var(--white);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .roadmap-status {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    width: fit-content;
+  }
+
+  .status-live { background: rgba(42,157,92,0.12); color: #2a9d5c; }
+  .status-soon { background: rgba(242,201,76,0.2); color: var(--yellow-dark); }
+  .status-later { background: var(--gray-light); color: var(--gray); }
+
+  .roadmap-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .roadmap-card-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .roadmap-card-link {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--yellow-dark);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .roadmap-card-link:hover { color: var(--black); }
+
   /* ANIMATIONS */
   .fade-up {
     opacity: 0;
@@ -539,6 +599,7 @@
     .manifesto-right { padding: 3rem 1.5rem; }
     .zach-section { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
     .section-header { padding: 2rem 1.5rem 1.25rem; }
+    .roadmap-grid { grid-template-columns: 1fr 1fr; }
     footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
   }
 </style>
@@ -718,6 +779,59 @@
     </p>
     <div class="venmo-note">
       <strong>If this helped you, cool.</strong> There's a Venmo link below if you feel like buying me a coffee as a thank you. It helps keep the lights on. But it is absolutely, 100% never required. This stays free no matter what.
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">What's coming</h2>
+  </div>
+  <div class="roadmap-grid">
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-live">Live now</span>
+      <div class="roadmap-card-title">The 5 P's Diagnostic</div>
+      <p class="roadmap-card-desc">Answer 10 questions and get a ranked breakdown of all 5 P's with a custom action plan for your top two.</p>
+      <a href="5ps.html" class="roadmap-card-link">Try it →</a>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-live">Live now</span>
+      <div class="roadmap-card-title">Lead Funnel Visualizer</div>
+      <p class="roadmap-card-desc">See exactly where leads drop out of your pipeline and get specific next steps to plug the holes.</p>
+      <a href="funnel.html" class="roadmap-card-link">Try it →</a>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-live">Live now</span>
+      <div class="roadmap-card-title">Cost Per Lead Calculator</div>
+      <p class="roadmap-card-desc">Find out what each lead source is actually costing you, whether the math works, and where to focus next.</p>
+      <a href="calculator.html" class="roadmap-card-link">Try it →</a>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-soon">Coming soon</span>
+      <div class="roadmap-card-title">AI Tools for Real Businesses</div>
+      <p class="roadmap-card-desc">A plain-English guide to the AI tools actually worth your time, organized by what problem they solve. No hype, no jargon.</p>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-soon">Coming soon</span>
+      <div class="roadmap-card-title">Industry Benchmarks</div>
+      <p class="roadmap-card-desc">How does your close rate, cost per lead, and retention stack up against others in your space? Find out without hiring a consultant.</p>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-soon">Coming soon</span>
+      <div class="roadmap-card-title">Sales Process Tracker</div>
+      <p class="roadmap-card-desc">Map every step from first contact to signed client. Find the gaps. Stop losing people you already paid to get in the door.</p>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-later">On the horizon</span>
+      <div class="roadmap-card-title">Data Flow Explainer</div>
+      <p class="roadmap-card-desc">How your lead data should actually move from ad platform to CRM to close. Finally make sense of your tracking.</p>
+    </div>
+    <div class="roadmap-card fade-up">
+      <span class="roadmap-status status-later">On the horizon</span>
+      <div class="roadmap-card-title">The Champions System</div>
+      <p class="roadmap-card-desc">Retention, referrals, and turning your happiest customers into your best and cheapest marketing channel.</p>
     </div>
   </div>
 </section>
