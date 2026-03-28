@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead Funnel Visualizer | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0f0f0f;
+  --white: #f5f2eb;
+  --yellow: #f2c94c;
+  --yellow-dark: #d4a800;
+  --gray: #6b6b6b;
+  --gray-light: #e8e4da;
+  --red: #e84040;
+  --green: #2a9d5c;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: var(--white);
+  border-bottom: 1.5px solid var(--black);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--yellow-dark); }
+.nav-links a.active { border-bottom: 2px solid var(--yellow-dark); padding-bottom: 2px; }
+
+.page-header {
+  margin-top: 72px;
+  padding: 4rem 3rem 3rem;
+  border-bottom: 1.5px solid var(--black);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: end;
+}
+
+.page-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--black);
+  color: var(--white);
+  padding: 0.35rem 0.8rem;
+  margin-bottom: 1.25rem;
+  width: fit-content;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+}
+
+.page-title .accent { color: var(--yellow-dark); }
+
+.page-intro {
+  font-size: 1rem;
+  color: var(--gray);
+  line-height: 1.75;
+}
+
+.page-intro strong { color: var(--black); font-weight: 500; }
+
+/* MAIN */
+.tool-wrap {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: calc(100vh - 72px);
+  border-bottom: 1.5px solid var(--black);
+}
+
+/* LEFT PANEL */
+.left-panel {
+  border-right: 1.5px solid var(--black);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-section {
+  padding: 2rem;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.panel-section:last-child { border-bottom: none; }
+
+.panel-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  color: var(--gray);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.panel-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gray-light);
+}
+
+/* SOURCE TOGGLES */
+.source-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.source-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--gray-light);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+
+.source-row.active { border-color: var(--black); background: var(--white); }
+.source-row:not(.active) { opacity: 0.45; }
+
+.source-row-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.source-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.source-row-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.source-count-input {
+  width: 64px;
+  text-align: right;
+  border: none;
+  border-bottom: 1px solid var(--gray-light);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--black);
+  outline: none;
+  padding: 0.1rem 0.2rem;
+  -moz-appearance: textfield;
+}
+
+.source-count-input::-webkit-outer-spin-button,
+.source-count-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.source-count-input:focus { border-color: var(--black); }
+
+/* STAGES */
+.stages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stage-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stage-input {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--gray-light);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.stage-input:focus { border-color: var(--black); }
+
+.stage-remove {
+  width: 28px; height: 28px;
+  border: 1px solid var(--gray-light);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.stage-remove:hover { border-color: var(--red); color: var(--red); }
+
+.add-stage-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  border: 1.5px dashed var(--gray-light);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.add-stage-btn:hover { border-color: var(--black); color: var(--black); }
+
+/* STAGE COUNTS */
+.stage-counts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stage-count-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.stage-count-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--black);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stage-count-input {
+  width: 80px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--gray-light);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--black);
+  outline: none;
+  text-align: right;
+  transition: border-color 0.2s;
+  -moz-appearance: textfield;
+}
+
+.stage-count-input::-webkit-outer-spin-button,
+.stage-count-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.stage-count-input:focus { border-color: var(--black); }
+
+/* RIGHT PANEL: FUNNEL */
+.right-panel {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  overflow-x: auto;
+}
+
+/* SOURCES ROW */
+.sources-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.source-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: default;
+}
+
+.source-bubble-circle {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: white;
+  border: 2px solid rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.source-bubble-circle:hover { transform: scale(1.06); }
+
+.source-bubble-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.source-bubble-name {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-align: center;
+  max-width: 90px;
+}
+
+/* ARROW DOWN */
+.funnel-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--gray-light);
+  line-height: 1;
+}
+
+/* CRM BOX */
+.crm-box {
+  background: var(--black);
+  color: var(--white);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.crm-box-left { display: flex; flex-direction: column; gap: 0.25rem; }
+.crm-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+.crm-name-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  outline: none;
+  width: 220px;
+  padding: 0.1rem 0;
+  transition: border-color 0.2s;
+}
+
+.crm-name-input:focus { border-color: var(--yellow); }
+.crm-name-input::placeholder { color: rgba(255,255,255,0.25); }
+
+.crm-total {
+  text-align: right;
+}
+
+.crm-total-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--yellow);
+  line-height: 1;
+}
+
+.crm-total-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* FUNNEL STAGES */
+.funnel-stages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.funnel-stage-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.funnel-stage-block {
+  background: var(--white);
+  border: 1.5px solid var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.funnel-stage-block:hover { background: var(--gray-light); }
+
+.funnel-stage-left { display: flex; flex-direction: column; gap: 0.15rem; }
+
+.funnel-stage-name {
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+.funnel-stage-drop {
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+.funnel-stage-drop.leak { color: var(--red); font-weight: 500; }
+.funnel-stage-drop.ok { color: var(--green); font-weight: 500; }
+
+.funnel-stage-right {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.funnel-stage-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.funnel-stage-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.funnel-connector {
+  width: 2px;
+  height: 24px;
+  background: var(--black);
+  position: relative;
+}
+
+.funnel-connector::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--black);
+}
+
+/* CLIENT WIN BOX */
+.client-win {
+  background: var(--yellow);
+  border: 1.5px solid var(--black);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.client-win-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.client-win-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+/* INSIGHTS */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--black);
+  border: 1.5px solid var(--black);
+}
+
+.insight-box {
+  background: var(--white);
+  padding: 1.25rem 1.5rem;
+}
+
+.insight-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.4rem;
+}
+
+.insight-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--black);
+}
+
+.insight-sub {
+  font-size: 0.75rem;
+  color: var(--gray);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.insight-val.warn { color: var(--red); }
+.insight-val.good { color: var(--green); }
+
+/* HOLE CALLOUT */
+.hole-callout {
+  background: rgba(232,64,64,0.07);
+  border-left: 4px solid var(--red);
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--black);
+}
+
+.hole-callout strong { font-weight: 500; }
+
+.good-callout {
+  background: rgba(42,157,92,0.07);
+  border-left: 4px solid var(--green);
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--black);
+}
+
+.empty-funnel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--gray);
+  text-align: center;
+  gap: 1rem;
+}
+
+.empty-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  color: var(--gray-light);
+  line-height: 1;
+}
+
+footer {
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid var(--black);
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.footer-note { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; }
+
+@media (max-width: 900px) {
+  .page-header { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem 2rem; }
+  .tool-wrap { grid-template-columns: 1fr; }
+  .left-panel { border-right: none; border-bottom: 1.5px solid var(--black); }
+  .right-panel { padding: 2rem 1.5rem; }
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .insights-grid { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="5ps.html">The 5 P's</a></li>
+    <li><a href="funnel.html" class="active">Lead Funnel</a></li>
+    <li><a href="calculator.html">Calculator</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div>
+    <div class="page-tag">Tool 02 / Lead Funnel</div>
+    <h1 class="page-title">Where are your <span class="accent">leads</span> actually going?</h1>
+  </div>
+  <p class="page-intro">
+    A lead comes in. Then what? Most small business owners have no idea where leads disappear. <strong>This funnel shows you every step from first contact to paying client</strong> so you can see exactly where you're leaking money.
+  </p>
+</div>
+
+<div class="tool-wrap">
+
+  <!-- LEFT -->
+  <div class="left-panel">
+
+    <div class="panel-section">
+      <div class="panel-label">Lead sources</div>
+      <div class="source-list" id="source-list"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Your CRM / system</div>
+      <input class="crm-name-edit" id="crm-name-edit" type="text" placeholder="e.g. HubSpot, Spreadsheet, Gut Feeling..." value="Your CRM"
+        style="width:100%;padding:0.6rem 0.75rem;border:1px solid var(--gray-light);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--black);outline:none;"
+        oninput="render()">
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;">What do you actually use to track leads?</p>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Funnel stages</div>
+      <div class="stages-list" id="stages-list"></div>
+      <button class="add-stage-btn" onclick="addStage()">+ Add a stage</button>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Count per stage</div>
+      <div class="stage-counts-list" id="stage-counts"></div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;">How many people reach each step per month?</p>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: FUNNEL VISUAL -->
+  <div class="right-panel" id="funnel-output">
+    <div class="empty-funnel">
+      <div class="empty-big">↓</div>
+      <p>Turn on some lead sources and fill in your funnel stages to see your funnel.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+const SOURCES = [
+  { id: 1, name: 'Facebook Ads',  color: '#1877F2', on: true,  leads: '' },
+  { id: 2, name: 'Google Ads',    color: '#EA4335', on: true,  leads: '' },
+  { id: 3, name: 'Instagram',     color: '#C13584', on: false, leads: '' },
+  { id: 4, name: 'Word of Mouth', color: '#2a9d5c', on: true,  leads: '' },
+  { id: 5, name: 'Referrals',     color: '#F4A261', on: true,  leads: '' },
+];
+
+let stages = [
+  { id: 1, name: 'Lead fills out form', count: '' },
+  { id: 2, name: 'Schedules appointment', count: '' },
+  { id: 3, name: 'Shows up', count: '' },
+  { id: 4, name: 'Converts to client', count: '' },
+];
+
+let nextStageId = 5;
+
+function initSourceList() {
+  const el = document.getElementById('source-list');
+  el.innerHTML = SOURCES.map(s => `
+    <div class="source-row ${s.on ? 'active' : ''}" id="srow-${s.id}" onclick="toggleSrc(${s.id})">
+      <div class="source-row-left">
+        <div class="source-dot" style="background:${s.color}"></div>
+        <span class="source-row-name">${s.name}</span>
+      </div>
+      <input class="source-count-input" type="number" placeholder="0" value="${s.leads}"
+        onclick="event.stopPropagation()"
+        oninput="event.stopPropagation();updateSrcLeads(${s.id},this.value)"
+        ${s.on ? '' : 'disabled'}>
+    </div>
+  `).join('');
+}
+
+function toggleSrc(id) {
+  const s = SOURCES.find(s => s.id === id);
+  if (!s) return;
+  s.on = !s.on;
+  initSourceList();
+  render();
+}
+
+function updateSrcLeads(id, val) {
+  const s = SOURCES.find(s => s.id === id);
+  if (s) s.leads = val;
+  render();
+}
+
+function renderStagesList() {
+  document.getElementById('stages-list').innerHTML = stages.map((s, i) => `
+    <div class="stage-row">
+      <input class="stage-input" type="text" placeholder="Stage name..." value="${s.name}"
+        oninput="updateStageName(${s.id}, this.value)">
+      ${stages.length > 1 ? `<button class="stage-remove" onclick="removeStage(${s.id})">×</button>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('stage-counts').innerHTML = stages.map(s => `
+    <div class="stage-count-row">
+      <span class="stage-count-label">${s.name || 'Unnamed stage'}</span>
+      <input class="stage-count-input" type="number" placeholder="0" value="${s.count}"
+        oninput="updateStageCount(${s.id}, this.value)">
+    </div>
+  `).join('');
+}
+
+function updateStageName(id, val) {
+  const s = stages.find(s => s.id === id);
+  if (s) s.name = val;
+  renderStagesList();
+  render();
+}
+
+function updateStageCount(id, val) {
+  const s = stages.find(s => s.id === id);
+  if (s) s.count = val;
+  render();
+}
+
+function addStage() {
+  stages.push({ id: nextStageId++, name: '', count: '' });
+  renderStagesList();
+  render();
+}
+
+function removeStage(id) {
+  stages = stages.filter(s => s.id !== id);
+  renderStagesList();
+  render();
+}
+
+function render() {
+  const output = document.getElementById('funnel-output');
+  const activeSources = SOURCES.filter(s => s.on);
+  const totalLeads = activeSources.reduce((a, s) => a + (parseFloat(s.leads) || 0), 0);
+  const crmName = document.getElementById('crm-name-edit').value || 'Your CRM';
+
+  const hasData = totalLeads > 0 || stages.some(s => parseFloat(s.count) > 0);
+
+  if (!hasData) {
+    output.innerHTML = `<div class="empty-funnel"><div class="empty-big">↓</div><p>Turn on some lead sources and fill in your stage counts to see your funnel.</p></div>`;
+    return;
+  }
+
+  // Stage analysis
+  const stageData = stages.map((s, i) => {
+    const count = parseFloat(s.count) || 0;
+    const prev = i === 0 ? totalLeads : (parseFloat(stages[i-1].count) || 0);
+    const pct = prev > 0 ? Math.round((count / prev) * 100) : 0;
+    const drop = prev > 0 ? Math.round(((prev - count) / prev) * 100) : 0;
+    return { ...s, count, pct, drop, prev };
+  });
+
+  // Find biggest leak
+  let worstStage = null;
+  let worstDrop = 0;
+  stageData.forEach(s => {
+    if (s.drop > worstDrop) { worstDrop = s.drop; worstStage = s; }
+  });
+
+  const lastStage = stageData[stageData.length - 1];
+  const closeRate = totalLeads > 0 ? Math.round((lastStage.count / totalLeads) * 100) : 0;
+  const leadsLost = totalLeads - lastStage.count;
+
+  // Sources row
+  const sourcesHTML = activeSources.length > 0 ? `
+    <div class="sources-row">
+      ${activeSources.map(s => {
+        const num = parseFloat(s.leads) || 0;
+        const initials = s.name.split(' ').map(w => w[0]).join('').slice(0,2);
+        return `
+        <div class="source-bubble">
+          <div class="source-bubble-circle" style="background:${s.color}">
+            <span class="source-bubble-num">${num > 0 ? num : initials}</span>
+          </div>
+          <span class="source-bubble-name">${s.name}</span>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="funnel-arrow">↓</div>
+  ` : '';
+
+  // CRM box
+  const crmHTML = `
+    <div class="crm-box">
+      <div class="crm-box-left">
+        <span class="crm-label">All leads enter</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.05em;color:var(--white)">${crmName}</span>
+      </div>
+      <div class="crm-total">
+        <div class="crm-total-num">${totalLeads > 0 ? totalLeads : '?'}</div>
+        <div class="crm-total-label">total leads / mo</div>
+      </div>
+    </div>
+    <div class="funnel-connector"></div>
+  `;
+
+  // Funnel stages
+  const stagesHTML = stageData.map((s, i) => {
+    const isLeak = s.drop >= 50;
+    const isOk = s.drop < 25;
+    const dropClass = isLeak ? 'leak' : isOk ? 'ok' : '';
+    const dropText = i === 0
+      ? (s.prev > 0 ? `${s.pct}% of total leads reach this step` : 'Enter total leads above')
+      : (s.prev > 0 ? `${s.drop}% dropped from previous step` : '');
+
+    return `
+      <div class="funnel-stage-wrap">
+        <div class="funnel-stage-block">
+          <div class="funnel-stage-left">
+            <span class="funnel-stage-name">${s.name || 'Unnamed stage'}</span>
+            <span class="funnel-stage-drop ${dropClass}">${dropText}</span>
+          </div>
+          <div class="funnel-stage-right">
+            <span class="funnel-stage-num">${s.count > 0 ? s.count : '?'}</span>
+            ${totalLeads > 0 && s.count > 0 ? `<span class="funnel-stage-pct">${Math.round((s.count/totalLeads)*100)}%</span>` : ''}
+          </div>
+        </div>
+        ${i < stageData.length - 1 ? '<div class="funnel-connector"></div>' : ''}
+      </div>`;
+  }).join('');
+
+  // Client win box
+  const clientWinHTML = `
+    <div class="funnel-connector"></div>
+    <div class="client-win">
+      <span class="client-win-label">New clients this month</span>
+      <span class="client-win-num">${lastStage.count > 0 ? lastStage.count : '?'}</span>
+    </div>
+  `;
+
+  // Insights
+  const insightsHTML = (totalLeads > 0 && lastStage.count > 0) ? `
+    <div class="insights-grid">
+      <div class="insight-box">
+        <div class="insight-label">Overall close rate</div>
+        <div class="insight-val ${closeRate >= 30 ? 'good' : closeRate < 15 ? 'warn' : ''}">${closeRate}%</div>
+        <div class="insight-sub">${closeRate >= 30 ? 'Strong. Most businesses close 20-30%.' : closeRate >= 15 ? 'Room to grow. Aim for 25%+.' : 'This needs attention. Where are leads going?'}</div>
+      </div>
+      <div class="insight-box">
+        <div class="insight-label">Leads lost per month</div>
+        <div class="insight-val warn">${leadsLost > 0 ? leadsLost : 0}</div>
+        <div class="insight-sub">People who showed interest and never became clients.</div>
+      </div>
+      <div class="insight-box">
+        <div class="insight-label">Biggest leak</div>
+        <div class="insight-val warn">${worstStage ? worstStage.drop + '%' : 'N/A'}</div>
+        <div class="insight-sub">${worstStage ? `"${worstStage.name}" drops ${worstStage.drop}% of people.` : 'Add stage data to find your leak.'}</div>
+      </div>
+    </div>
+  ` : '';
+
+  // Callout
+  let calloutHTML = '';
+  if (worstStage && worstStage.drop >= 50 && totalLeads > 0) {
+    calloutHTML = `
+      <div class="hole-callout">
+        <strong>You've got a hole in your funnel.</strong> "${worstStage.name}" is dropping ${worstStage.drop}% of people. That's your biggest opportunity right now. Figure out why people aren't making it past this step and fix that one thing before you spend another dollar on ads.
+      </div>`;
+  } else if (closeRate >= 35 && totalLeads > 0) {
+    calloutHTML = `
+      <div class="good-callout">
+        <strong>Your funnel is working.</strong> A ${closeRate}% close rate is genuinely strong. The question now is whether you can get more leads into the top without breaking what's working at the bottom.
+      </div>`;
+  }
+
+  output.innerHTML = `
+    ${sourcesHTML}
+    ${crmHTML}
+    <div class="funnel-stages">${stagesHTML}</div>
+    ${clientWinHTML}
+    ${insightsHTML ? `<div style="margin-top:0.5rem">${insightsHTML}</div>` : ''}
+    ${calloutHTML}
+  `;
+}
+
+initSourceList();
+renderStagesList();
+render();
+</script>
+</body>
+</html>
