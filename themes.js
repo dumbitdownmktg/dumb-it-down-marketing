@@ -183,65 +183,66 @@
     window._decoInterval = setInterval(spawn, 1800);
   }
 
-  // ---- NAV BUTTON ----
   function injectNavButton() {
-    // only inject once per page
     if (document.getElementById('didm-theme-btn')) return;
 
     const saved = localStorage.getItem(STORAGE_KEY) || 'default';
 
     const wrap = document.createElement('div');
     wrap.id = 'didm-theme-wrap';
-    wrap.style.cssText = `
-      position: relative;
-      display: flex;
-      align-items: center;
-    `;
+    wrap.style.cssText = 'position:relative;display:flex;align-items:center;margin-left:0.5rem;';
 
     wrap.innerHTML = `
-      <button id="didm-theme-btn" title="Switch theme" style="
-        background: none;
-        border: 1.5px solid currentColor;
-        padding: 0.3rem 0.75rem;
+      <button id="didm-theme-btn" title="Change the vibe" style="
+        background: var(--black, #0f0f0f);
+        color: var(--white, #f5f2eb);
+        border: 1.5px solid var(--black, #0f0f0f);
+        padding: 0.4rem 0.9rem;
         font-family: 'DM Sans', sans-serif;
-        font-size: 0.78rem;
+        font-size: 0.82rem;
         font-weight: 500;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
         cursor: pointer;
-        color: inherit;
         display: flex;
         align-items: center;
-        gap: 0.4rem;
-        transition: background 0.15s;
+        gap: 0.5rem;
         white-space: nowrap;
+        transition: background 0.15s, color 0.15s;
       ">
-        <span id="didm-theme-emoji">${THEMES[saved].emoji}</span>
-        <span id="didm-theme-label">${THEMES[saved].label}</span>
+        <span style="font-size:1rem" id="didm-theme-emoji">${THEMES[saved].emoji}</span>
+        <span id="didm-theme-label">Change vibe</span>
+        <span style="font-size:0.6rem;opacity:0.6">&#9660;</span>
       </button>
       <div id="didm-theme-menu" style="
         display: none;
         position: absolute;
-        top: calc(100% + 8px);
+        top: calc(100% + 6px);
         right: 0;
         background: var(--white, #f5f2eb);
         border: 1.5px solid var(--black, #0f0f0f);
-        min-width: 180px;
-        z-index: 200;
+        min-width: 200px;
+        z-index: 500;
         flex-direction: column;
+        box-shadow: 2px 4px 0 rgba(0,0,0,0.08);
       ">
+        <div style="padding:0.6rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#888;border-bottom:1px solid var(--gray-light,#e8e4da)">Pick your vibe</div>
         ${Object.entries(THEMES).map(([key, t]) => `
           <button data-theme="${key}" style="
-            display: flex; align-items: center; gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            background: none; border: none; border-bottom: 1px solid var(--gray-light, #e8e4da);
-            font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
-            cursor: pointer; text-align: left; width: 100%; color: inherit;
-            transition: background 0.1s;
-          " onmouseover="this.style.background='var(--gray-light,#e8e4da)'"
-             onmouseout="this.style.background='none'">
-            <span style="font-size:1.1rem">${t.emoji}</span>
-            <span>${t.label}</span>
+            display:flex;align-items:center;gap:0.85rem;
+            padding:0.85rem 1rem;
+            background:none;border:none;border-bottom:1px solid var(--gray-light,#e8e4da);
+            font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;
+            cursor:pointer;text-align:left;width:100%;color:inherit;
+            transition:background 0.1s;
+          "
+          onmouseover="this.style.background='var(--gray-light,#e8e4da)'"
+          onmouseout="this.style.background='none'">
+            <span style="font-size:1.25rem">${t.emoji}</span>
+            <div style="display:flex;flex-direction:column;gap:1px;text-align:left">
+              <span style="font-weight:500">${t.label}</span>
+              <span style="font-size:0.72rem;opacity:0.5">${key === 'default' ? 'The original. Boring on purpose.' : key === 'cats' ? 'Everything is better with cats.' : 'Pink. Sparkly. Chaotic.'}</span>
+            </div>
           </button>
         `).join('')}
       </div>
@@ -275,13 +276,30 @@
   function updateNavButton(name) {
     const theme = THEMES[name];
     const emoji = document.getElementById('didm-theme-emoji');
-    const label = document.getElementById('didm-theme-label');
     if (emoji) emoji.textContent = theme.emoji;
-    if (label) label.textContent = theme.label;
 
-    // highlight active item in menu
-    document.querySelectorAll('#didm-theme-menu [data-theme]').forEach(btn => {
-      btn.style.fontWeight = btn.dataset.theme === name ? '700' : '500';
+    // update button bg to match theme accent
+    const btn = document.getElementById('didm-theme-btn');
+    if (btn) {
+      if (name === 'cats') {
+        btn.style.background = '#ff9a3c';
+        btn.style.borderColor = '#e07800';
+        btn.style.color = '#2d1b00';
+      } else if (name === 'kawaii') {
+        btn.style.background = '#ff85c2';
+        btn.style.borderColor = '#d4006a';
+        btn.style.color = '#2d0028';
+      } else {
+        btn.style.background = 'var(--black, #0f0f0f)';
+        btn.style.borderColor = 'var(--black, #0f0f0f)';
+        btn.style.color = 'var(--white, #f5f2eb)';
+      }
+    }
+
+    // highlight active in menu
+    document.querySelectorAll('#didm-theme-menu [data-theme]').forEach(b => {
+      b.style.fontWeight = b.dataset.theme === name ? '700' : '500';
+      b.style.background = b.dataset.theme === name ? 'var(--gray-light,#e8e4da)' : 'none';
     });
   }
 
