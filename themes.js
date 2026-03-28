@@ -123,7 +123,7 @@
     // floating decorations
     removeDecorations();
     if (theme.decorations && theme.decorations.length) {
-      spawnDecorations(theme.decorations);
+      spawnDecorations(name, theme.decorations);
     }
 
     // sound
@@ -142,45 +142,103 @@
     if (window._decoInterval) { clearInterval(window._decoInterval); window._decoInterval = null; }
   }
 
-  function spawnDecorations(emojis) {
-    function spawn() {
-      const el = document.createElement('div');
-      el.className = 'didm-deco';
-      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      el.style.cssText = `
-        position: fixed;
-        pointer-events: none;
-        z-index: 9990;
-        font-size: ${16 + Math.random() * 20}px;
-        left: ${Math.random() * 95}vw;
-        top: -40px;
-        opacity: 0;
-        transition: none;
-        animation: didm-fall ${3 + Math.random() * 4}s linear forwards;
-        user-select: none;
-      `;
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 8000);
+  function injectDecoStyles() {
+    if (document.getElementById('didm-deco-style')) return;
+    const s = document.createElement('style');
+    s.id = 'didm-deco-style';
+    s.textContent = `
+      @keyframes didm-fall {
+        0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 0.85; }
+        100% { transform: translateY(108vh) rotate(360deg); opacity: 0; }
+      }
+      @keyframes didm-fall-photo {
+        0%   { transform: translateY(0) rotate(-3deg); opacity: 0; }
+        8%   { opacity: 1; }
+        92%  { opacity: 0.9; }
+        100% { transform: translateY(108vh) rotate(5deg); opacity: 0; }
+      }
+      .didm-deco {
+        position: fixed; pointer-events: none; z-index: 9990; user-select: none;
+      }
+      .didm-deco-emoji {
+        animation: didm-fall var(--dur, 5s) linear forwards;
+      }
+      .didm-deco-cat-photo {
+        width: 88px; height: 88px;
+        object-fit: cover;
+        border: 3px solid white;
+        border-radius: 3px;
+        box-shadow: 2px 4px 10px rgba(0,0,0,0.22);
+        animation: didm-fall-photo var(--dur, 6s) linear forwards;
+        background: #f5e6d3;
+      }
+    `;
+    document.head.appendChild(s);
+  }
+
+  function spawnCatPhoto() {
+    injectDecoStyles();
+    const wrap = document.createElement('div');
+    wrap.className = 'didm-deco';
+    const dur = 5 + Math.random() * 4;
+    wrap.style.cssText = `left:${2 + Math.random() * 88}vw;top:-110px;--dur:${dur}s`;
+
+    const img = document.createElement('img');
+    img.className = 'didm-deco-cat-photo';
+    // cataas.com - free cat image API, no key needed
+    img.src = `https://cataas.com/cat?width=88&height=88&_=${Date.now()}-${Math.random()}`;
+    img.alt = 'cat';
+    img.onerror = () => {
+      // if image fails, fall back to a cat emoji
+      img.remove();
+      const em = document.createElement('div');
+      em.className = 'didm-deco-emoji';
+      em.style.cssText = `font-size:${28 + Math.random()*16}px;--dur:${dur}s`;
+      em.textContent = ['🐱','😸','🐈','😻','🐾'][Math.floor(Math.random()*5)];
+      wrap.appendChild(em);
+    };
+    wrap.appendChild(img);
+    document.body.appendChild(wrap);
+    setTimeout(() => wrap.remove(), (dur + 0.5) * 1000);
+  }
+
+  function spawnEmoji(emojis) {
+    injectDecoStyles();
+    const wrap = document.createElement('div');
+    wrap.className = 'didm-deco';
+    const dur = 4 + Math.random() * 4;
+    wrap.style.cssText = `left:${2 + Math.random() * 92}vw;top:-40px;`;
+    const em = document.createElement('div');
+    em.className = 'didm-deco-emoji';
+    em.style.cssText = `font-size:${18 + Math.random()*22}px;--dur:${dur}s`;
+    em.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    wrap.appendChild(em);
+    document.body.appendChild(wrap);
+    setTimeout(() => wrap.remove(), (dur + 0.5) * 1000);
+  }
+
+  function spawnDecorations(theme, emojis) {
+    injectDecoStyles();
+
+    function tick() {
+      if (theme === 'cats') {
+        // 2 real cat photos + 1 emoji per tick
+        spawnCatPhoto();
+        spawnCatPhoto();
+        spawnEmoji(emojis);
+      } else {
+        // kawaii: emoji only
+        spawnEmoji(emojis);
+        spawnEmoji(emojis);
+        spawnEmoji(emojis);
+      }
     }
 
-    // inject keyframes once
-    if (!document.getElementById('didm-deco-style')) {
-      const s = document.createElement('style');
-      s.id = 'didm-deco-style';
-      s.textContent = `
-        @keyframes didm-fall {
-          0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
-          10%  { opacity: 1; }
-          90%  { opacity: 0.8; }
-          100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-        }
-      `;
-      document.head.appendChild(s);
-    }
-
-    // spawn a few immediately, then keep going
-    for (let i = 0; i < 5; i++) setTimeout(spawn, i * 300);
-    window._decoInterval = setInterval(spawn, 1800);
+    // first burst
+    for (let i = 0; i < 4; i++) setTimeout(tick, i * 400);
+    window._decoInterval = setInterval(tick, 2500);
   }
 
   function injectNavButton() {
