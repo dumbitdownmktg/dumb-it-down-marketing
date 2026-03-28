@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0f0f0f;
+    --white: #f5f2eb;
+    --yellow: #f2c94c;
+    --yellow-dark: #d4a800;
+    --gray: #6b6b6b;
+    --gray-light: #e8e4da;
+    --red: #e84040;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: var(--white);
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--yellow-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .hero-left {
+    padding: 5rem 3rem 4rem 3rem;
+    border-right: 1.5px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--white);
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-headline .accent {
+    color: var(--yellow-dark);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--gray);
+    max-width: 420px;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-sub strong { font-weight: 500; color: var(--black); }
+
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border: 1.5px solid var(--black);
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--black);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border: 1.5px solid var(--black);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover { background: var(--gray-light); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right-bg {
+    position: absolute;
+    top: -40px; right: -40px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22rem;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.15);
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stat {
+    padding: 2rem;
+    background: var(--black);
+  }
+
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  .hero-byline {
+    margin-top: 2rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-byline span { color: rgba(255,255,255,0.75); font-weight: 500; }
+
+  /* MARQUEE STRIP */
+  .marquee-strip {
+    background: var(--yellow);
+    border-bottom: 1.5px solid var(--black);
+    padding: 0.85rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 22s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: var(--black);
+    margin-right: 3rem;
+  }
+
+  .marquee-inner span.dot {
+    margin-right: 3rem;
+    color: var(--black);
+    opacity: 0.4;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* TOOLS SECTION */
+  .tools {
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .section-header {
+    padding: 3rem 3rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--gray-light);
+    padding-bottom: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tool-card {
+    padding: 3rem;
+    border-right: 1.5px solid var(--black);
+    text-decoration: none;
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tool-card:last-child { border-right: none; }
+  .tool-card:hover { background: var(--black); color: var(--white); }
+  .tool-card:hover .tool-num { color: var(--yellow); }
+  .tool-card:hover .tool-desc { color: rgba(255,255,255,0.55); }
+  .tool-card:hover .tool-arrow { border-color: var(--yellow); color: var(--yellow); }
+  .tool-card:hover .tool-tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+
+  .tool-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--gray-light);
+    transition: color 0.2s;
+  }
+
+  .tool-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .tool-desc {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.65;
+    transition: color 0.2s;
+  }
+
+  .tool-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+
+  .tool-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--gray-light);
+    color: var(--gray);
+    padding: 0.3rem 0.7rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tool-arrow {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  /* MANIFESTO */
+  .manifesto {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .manifesto-left {
+    padding: 5rem 3rem;
+    border-right: 1.5px solid var(--black);
+  }
+
+  .manifesto-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1.05;
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .manifesto-left p {
+    font-size: 1rem;
+    color: var(--gray);
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+
+  .manifesto-left p strong { color: var(--black); font-weight: 500; }
+
+  .manifesto-right {
+    padding: 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .principle {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .principle:last-child { border-bottom: none; }
+
+  .principle-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    background: var(--yellow);
+    color: var(--black);
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .principle-text h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+  }
+
+  .principle-text p {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.65;
+  }
+
+  /* ZACH SECTION */
+  .zach-section {
+    background: var(--black);
+    color: var(--white);
+    padding: 5rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: center;
+    border-bottom: 1.5px solid var(--black);
+  }
+
+  .zach-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    line-height: 0.95;
+    color: var(--yellow);
+  }
+
+  .zach-label small {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.5rem;
+  }
+
+  .zach-body p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .zach-body p strong { color: var(--white); font-weight: 500; }
+
+  .venmo-note {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+
+  .venmo-note strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1.5px solid var(--black);
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-note {
+    font-size: 0.78rem;
+    color: var(--gray);
+    letter-spacing: 0.04em;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 340px; }
+    .hero-left { padding: 3rem 1.5rem; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .tool-card { border-right: none; border-bottom: 1.5px solid var(--black); }
+    .manifesto { grid-template-columns: 1fr; }
+    .manifesto-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 3rem 1.5rem; }
+    .manifesto-right { padding: 3rem 1.5rem; }
+    .zach-section { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+    .section-header { padding: 2rem 1.5rem 1.25rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Dumb It Down Marketing</a>
+  <ul class="nav-links">
+    <li><a href="#tools">The Tools</a></li>
+    <li><a href="#why">Why This Exists</a></li>
+    <li><a href="5ps.html">The 5 P's</a></li>
+    <li><a href="funnel.html">Lead Funnel</a></li>
+    <li><a href="calculator.html">Calculator</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Free. No fluff. Actually useful.</div>
+    <h1 class="hero-headline">
+      Marketing
+      <span class="accent">Without</span>
+      The BS.
+    </h1>
+    <p class="hero-sub">
+      Real talk about marketing for small business owners who are <strong>tired of feeling like they need a marketing degree</strong> just to figure out where their leads are coming from.
+    </p>
+    <div class="cta-row">
+      <a href="#tools" class="btn-primary">Show me the tools</a>
+      <a href="#why" class="btn-secondary">Why this exists</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg">$</div>
+    <div class="hero-stat-grid">
+      <div class="hero-stat">
+        <div class="hero-stat-num">5</div>
+        <div class="hero-stat-label">P's of marketing, actually explained in plain english</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">$0</div>
+        <div class="hero-stat-label">cost to use any of this. forever. no catch.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1</div>
+        <div class="hero-stat-label">place to finally understand your numbers</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">∞</div>
+        <div class="hero-stat-label">times better than paying $5k for a marketing consultant</div>
+      </div>
+    </div>
+    <p class="hero-byline">Built by <span>Zach</span> for people who actually have to run a business.</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Give more than you ask</span><span class="dot">//</span>
+    <span>Keep it simple</span><span class="dot">//</span>
+    <span>Always be testing</span><span class="dot">//</span>
+    <span>Know your numbers</span><span class="dot">//</span>
+    <span>Marketing is spending money to make money</span><span class="dot">//</span>
+    <span>Give more than you ask</span><span class="dot">//</span>
+    <span>Keep it simple</span><span class="dot">//</span>
+    <span>Always be testing</span><span class="dot">//</span>
+    <span>Know your numbers</span><span class="dot">//</span>
+    <span>Marketing is spending money to make money</span><span class="dot">//</span>
+  </div>
+</div>
+
+<!-- TOOLS -->
+<section class="tools" id="tools">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">The Tools</h2>
+  </div>
+  <div class="tools-grid">
+    <a href="5ps.html" class="tool-card fade-up">
+      <div class="tool-num">01</div>
+      <div class="tool-name">The 5 P's of Marketing</div>
+      <p class="tool-desc">
+        Product, Price, Place, Promotion, People. Pick the one your business is actually good at and build a plan around it. Includes a quiz that tells you exactly where to focus.
+      </p>
+      <div class="tool-footer">
+        <span class="tool-tag">Interactive quiz</span>
+        <div class="tool-arrow">→</div>
+      </div>
+    </a>
+    <a href="funnel.html" class="tool-card fade-up">
+      <div class="tool-num">02</div>
+      <div class="tool-name">Your Lead Funnel, Visualized</div>
+      <p class="tool-desc">
+        Facebook, Google, word of mouth, referrals. See exactly where your leads come from and what happens to them. Click into any source to see where the money is going.
+      </p>
+      <div class="tool-footer">
+        <span class="tool-tag">Visual tool</span>
+        <div class="tool-arrow">→</div>
+      </div>
+    </a>
+    <a href="calculator.html" class="tool-card fade-up">
+      <div class="tool-num">03</div>
+      <div class="tool-name">Cost Per Lead Calculator</div>
+      <p class="tool-desc">
+        Would you pay $25 to make $2,000? Probably. Find out what each lead is actually costing you per source and whether you should be spending more or less.
+      </p>
+      <div class="tool-footer">
+        <span class="tool-tag">Calculator</span>
+        <div class="tool-arrow">→</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="why">
+  <div class="manifesto-left fade-up">
+    <h2>Why does this even exist?</h2>
+    <p>
+      Most marketing content is written for people who already understand marketing. Which is great if you have a marketing degree. <strong>Most small business owners don't.</strong>
+    </p>
+    <p>
+      You're running a martial arts school, a plumbing company, a gym. You're great at what you do. But somewhere between running the business and living your life, someone told you that you need to be on Facebook, Google, Instagram, TikTok, and also have a podcast.
+    </p>
+    <p>
+      <strong>This site exists to cut through that noise.</strong> No funnels that take 45 minutes to explain. No buzzwords. Just real tools you can actually use to understand where your customers are coming from and what it's costing you to get them.
+    </p>
+    <p>
+      Take what's useful. Leave what isn't. And if this saves you even one bad marketing spend, it did its job.
+    </p>
+  </div>
+  <div class="manifesto-right">
+    <div class="principle fade-up">
+      <div class="principle-icon">01</div>
+      <div class="principle-text">
+        <h3>Give more than you ask for</h3>
+        <p>Everything here is free. No email capture, no upsell, no "premium tier." Just good information, handed over because it's the right thing to do.</p>
+      </div>
+    </div>
+    <div class="principle fade-up">
+      <div class="principle-icon">02</div>
+      <div class="principle-text">
+        <h3>Keep it simple</h3>
+        <p>If you need a glossary to understand the marketing content, the marketing content is the problem. Plain language only. Always.</p>
+      </div>
+    </div>
+    <div class="principle fade-up">
+      <div class="principle-icon">03</div>
+      <div class="principle-text">
+        <h3>Always be testing</h3>
+        <p>Nothing here is gospel. Try it, track it, and adjust based on what actually works for your specific business. That's it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZACH SECTION -->
+<section class="zach-section">
+  <div>
+    <div class="zach-label">
+      <small>Built by</small>
+      Zach
+    </div>
+  </div>
+  <div class="zach-body">
+    <p>
+      I'm not a marketing agency. I'm not trying to sell you a course. I'm just someone who has spent a lot of time figuring out what actually works for small businesses and got tired of watching good business owners waste money because <strong>nobody ever showed them the basics in a way that made sense.</strong>
+    </p>
+    <p>
+      My family runs a martial arts school. I've watched leads fall through the cracks, ad spend go sideways, and tracking systems that nobody actually tracked. This site is built around fixing those exact problems.
+    </p>
+    <p>
+      Use the tools. Share it with another small business owner who needs it. That's the whole plan.
+    </p>
+    <div class="venmo-note">
+      <strong>If this helped you, cool.</strong> There's a Venmo link below if you feel like buying me a coffee as a thank you. It helps keep the lights on. But it is absolutely, 100% never required. This stays free no matter what.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dumb It Down Marketing</div>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
