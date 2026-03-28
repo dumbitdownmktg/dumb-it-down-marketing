@@ -741,9 +741,17 @@ footer {
   .roadmap { padding: 2.5rem 1.5rem; }
   footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
 }
+@media (max-width: 480px) {
+  .action-steps-inner { grid-template-columns: 1fr; }
+  .q-text { font-size: 1.6rem; }
+  .results-winner { font-size: 3rem; }
+  .p-plan-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .progress-item { padding: 0.35rem 0.5rem; }
+  .progress-text { display: none; }
+  .score-row { grid-template-columns: 90px 1fr 40px; }
+}
 </style>
 </head>
-  <script src="email-capture.js"></script>
 <body>
 
 <nav>
@@ -1244,5 +1252,6 @@ function downloadPDF() {
 buildProgress();
 buildQuestion();
 </script>
+<script src="email-capture.js"></script>
 </body>
 </html>
