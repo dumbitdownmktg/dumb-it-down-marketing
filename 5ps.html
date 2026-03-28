@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 5 P's Diagnostic | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0f0f0f;
+  --white: #f5f2eb;
+  --yellow: #f2c94c;
+  --yellow-dark: #d4a800;
+  --gray: #6b6b6b;
+  --gray-light: #e8e4da;
+  --red: #e84040;
+  --green: #2a9d5c;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: var(--white);
+  border-bottom: 1.5px solid var(--black);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--yellow-dark); }
+.nav-links a.active { border-bottom: 2px solid var(--yellow-dark); padding-bottom: 2px; }
+
+.page-header {
+  margin-top: 72px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1.5px solid var(--black);
+}
+
+.header-left {
+  padding: 4rem 3rem;
+  border-right: 1.5px solid var(--black);
+}
+
+.page-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--black);
+  color: var(--white);
+  padding: 0.35rem 0.8rem;
+  margin-bottom: 1.25rem;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.page-title .accent { color: var(--yellow-dark); }
+
+.page-intro {
+  font-size: 1rem;
+  color: var(--gray);
+  line-height: 1.75;
+  max-width: 440px;
+}
+
+.page-intro strong { color: var(--black); font-weight: 500; }
+
+.header-right {
+  background: var(--black);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.how-it-works-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 0.25rem;
+}
+
+.how-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.how-step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  width: 28px; height: 28px;
+  background: var(--yellow);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.how-step-text {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.55;
+  padding-top: 4px;
+}
+
+.how-step-text strong { color: var(--white); font-weight: 500; }
+
+.diagnostic-wrap {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  border-bottom: 1.5px solid var(--black);
+}
+
+.progress-sidebar {
+  border-right: 1.5px solid var(--black);
+  padding: 2.5rem 1.75rem;
+  position: sticky;
+  top: 72px;
+  height: calc(100vh - 72px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.progress-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--gray);
+  margin-bottom: 1rem;
+}
+
+.progress-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+
+.progress-item.current { border-color: var(--black); background: var(--gray-light); }
+
+.progress-dot {
+  width: 22px; height: 22px;
+  border: 1.5px solid var(--gray-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 500;
+  flex-shrink: 0;
+  color: var(--gray);
+  transition: all 0.2s;
+  margin-top: 1px;
+}
+
+.progress-item.current .progress-dot { border-color: var(--black); background: var(--black); color: var(--yellow); }
+.progress-item.done .progress-dot { border-color: var(--green); background: var(--green); color: white; font-size: 0.6rem; }
+
+.progress-text {
+  font-size: 0.78rem;
+  color: var(--gray);
+  line-height: 1.35;
+}
+
+.progress-item.current .progress-text { color: var(--black); font-weight: 500; }
+
+.progress-bar-wrap {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-light);
+}
+
+.progress-bar-label {
+  font-size: 0.72rem;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar-track { height: 4px; background: var(--gray-light); }
+
+.progress-bar-fill {
+  height: 4px;
+  background: var(--yellow-dark);
+  transition: width 0.4s ease;
+}
+
+.question-main {
+  padding: 3rem;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.q-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.75rem;
+}
+
+.q-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+  max-width: 680px;
+}
+
+.q-context {
+  font-size: 0.88rem;
+  color: var(--gray);
+  line-height: 1.65;
+  max-width: 540px;
+  margin-bottom: 2.5rem;
+}
+
+.q-context strong { color: var(--black); font-weight: 500; }
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  max-width: 700px;
+  margin-bottom: 2.5rem;
+}
+
+.answer-card {
+  padding: 1.25rem 1.5rem;
+  border: 1.5px solid var(--gray-light);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.answer-card:hover { border-color: var(--black); background: var(--gray-light); }
+
+.answer-card.selected {
+  border-color: var(--black);
+  background: var(--black);
+  color: var(--white);
+}
+
+.answer-card.selected .answer-card-letter {
+  background: var(--yellow);
+  color: var(--black);
+  border-color: var(--yellow);
+}
+
+.answer-card.selected .answer-card-detail { color: rgba(255,255,255,0.55); }
+
+.answer-card-letter {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  width: 28px; height: 28px;
+  border: 1.5px solid var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  color: var(--gray);
+}
+
+.answer-card-label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  margin-bottom: 0.25rem;
+}
+
+.answer-card-detail {
+  font-size: 0.78rem;
+  color: var(--gray);
+  line-height: 1.5;
+  transition: color 0.15s;
+}
+
+.btn-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: auto;
+}
+
+.btn-primary {
+  padding: 0.9rem 2.25rem;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--black);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-primary:hover { background: var(--yellow); color: var(--black); border-color: var(--black); }
+.btn-primary:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-primary:disabled:hover { background: var(--black); color: var(--white); }
+
+.btn-secondary {
+  padding: 0.9rem 1.5rem;
+  background: transparent;
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--black);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover { background: var(--gray-light); }
+
+/* RESULTS */
+.results-wrap { display: none; }
+.results-wrap.active { display: block; }
+
+.results-hero {
+  background: var(--black);
+  color: var(--white);
+  padding: 4rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  border-bottom: 1.5px solid var(--black);
+}
+
+.results-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0.75rem;
+}
+
+.results-winner {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  line-height: 0.9;
+  color: var(--yellow);
+  margin-bottom: 0.75rem;
+}
+
+.results-winner-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+  max-width: 400px;
+}
+
+.results-winner-sub strong { color: var(--white); font-weight: 500; }
+
+.results-score-grid { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.score-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 48px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.score-row-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-align: right;
+  color: rgba(255,255,255,0.45);
+}
+
+.score-row.top .score-row-label { color: var(--yellow); }
+
+.score-track { height: 8px; background: rgba(255,255,255,0.1); }
+
+.score-fill {
+  height: 8px;
+  background: rgba(255,255,255,0.2);
+  transition: width 0.8s ease;
+}
+
+.score-row.top .score-fill { background: var(--yellow); }
+
+.score-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.score-row.top .score-num { color: var(--yellow); }
+
+.plan-wrap { padding: 3rem; }
+
+.plan-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.plan-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gray-light);
+}
+
+.insight-callout {
+  background: rgba(242,201,76,0.12);
+  border-left: 4px solid var(--yellow-dark);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.insight-callout strong { font-weight: 500; }
+
+.p-plan-block {
+  margin-bottom: 2.5rem;
+  border: 1.5px solid var(--black);
+}
+
+.p-plan-header {
+  padding: 1.5rem 2rem;
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.p-plan-header.secondary { background: var(--gray-light); color: var(--black); }
+
+.p-plan-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.p-plan-badge {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  background: var(--yellow);
+  color: var(--black);
+  white-space: nowrap;
+}
+
+.p-plan-badge.second { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.65); }
+.p-plan-header.secondary .p-plan-badge.second { background: white; color: var(--gray); border: 1px solid var(--gray-light); }
+
+.p-plan-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.p-plan-col {
+  padding: 1.75rem 2rem;
+  border-right: 1px solid var(--gray-light);
+}
+
+.p-plan-col:last-child { border-right: none; }
+
+.p-plan-col-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.p-plan-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+
+.p-plan-list li {
+  font-size: 0.87rem;
+  color: var(--gray);
+  line-height: 1.55;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.p-plan-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--yellow-dark);
+  font-size: 0.78rem;
+  top: 1px;
+}
+
+.p-plan-list li strong { color: var(--black); font-weight: 500; }
+
+.action-steps-block { border-top: 1px solid var(--gray-light); }
+
+.action-steps-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.action-step {
+  padding: 1.5rem;
+  border-right: 1px solid var(--gray-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.action-step:last-child { border-right: none; }
+
+.action-step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  width: 28px; height: 28px;
+  background: var(--yellow);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-step-title { font-weight: 500; font-size: 0.88rem; line-height: 1.35; }
+.action-step-body { font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+
+.remaining-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--black);
+  border: 1.5px solid var(--black);
+  margin-bottom: 3rem;
+}
+
+.remaining-card { background: var(--white); padding: 1.5rem; }
+
+.remaining-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.remaining-p-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.03em;
+}
+
+.remaining-score { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--gray); }
+
+.remaining-bar-track { height: 4px; background: var(--gray-light); margin-bottom: 0.85rem; }
+
+.remaining-bar-fill { height: 4px; transition: width 0.6s ease; }
+
+.remaining-tip { font-size: 0.8rem; color: var(--gray); line-height: 1.55; }
+.remaining-tip strong { color: var(--black); font-weight: 500; }
+
+.venmo-block {
+  background: var(--black);
+  color: var(--white);
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-top: 1.5px solid var(--black);
+}
+
+.venmo-left h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  color: var(--yellow);
+  margin-bottom: 0.4rem;
+}
+
+.venmo-left p { font-size: 0.85rem; color: rgba(255,255,255,0.5); max-width: 400px; line-height: 1.6; }
+
+.venmo-btn {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1.5px solid var(--yellow);
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.venmo-btn:hover { background: var(--white); border-color: var(--white); }
+
+.roadmap { padding: 4rem 3rem; border-top: 1.5px solid var(--black); }
+
+.roadmap-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.roadmap-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--gray); letter-spacing: 0.1em; }
+.roadmap-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; }
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--black);
+  border: 1.5px solid var(--black);
+}
+
+.roadmap-card { background: var(--white); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; }
+
+.roadmap-card-status {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  width: fit-content;
+}
+
+.status-live { background: rgba(42,157,92,0.12); color: var(--green); }
+.status-soon { background: rgba(242,201,76,0.2); color: var(--yellow-dark); }
+.status-later { background: var(--gray-light); color: var(--gray); }
+
+.roadmap-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.03em; line-height: 1.1; }
+.roadmap-card-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+footer {
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid var(--black);
+}
+
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .page-header { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
+  .header-right { padding: 2rem 1.5rem; }
+  .diagnostic-wrap { grid-template-columns: 1fr; }
+  .progress-sidebar { position: static; height: auto; border-right: none; border-bottom: 1.5px solid var(--black); padding: 1.25rem 1.5rem; flex-direction: row; flex-wrap: wrap; gap: 0.4rem; }
+  .progress-bar-wrap { display: none; }
+  .question-main { padding: 2rem 1.5rem; }
+  .answer-grid { grid-template-columns: 1fr; }
+  .results-hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 2rem; }
+  .plan-wrap { padding: 2rem 1.5rem; }
+  .p-plan-body { grid-template-columns: 1fr; }
+  .p-plan-col { border-right: none; border-bottom: 1px solid var(--gray-light); }
+  .p-plan-col:last-child { border-bottom: none; }
+  .action-steps-inner { grid-template-columns: 1fr 1fr; }
+  .action-step { border-right: none; border-bottom: 1px solid var(--gray-light); }
+  .action-step:last-child { border-bottom: none; }
+  .remaining-grid { grid-template-columns: 1fr; }
+  .venmo-block { padding: 2rem 1.5rem; }
+  .roadmap { padding: 2.5rem 1.5rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="5ps.html" class="active">The 5 P's</a></li>
+    <li><a href="funnel.html">Lead Funnel</a></li>
+    <li><a href="calculator.html">Calculator</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">Tool 01 / The 5 P's Diagnostic</div>
+    <h1 class="page-title">Find out where your marketing <span class="accent">actually stands.</span></h1>
+    <p class="page-intro">Answer 10 honest questions about your business. We score all 5 P's simultaneously and hand you a <strong>ranked breakdown with a real action plan</strong> for your top two. No fluff. No generic advice.</p>
+  </div>
+  <div class="header-right">
+    <div class="how-it-works-title">How it works</div>
+    <div class="how-step">
+      <div class="how-step-num">1</div>
+      <div class="how-step-text"><strong>Answer 10 questions</strong> about your business as honestly as you can. There are no right answers, only real ones.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">2</div>
+      <div class="how-step-text"><strong>We score all 5 P's</strong> at the same time. Every question feeds multiple scores so the ranking actually means something.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">3</div>
+      <div class="how-step-text"><strong>Get your plan.</strong> Your top two P's get a full breakdown with specific actions. Your other three get quick wins. Download it all as a PDF.</div>
+    </div>
+  </div>
+</div>
+
+<div class="diagnostic-wrap" id="diagnostic-wrap">
+  <div class="progress-sidebar" id="progress-sidebar"></div>
+  <div class="question-main" id="question-main"></div>
+</div>
+
+<div class="results-wrap" id="results-wrap">
+  <div class="results-hero">
+    <div>
+      <div class="results-eyebrow">Your strongest marketing lever</div>
+      <div class="results-winner" id="results-winner"></div>
+      <div class="results-winner-sub" id="results-winner-sub"></div>
+    </div>
+    <div class="results-score-grid" id="results-score-grid"></div>
+  </div>
+
+  <div class="plan-wrap">
+    <div class="plan-section-title">Your full plan</div>
+    <div id="plan-output"></div>
+    <div class="plan-section-title">Your other P's at a glance</div>
+    <div class="remaining-grid" id="remaining-grid"></div>
+    <div class="btn-row" style="margin-bottom:2rem">
+      <button class="btn-primary" onclick="downloadPDF()">Download my plan (PDF)</button>
+      <button class="btn-secondary" onclick="startOver()">Retake the diagnostic</button>
+    </div>
+  </div>
+
+  <div class="venmo-block">
+    <div class="venmo-left">
+      <h3>Did this help?</h3>
+      <p>This is free and always will be. But if this saved you even one bad marketing decision, buying me a coffee is a pretty solid ROI. No pressure. Seriously.</p>
+    </div>
+    <a href="https://venmo.com/u/zachary-maldonado-6" target="_blank" class="venmo-btn">Buy Zach a coffee</a>
+  </div>
+
+  <div class="roadmap">
+    <div class="roadmap-header">
+      <span class="roadmap-num">What's coming</span>
+      <h2 class="roadmap-title">The Roadmap</h2>
+    </div>
+    <div class="roadmap-grid">
+      <div class="roadmap-card"><span class="roadmap-card-status status-live">Live now</span><div class="roadmap-card-title">The 5 P's Diagnostic</div><p class="roadmap-card-desc">Answer 10 questions, get a ranked breakdown of all 5 P's and a custom action plan.</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-live">Live now</span><div class="roadmap-card-title">Lead Funnel Visualizer</div><p class="roadmap-card-desc">See exactly where leads drop out of your pipeline and where to plug the holes.</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-live">Live now</span><div class="roadmap-card-title">Cost Per Lead Calculator</div><p class="roadmap-card-desc">Find out what each lead source is actually costing you and whether the math works.</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-soon">Coming soon</span><div class="roadmap-card-title">AI Tools for Real Businesses</div><p class="roadmap-card-desc">A plain-English guide to AI tools actually worth your time, organized by what problem they solve.</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-soon">Coming soon</span><div class="roadmap-card-title">Industry Benchmarks</div><p class="roadmap-card-desc">How does your close rate, cost per lead, and retention stack up against others in your space?</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-soon">Coming soon</span><div class="roadmap-card-title">Sales Process Tracker</div><p class="roadmap-card-desc">Map every step from first contact to signed client. Find the gaps. Stop losing people you paid to get.</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-later">On the horizon</span><div class="roadmap-card-title">Data Flow Explainer</div><p class="roadmap-card-desc">How your lead data should move from ad platform to CRM to close. Make sense of your tracking.</p></div>
+      <div class="roadmap-card"><span class="roadmap-card-status status-later">On the horizon</span><div class="roadmap-card-title">The Champions System</div><p class="roadmap-card-desc">Retention, referrals, and turning happy customers into your best marketing channel.</p></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const QUESTIONS = [
+  { q: 'When a new customer chooses you over a competitor, what\'s the real reason?', context: 'Think about what they actually tell you, not what you hope they\'re thinking.',
+    answers: [
+      { label: 'Our quality or results speak for themselves', detail: 'Customers cite the work, the transformation, or the outcome.', scores: { product:3, price:0, place:0, promotion:1, people:1 } },
+      { label: 'We\'re the best value for what we offer', detail: 'Price or package structure is a real competitive advantage.', scores: { product:1, price:3, place:0, promotion:1, people:0 } },
+      { label: 'We\'re easy to find and easy to work with', detail: 'Location, online presence, or accessibility wins the deal.', scores: { product:0, price:0, place:3, promotion:1, people:1 } },
+      { label: 'They saw us somewhere and it clicked', detail: 'An ad, a post, or a piece of content brought them in.', scores: { product:0, price:0, place:1, promotion:3, people:0 } },
+    ]
+  },
+  { q: 'How much of your new business comes from referrals or word of mouth?', context: 'Gut feel is fine here. Be honest.',
+    answers: [
+      { label: 'More than half', detail: 'Referrals are our most reliable source of new clients.', scores: { product:2, price:1, place:0, promotion:0, people:3 } },
+      { label: 'A solid chunk, maybe 25 to 50%', detail: 'Referrals happen regularly but we rely on other channels too.', scores: { product:1, price:1, place:0, promotion:1, people:2 } },
+      { label: 'Some, but not something we count on', detail: 'It happens occasionally but it\'s not predictable.', scores: { product:0, price:0, place:1, promotion:2, people:1 } },
+      { label: 'Almost none, we earn every lead', detail: 'We generate most new business through marketing and outreach.', scores: { product:0, price:0, place:1, promotion:3, people:0 } },
+    ]
+  },
+  { q: 'What happens when a prospect asks about your price?', context: 'The first reaction tells you a lot about how your pricing actually lands.',
+    answers: [
+      { label: 'They usually say it\'s fair or worth it', detail: 'Price rarely becomes a real sticking point.', scores: { product:1, price:3, place:0, promotion:0, people:1 } },
+      { label: 'They push back sometimes but we hold our ground', detail: 'Negotiation happens but we know our value.', scores: { product:1, price:2, place:0, promotion:0, people:0 } },
+      { label: 'Price is often the first objection we handle', detail: 'We spend real energy justifying the cost.', scores: { product:0, price:1, place:0, promotion:1, people:0 } },
+      { label: 'We\'re honestly not sure how our price compares', detail: 'Pricing still feels like a bit of a guessing game.', scores: { product:0, price:0, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'If someone Googles your type of business right now, how do you show up?', context: 'Open a new tab and actually check if you\'re not sure.',
+    answers: [
+      { label: 'Top of results with strong reviews', detail: 'We show up first and our reputation backs it up.', scores: { product:1, price:0, place:3, promotion:2, people:1 } },
+      { label: 'We show up but not always at the top', detail: 'We\'re findable but could be more visible.', scores: { product:0, price:0, place:2, promotion:1, people:0 } },
+      { label: 'Somewhere on the first page', detail: 'You have to look a bit to find us.', scores: { product:0, price:0, place:1, promotion:1, people:0 } },
+      { label: 'We don\'t really show up', detail: 'Our online presence needs serious work.', scores: { product:0, price:0, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'How consistent is your marketing right now?', context: 'Think about the last 90 days of actual activity, not your intentions.',
+    answers: [
+      { label: 'Very consistent, we show up on a real schedule', detail: 'Regular content, campaigns, or outreach happening.', scores: { product:0, price:0, place:1, promotion:3, people:0 } },
+      { label: 'Pretty regular with some gaps', detail: 'We\'re mostly consistent but it varies.', scores: { product:0, price:0, place:0, promotion:2, people:0 } },
+      { label: 'We post or run ads when we remember', detail: 'Marketing is reactive, not proactive.', scores: { product:0, price:0, place:0, promotion:1, people:0 } },
+      { label: 'Sporadic at best', detail: 'There\'s no real rhythm to what we put out.', scores: { product:0, price:0, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'How would your best customers describe working with you to a friend?', context: 'What do they actually say in reviews, texts, or when they refer someone?',
+    answers: [
+      { label: 'They rave about the experience and the people', detail: 'The relationship and service quality is what they lead with.', scores: { product:1, price:0, place:0, promotion:0, people:3 } },
+      { label: 'They talk about the results we delivered', detail: 'The outcome or transformation is what gets mentioned.', scores: { product:3, price:0, place:0, promotion:1, people:1 } },
+      { label: 'They say we\'re easy to work with and convenient', detail: 'Accessibility and low friction is the selling point.', scores: { product:0, price:0, place:2, promotion:0, people:2 } },
+      { label: 'They mention we\'re a great deal', detail: 'Value for money is what gets passed along.', scores: { product:0, price:3, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'What does your follow-up process look like after a lead comes in?', context: 'From the moment someone shows interest to when they become a customer.',
+    answers: [
+      { label: 'We have a clear process and we follow it every time', detail: 'CRM, sequences, or a workflow that actually gets used.', scores: { product:0, price:0, place:0, promotion:2, people:3 } },
+      { label: 'We follow up but it\'s a bit improvised', detail: 'We get back to people but there\'s no real system.', scores: { product:0, price:0, place:0, promotion:1, people:1 } },
+      { label: 'Leads sometimes slip through the cracks', detail: 'Follow-up is inconsistent and we know it.', scores: { product:0, price:0, place:0, promotion:0, people:1 } },
+      { label: 'We mostly wait for people to come back to us', detail: 'No real follow-up system in place.', scores: { product:0, price:0, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'How does your product or service actually compare to your competitors?', context: 'Be honest. Honest businesses make better marketing decisions.',
+    answers: [
+      { label: 'We\'re genuinely better in a way customers notice', detail: 'There\'s a real tangible difference that shows up in results.', scores: { product:3, price:1, place:0, promotion:1, people:0 } },
+      { label: 'We\'re better but haven\'t figured out how to communicate it', detail: 'The difference exists but it\'s not landing in our messaging.', scores: { product:2, price:0, place:0, promotion:1, people:0 } },
+      { label: 'Honestly pretty similar to what\'s out there', detail: 'The work is solid but not dramatically different.', scores: { product:1, price:1, place:1, promotion:1, people:1 } },
+      { label: 'We\'re still figuring out our differentiation', detail: 'We haven\'t nailed what makes us the obvious choice yet.', scores: { product:0, price:0, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'When you spend money on marketing, do you know what\'s actually working?', context: 'Think about whether you can tie dollars spent to real clients gained.',
+    answers: [
+      { label: 'Yes, we track it all the way to a closed client', detail: 'We know cost per lead and close rate by channel.', scores: { product:0, price:1, place:1, promotion:3, people:1 } },
+      { label: 'We track some of it but not everything', detail: 'We have a rough idea but there are gaps.', scores: { product:0, price:0, place:0, promotion:2, people:0 } },
+      { label: 'We have a gut feel but not real data', detail: 'We think we know but we\'re not tracking it formally.', scores: { product:0, price:0, place:0, promotion:1, people:0 } },
+      { label: 'No, we\'re mostly guessing', detail: 'Marketing spend is based on hope more than data.', scores: { product:0, price:0, place:0, promotion:0, people:0 } },
+    ]
+  },
+  { q: 'How strong is your customer retention right now?', context: 'Do people come back, upgrade, or refer others, or is every sale a one-time thing?',
+    answers: [
+      { label: 'Very strong, customers stick around and refer others', detail: 'Lifetime value is high and churn is low.', scores: { product:2, price:1, place:0, promotion:0, people:3 } },
+      { label: 'Pretty good, most customers come back', detail: 'Retention is solid but not something we actively manage.', scores: { product:1, price:1, place:0, promotion:0, people:2 } },
+      { label: 'Mixed, some stick but a lot churn', detail: 'Retention is inconsistent and we\'re not sure why.', scores: { product:1, price:0, place:0, promotion:0, people:1 } },
+      { label: 'Most of our business is one-time transactions', detail: 'Repeat business isn\'t really part of our model yet.', scores: { product:0, price:0, place:0, promotion:1, people:0 } },
+    ]
+  },
+];
+
+const P_DATA = {
+  product: {
+    name: 'Product',
+    tagline: 'Your product or service is your biggest advantage. <strong>The play is making sure everyone who should know about it actually does</strong> and letting your results do the selling.',
+    strengths: ['You have something genuinely worth selling and customers feel it', 'Word of mouth works in your favor because the work backs it up', 'Results and transformations are your most convincing marketing asset', 'Happy customers are willing to advocate for you if you make it easy'],
+    opportunities: ['Turn results into documented proof: case studies, before and afters, testimonials', 'Build a referral system so advocacy happens automatically, not just when someone remembers', 'Make your guarantee explicit. If you believe in the work, say so loudly.', 'Identify your 10 best clients and figure out exactly what they have in common'],
+    actions: [
+      { title: 'Build a referral system', body: 'Give happy customers a clear, easy way to send you business. The ask and the incentive should both fit in one sentence.' },
+      { title: 'Collect proof this week', body: 'Email your 5 best clients right now and ask for a 2-sentence testimonial. Put it everywhere someone might be evaluating you.' },
+      { title: 'Make the guarantee obvious', body: 'If you stand behind your work, say it in plain language on your website and in proposals. Remove the risk for people on the fence.' },
+      { title: 'Clone your best clients', body: 'Who are your top 10%? What do they have in common? Build your next campaign around finding more people exactly like them.' },
+    ],
+    quickwin: 'Ask your 3 happiest clients for a testimonial this week. Put it on your homepage before the weekend.',
+  },
+  price: {
+    name: 'Price',
+    tagline: 'You understand value and how to price it. <strong>The play is making your pricing so clear and compelling that the decision feels like a no-brainer</strong>, not a negotiation.',
+    strengths: ['Your pricing strategy is a real competitive lever, not just a number', 'You understand what your market is willing to pay', 'Value communication is something you\'ve figured out', 'Price-anchored clients tend to be more committed long term'],
+    opportunities: ['A good, better, best structure removes friction and lifts average order value', 'Showing customers the math makes the price feel smaller', 'Testing a price increase on your best offer could change everything', 'One premium tier makes everything else look more accessible'],
+    actions: [
+      { title: 'Audit your pricing structure', body: 'Do you have at least three tiers? If not, build a good, better, best structure. People like choosing between options, not just saying yes or no.' },
+      { title: 'Show your client the math', body: 'If your service saves time or makes money, put a real number on it. $500 per month feels different when it replaces $3,000 in problems.' },
+      { title: 'Raise one price', body: 'Pick your most popular offer and increase the price 10 to 15%. Run it for 30 days and see what happens. Most businesses are undercharging.' },
+      { title: 'Add a premium option', body: 'Even if almost nobody buys it, having a high-ticket offer makes everything else look more accessible. Add one and see what happens.' },
+    ],
+    quickwin: 'Write out what a client actually gets from you in dollar terms. Use that language in your next sales conversation.',
+  },
+  place: {
+    name: 'Place',
+    tagline: 'Being easy to find and easy to reach is a real advantage. <strong>The play is doubling down where you\'re already visible and removing every friction point</strong> between finding you and becoming a customer.',
+    strengths: ['Accessibility is a genuine competitive advantage most businesses ignore', 'You show up where your customers are actually looking', 'Low friction between finding you and working with you', 'Your presence in the right places drives real business'],
+    opportunities: ['Your Google Business Profile is free marketing most businesses treat as an afterthought', 'Every channel where you\'re half-in is a wasted opportunity', 'The experience of finding and contacting you might have more friction than you think', 'One new channel done well can open an entirely new stream of customers'],
+    actions: [
+      { title: 'Full Google Business audit', body: 'Update photos, hours, description, and services. Respond to every review that doesn\'t have a response. Free and most businesses ignore it.' },
+      { title: 'Try to find yourself as a stranger', body: 'Google your category in your city. Call your own number. Submit your own contact form. Note every friction point and fix it.' },
+      { title: 'Pick one new channel to own', body: 'Where are your customers that you\'re not? Pick one, commit to 90 days, and actually show up there consistently.' },
+      { title: 'Streamline the first step', body: 'What\'s the very first action a new customer takes? Make that one thing as fast and frictionless as possible.' },
+    ],
+    quickwin: 'Update your Google Business Profile today. Add 3 recent photos and respond to your last 5 reviews.',
+  },
+  promotion: {
+    name: 'Promotion',
+    tagline: 'Getting attention is a skill and you\'ve got it. <strong>The play is making sure all that attention flows into a system that actually converts</strong>, not just generates awareness.',
+    strengths: ['You know how to get people to raise their hand', 'Your marketing spend is generating real awareness', 'You understand your audience and how to reach them', 'The top of your funnel is working'],
+    opportunities: ['The strongest promoters often have the weakest follow-up. That\'s where the money is.', 'Matching your message to where someone is in their decision process doubles conversion', 'Shifting even 20% of budget toward retention usually has a better ROI than more acquisition', 'One piece of genuinely useful content can outperform a month of ads'],
+    actions: [
+      { title: 'Audit your post-lead process', body: 'What happens in the 24 hours after someone shows interest? If there\'s no clear documented answer, that\'s your biggest leak right now.' },
+      { title: 'Test a different offer', body: 'Same audience, completely different hook. Run both for 30 days. Let the data pick the winner, not your gut.' },
+      { title: 'Create one demand-gen piece', body: 'Something genuinely educational or useful. A real answer to a question your customers always ask. Give before you ask.' },
+      { title: 'Shift 20% of budget to retention', body: 'Getting new customers is expensive. Selling more to existing ones is cheap. Move a slice of budget and measure the difference.' },
+    ],
+    quickwin: 'Map out what happens to a lead in the first 48 hours after they contact you. Find the first gap and fix it this week.',
+  },
+  people: {
+    name: 'People',
+    tagline: 'Your team and your customers are the engine. <strong>The play is building systems around what\'s already working</strong> so it scales without everything depending on you personally.',
+    strengths: ['Retention is strong because people actually enjoy working with you', 'Referrals flow naturally because you take care of people', 'Your team delivers an experience customers want to come back to', 'Customer relationships are a real asset, not just a nice thing to say'],
+    opportunities: ['A formal referral system turns organic advocacy into a predictable channel', 'Documenting what a great experience looks like lets your team deliver it consistently', 'Your top 20% of customers could be doing a lot more for your growth if you activated them', 'The moment right after someone becomes a customer is your most underused marketing window'],
+    actions: [
+      { title: 'Launch a simple referral program', body: 'Give your happy customers a clear way to send you business. Make the ask easy and the thank-you obvious. It doesn\'t need to be complicated.' },
+      { title: 'Write down what great looks like', body: 'What does a perfect first 30 days with a new client look like? Document it and make sure your team delivers that same experience every time.' },
+      { title: 'Activate your top clients', body: 'Who are your 10 best customers? Call them. Thank them personally. Ask if they know anyone who could use what you do.' },
+      { title: 'Build a review request into the process', body: 'Not occasionally. Every happy client, every time, as part of the normal workflow. Systematize it so it happens without anyone having to remember.' },
+    ],
+    quickwin: 'Call your 3 best clients this week. Thank them. Then ask: do you know anyone else we could help? That\'s it.',
+  },
+};
+
+let currentQ = 0;
+let answers = {};
+let ranked = [];
+
+function buildProgress() {
+  document.getElementById('progress-sidebar').innerHTML = QUESTIONS.map((q, i) => `
+    <div class="progress-item ${i === currentQ ? 'current' : i < currentQ ? 'done' : ''}">
+      <div class="progress-dot">${i < currentQ ? '✓' : i + 1}</div>
+      <div class="progress-text">${q.q.length > 52 ? q.q.slice(0, 52) + '…' : q.q}</div>
+    </div>
+  `).join('') + `
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-label"><span>Progress</span><span>${currentQ} of ${QUESTIONS.length}</span></div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${Math.round((currentQ/QUESTIONS.length)*100)}%"></div></div>
+    </div>`;
+}
+
+function buildQuestion() {
+  const q = QUESTIONS[currentQ];
+  const letters = ['A','B','C','D'];
+  document.getElementById('question-main').innerHTML = `
+    <div class="q-eyebrow">Question ${currentQ + 1} of ${QUESTIONS.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="q-context">${q.context}</div>
+    <div class="answer-grid">
+      ${q.answers.map((a, i) => `
+        <div class="answer-card ${answers[currentQ] === i ? 'selected' : ''}" onclick="pick(${i})">
+          <div class="answer-card-letter">${letters[i]}</div>
+          <div>
+            <div class="answer-card-label">${a.label}</div>
+            <div class="answer-card-detail">${a.detail}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="btn-row">
+      ${currentQ > 0 ? `<button class="btn-secondary" onclick="prev()">Back</button>` : ''}
+      <button class="btn-primary" id="btn-next" ${answers[currentQ] === undefined ? 'disabled' : ''}
+        onclick="${currentQ < QUESTIONS.length - 1 ? 'next()' : 'showResults()'}">
+        ${currentQ < QUESTIONS.length - 1 ? 'Next question' : 'Show my results'}
+      </button>
+    </div>`;
+}
+
+function pick(i) {
+  answers[currentQ] = i;
+  buildQuestion();
+}
+
+function next() {
+  if (answers[currentQ] === undefined) return;
+  currentQ++;
+  buildProgress();
+  buildQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prev() {
+  currentQ--;
+  buildProgress();
+  buildQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function computeScores() {
+  const raw = { product:0, price:0, place:0, promotion:0, people:0 };
+  const max = { product:0, price:0, place:0, promotion:0, people:0 };
+
+  QUESTIONS.forEach((q, qi) => {
+    const ai = answers[qi];
+    Object.keys(max).forEach(p => { max[p] += Math.max(...q.answers.map(a => a.scores[p])); });
+    if (ai !== undefined) Object.keys(raw).forEach(p => { raw[p] += q.answers[ai].scores[p]; });
+  });
+
+  const pct = {};
+  Object.keys(raw).forEach(p => { pct[p] = max[p] > 0 ? Math.round((raw[p]/max[p])*100) : 0; });
+  ranked = Object.keys(pct).sort((a,b) => pct[b] - pct[a]);
+  return pct;
+}
+
+function showResults() {
+  if (answers[currentQ] === undefined) return;
+  const pct = computeScores();
+  const top = ranked[0];
+  const second = ranked[1];
+  const rest = ranked.slice(2);
+
+  document.getElementById('diagnostic-wrap').style.display = 'none';
+  document.getElementById('results-wrap').classList.add('active');
+
+  document.getElementById('results-winner').textContent = P_DATA[top].name;
+  document.getElementById('results-winner-sub').innerHTML = P_DATA[top].tagline;
+
+  document.getElementById('results-score-grid').innerHTML = ranked.map(p => `
+    <div class="score-row ${p === top ? 'top' : ''}">
+      <span class="score-row-label">${P_DATA[p].name}</span>
+      <div class="score-track"><div class="score-fill" style="width:${pct[p]}%"></div></div>
+      <span class="score-num">${pct[p]}%</span>
+    </div>`).join('');
+
+  const gap = pct[top] - pct[second];
+  let insight = '';
+  if (gap >= 30) insight = `<strong>You have one clear strength and it\'s ${P_DATA[top].name}.</strong> A focused strategy almost always beats a scattered one. Build everything around what\'s already working.`;
+  else if (gap <= 10) insight = `<strong>Your top two P\'s are really close.</strong> That means you have two genuine strengths to work with, which is a great position to be in. The plan below covers both.`;
+  else insight = `<strong>Your scores tell a clear story.</strong> ${P_DATA[top].name} is where you\'re strongest and ${P_DATA[second].name} is right behind it. The plan below gives you a full playbook for both.`;
+
+  document.getElementById('plan-output').innerHTML = `
+    <div class="insight-callout">${insight}</div>
+    ${planBlock(top, pct[top], true)}
+    ${planBlock(second, pct[second], false)}`;
+
+  const barColors = { product:'#1877F2', price:'#2a9d5c', place:'#d4a800', promotion:'#C13584', people:'#F4A261' };
+
+  document.getElementById('remaining-grid').innerHTML = rest.map(p => `
+    <div class="remaining-card">
+      <div class="remaining-card-header">
+        <span class="remaining-p-name">${P_DATA[p].name}</span>
+        <span class="remaining-score">${pct[p]}%</span>
+      </div>
+      <div class="remaining-bar-track">
+        <div class="remaining-bar-fill" style="width:${pct[p]}%;background:${barColors[p]}"></div>
+      </div>
+      <div class="remaining-tip"><strong>Quick win:</strong> ${P_DATA[p].quickwin}</div>
+    </div>`).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function planBlock(p, score, isPrimary) {
+  const d = P_DATA[p];
+  return `
+    <div class="p-plan-block">
+      <div class="p-plan-header ${isPrimary ? '' : 'secondary'}">
+        <div class="p-plan-title">${d.name}</div>
+        <div class="p-plan-badge ${isPrimary ? '' : 'second'}">${isPrimary ? 'Your top P' : 'Your second P'} — ${score}%</div>
+      </div>
+      <div class="p-plan-body">
+        <div class="p-plan-col">
+          <div class="p-plan-col-title">Where you're winning</div>
+          <ul class="p-plan-list">${d.strengths.map(s=>`<li>${s}</li>`).join('')}</ul>
+        </div>
+        <div class="p-plan-col">
+          <div class="p-plan-col-title">Your biggest opportunities</div>
+          <ul class="p-plan-list">${d.opportunities.map(o=>`<li>${o}</li>`).join('')}</ul>
+        </div>
+      </div>
+      <div class="action-steps-block">
+        <div class="action-steps-inner">
+          ${d.actions.map((a,i)=>`
+            <div class="action-step">
+              <div class="action-step-num">${i+1}</div>
+              <div class="action-step-title">${a.title}</div>
+              <div class="action-step-body">${a.body}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function startOver() {
+  currentQ = 0; answers = {}; ranked = [];
+  document.getElementById('results-wrap').classList.remove('active');
+  document.getElementById('diagnostic-wrap').style.display = 'grid';
+  buildProgress(); buildQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+  const margin = 56, pageW = doc.internal.pageSize.getWidth(), pageH = doc.internal.pageSize.getHeight(), cw = pageW - margin * 2;
+  let y = margin;
+  const pct = computeScores();
+  const top = ranked[0], second = ranked[1];
+
+  const checkPage = (n) => { if (y + n > pageH - 60) { doc.addPage(); y = margin; } };
+
+  doc.setFillColor(15,15,15); doc.rect(0,0,pageW,120,'F');
+  doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(242,201,76);
+  doc.text('DUMB IT DOWN MARKETING', margin, 42);
+  doc.setFontSize(24); doc.setTextColor(245,242,235);
+  doc.text('Your 5 P\'s Marketing Diagnostic', margin, 74);
+  doc.setFontSize(10); doc.setTextColor(130,130,120);
+  doc.text('dumbitdownmarketing.com', margin, 96);
+
+  y = 148;
+  doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(107,107,107);
+  doc.text('YOUR SCORES', margin, y); y += 16;
+
+  ranked.forEach((p,i) => {
+    const barW = Math.round((pct[p]/100)*(cw-130));
+    i === 0 ? doc.setFillColor(212,168,0) : doc.setFillColor(220,218,210);
+    doc.rect(margin+120, y-9, barW, 11, 'F');
+    doc.setFontSize(9); doc.setFont('helvetica', i===0 ? 'bold' : 'normal');
+    doc.setTextColor(i===0 ? 15 : 80, i===0 ? 15 : 80, i===0 ? 15 : 80);
+    doc.text(P_DATA[p].name, margin, y);
+    doc.text(pct[p]+'%', pageW-margin, y, { align:'right' });
+    y += 18;
+  });
+
+  y += 12;
+
+  [top, second].forEach((p, pi) => {
+    checkPage(90);
+    doc.setFillColor(pi===0 ? 15 : 232, pi===0 ? 15 : 228, pi===0 ? 15 : 218);
+    doc.rect(margin, y, cw, 34, 'F');
+    doc.setFontSize(17); doc.setFont('helvetica','bold');
+    doc.setTextColor(pi===0 ? 242 : 15, pi===0 ? 201 : 15, pi===0 ? 76 : 15);
+    doc.text(P_DATA[p].name + ' — ' + pct[p]+'%', margin+12, y+22);
+    doc.setFontSize(8); doc.setFont('helvetica','normal');
+    doc.setTextColor(pi===0 ? 160 : 107, pi===0 ? 160 : 107, pi===0 ? 150 : 107);
+    doc.text(pi===0 ? 'YOUR TOP P' : 'YOUR SECOND P', pageW-margin-12, y+22, { align:'right' });
+    y += 48;
+
+    doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(15,15,15);
+    doc.text('WHERE YOU\'RE WINNING', margin, y); y += 14;
+    P_DATA[p].strengths.forEach(s => {
+      checkPage(22);
+      doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.setFontSize(9);
+      doc.setFillColor(212,168,0); doc.circle(margin+5, y-3, 2.5, 'F');
+      const lines = doc.splitTextToSize(s, cw-18);
+      doc.text(lines, margin+14, y);
+      y += lines.length * 12 + 4;
+    });
+
+    y += 8;
+    doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(15,15,15);
+    doc.text('YOUR 4-STEP ACTION PLAN', margin, y); y += 14;
+
+    P_DATA[p].actions.forEach((a, i) => {
+      checkPage(52);
+      doc.setFillColor(242,201,76); doc.rect(margin, y-12, 20, 18, 'F');
+      doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(15,15,15);
+      doc.text(String(i+1), margin+6, y);
+      doc.text(a.title, margin+26, y); y += 13;
+      doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80);
+      const lines = doc.splitTextToSize(a.body, cw-26);
+      doc.text(lines, margin+26, y);
+      y += lines.length * 12 + 8;
+    });
+    y += 14;
+  });
+
+  checkPage(50);
+  doc.setFillColor(232,228,218); doc.rect(margin, y, cw, 0.5, 'F'); y += 16;
+  doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(107,107,107);
+  doc.text('Generated by Dumb It Down Marketing — dumbitdownmarketing.com', margin, y); y += 12;
+  doc.text('If this was useful, buy Zach a coffee: venmo.com/u/zachary-maldonado-6', margin, y);
+
+  doc.save('5ps-diagnostic-plan.pdf');
+}
+
+buildProgress();
+buildQuestion();
+</script>
+</body>
+</html>
