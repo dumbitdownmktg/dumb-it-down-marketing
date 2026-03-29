@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Basics | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+/* PAGE HEADER */
+.page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.header-left { padding: 4rem 3rem; border-right: 1.5px solid var(--black); }
+.page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.25rem; }
+.page-title .accent { color: var(--yellow-dark); }
+.page-intro { font-size: 1rem; color: var(--gray); line-height: 1.75; max-width: 440px; }
+.page-intro strong { color: var(--black); font-weight: 500; }
+.header-right { background: var(--black); padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; }
+.header-right p { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+.header-right p strong { color: var(--white); font-weight: 500; }
+.header-tabs-preview { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+.header-tab-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
+.header-tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.header-tab-name { font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.7); }
+.header-tab-badge { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.5rem; margin-left: auto; }
+.badge-live { background: rgba(42,157,92,0.2); color: #5DCAA5; }
+.badge-soon { background: rgba(242,201,76,0.15); color: var(--yellow); }
+
+/* MAIN LAYOUT */
+.basics-wrap { display: grid; grid-template-columns: 260px 1fr; border-bottom: 1.5px solid var(--black); min-height: calc(100vh - 72px); }
+
+/* SIDEBAR TABS */
+.sidebar { border-right: 1.5px solid var(--black); position: sticky; top: 72px; height: calc(100vh - 72px); overflow-y: auto; display: flex; flex-direction: column; }
+.sidebar-section { padding: 1.5rem 1.25rem; border-bottom: 1px solid var(--gray-light); }
+.sidebar-section:last-child { border-bottom: none; }
+.sidebar-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.78rem; letter-spacing: 0.14em; color: var(--gray); margin-bottom: 0.85rem; }
+.tab-btn { width: 100%; display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0.85rem; border: 1.5px solid transparent; background: transparent; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; color: var(--gray); text-align: left; transition: all 0.15s; margin-bottom: 0.35rem; }
+.tab-btn:last-child { margin-bottom: 0; }
+.tab-btn:hover { border-color: var(--gray-light); color: var(--black); background: var(--gray-light); }
+.tab-btn.active { border-color: var(--black); background: var(--black); color: var(--yellow); }
+.tab-btn.active .tab-icon { color: var(--yellow); }
+.tab-btn.coming { opacity: 0.45; cursor: default; }
+.tab-btn.coming:hover { border-color: transparent; background: transparent; color: var(--gray); }
+.tab-icon { font-size: 1rem; flex-shrink: 0; }
+.tab-text { display: flex; flex-direction: column; gap: 1px; }
+.tab-name { font-size: 0.88rem; font-weight: 500; }
+.tab-sub { font-size: 0.7rem; opacity: 0.6; font-weight: 300; }
+.tab-badge { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.15rem 0.5rem; margin-left: auto; flex-shrink: 0; }
+.tb-live { background: rgba(42,157,92,0.12); color: var(--green); }
+.tb-soon { background: rgba(242,201,76,0.15); color: var(--yellow-dark); }
+.tab-btn.active .tb-live { background: rgba(242,201,76,0.2); color: var(--yellow); }
+
+/* CONTENT AREA */
+.content-area { overflow: hidden; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ================================
+   TAB 1: THE FUNNEL
+================================ */
+.funnel-tab { padding: 0; }
+
+.funnel-hero { padding: 3rem; border-bottom: 1.5px solid var(--black); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.funnel-hero-left h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; margin-bottom: 1rem; }
+.funnel-hero-left h2 .accent { color: var(--yellow-dark); }
+.funnel-hero-left p { font-size: 0.92rem; color: var(--gray); line-height: 1.75; margin-bottom: 1rem; }
+.funnel-hero-left p strong { color: var(--black); font-weight: 500; }
+
+.funnel-hero-right { display: flex; flex-direction: column; gap: 0; }
+.funnel-stage-card { padding: 1.25rem 1.5rem; border: 1.5px solid var(--black); margin-bottom: -1.5px; cursor: pointer; transition: all 0.15s; display: flex; align-items: flex-start; gap: 1rem; }
+.funnel-stage-card:hover { z-index: 1; position: relative; }
+.funnel-stage-card.tofu { background: var(--white); }
+.funnel-stage-card.mofu { background: var(--white); }
+.funnel-stage-card.bofu { background: var(--white); }
+.funnel-stage-card.active.tofu { background: #E1F5EE; border-color: #1D9E75; z-index: 2; position: relative; }
+.funnel-stage-card.active.mofu { background: rgba(242,201,76,0.15); border-color: var(--yellow-dark); z-index: 2; position: relative; }
+.funnel-stage-card.active.bofu { background: rgba(232,64,64,0.07); border-color: var(--red); z-index: 2; position: relative; }
+.fsc-letter { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; flex-shrink: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+.tofu .fsc-letter { background: #E1F5EE; color: #0F6E56; }
+.mofu .fsc-letter { background: rgba(242,201,76,0.2); color: var(--yellow-dark); }
+.bofu .fsc-letter { background: rgba(232,64,64,0.08); color: var(--red); }
+.active.tofu .fsc-letter { background: #1D9E75; color: white; }
+.active.mofu .fsc-letter { background: var(--yellow-dark); color: var(--black); }
+.active.bofu .fsc-letter { background: var(--red); color: white; }
+.fsc-content { flex: 1; }
+.fsc-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.2rem; }
+.fsc-tagline { font-size: 0.8rem; color: var(--gray); }
+
+/* FUNNEL VISUAL */
+.funnel-visual-section { padding: 3rem; border-bottom: 1.5px solid var(--black); }
+.funnel-visual-title { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
+.funnel-visual-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
+
+.funnel-diagram { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 800px; margin: 0 auto; }
+
+.funnel-tier { width: 100%; position: relative; cursor: pointer; transition: all 0.2s; }
+.funnel-tier-inner { display: flex; align-items: stretch; gap: 0; border: 1.5px solid var(--black); transition: all 0.2s; margin-bottom: -1.5px; }
+.funnel-tier:hover .funnel-tier-inner { z-index: 2; position: relative; }
+
+.funnel-tier-shape { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.35rem; padding: 1.25rem 2rem; flex: 1; transition: background 0.2s; }
+.tier-label { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; line-height: 1; }
+.tier-sublabel { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+
+.funnel-tier-info { width: 280px; padding: 1.25rem 1.5rem; border-left: 1.5px solid var(--black); display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.tier-info-stage { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); }
+.tier-info-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.04em; }
+.tier-info-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.55; }
+
+/* TOFU styles */
+.tier-tofu .funnel-tier-shape { background: #E1F5EE; }
+.tier-tofu .tier-label { color: #0F6E56; }
+.tier-tofu.active .funnel-tier-inner { border-color: #1D9E75; position: relative; z-index: 3; }
+.tier-tofu.active .funnel-tier-shape { background: #1D9E75; }
+.tier-tofu.active .tier-label { color: white; }
+.tier-tofu.active .tier-sublabel { color: rgba(255,255,255,0.7); }
+.tier-tofu.active .funnel-tier-info { background: #E1F5EE; border-color: #1D9E75; }
+.tier-tofu.active .tier-info-stage { color: #0F6E56; }
+
+/* MOFU styles */
+.tier-mofu .funnel-tier-shape { background: rgba(242,201,76,0.12); }
+.tier-mofu .tier-label { color: var(--yellow-dark); }
+.tier-mofu.active .funnel-tier-inner { border-color: var(--yellow-dark); position: relative; z-index: 3; }
+.tier-mofu.active .funnel-tier-shape { background: var(--yellow); }
+.tier-mofu.active .tier-label { color: var(--black); }
+.tier-mofu.active .tier-sublabel { color: rgba(0,0,0,0.55); }
+.tier-mofu.active .funnel-tier-info { background: rgba(242,201,76,0.12); border-color: var(--yellow-dark); }
+.tier-mofu.active .tier-info-stage { color: var(--yellow-dark); }
+
+/* BOFU styles */
+.tier-bofu .funnel-tier-shape { background: rgba(232,64,64,0.06); }
+.tier-bofu .tier-label { color: var(--red); }
+.tier-bofu.active .funnel-tier-inner { border-color: var(--red); position: relative; z-index: 3; }
+.tier-bofu.active .funnel-tier-shape { background: var(--red); }
+.tier-bofu.active .tier-label { color: white; }
+.tier-bofu.active .tier-sublabel { color: rgba(255,255,255,0.7); }
+.tier-bofu.active .funnel-tier-info { background: rgba(232,64,64,0.06); border-color: var(--red); }
+.tier-bofu.active .tier-info-stage { color: var(--red); }
+
+/* AFTER */
+.tier-after .funnel-tier-inner { background: #1a1a18; }
+.tier-after .funnel-tier-shape { background: var(--black); }
+.tier-after .tier-label { color: var(--yellow); }
+.tier-after .tier-sublabel { color: rgba(255,255,255,0.5); }
+.tier-after .funnel-tier-info { background: #1a1a18; }
+.tier-after .tier-info-stage { color: rgba(255,255,255,0.4) !important; }
+.tier-after .tier-info-title { color: var(--white) !important; }
+.tier-after .tier-info-desc { color: rgba(255,255,255,0.55) !important; }
+.tier-after.active .funnel-tier-inner { border-color: var(--yellow-dark); position: relative; z-index: 3; }
+.tier-after.active .funnel-tier-info { background: #2a2500; }
+.tier-after.active .tier-info-stage { color: var(--yellow) !important; }
+
+/* CONNECTOR */
+.funnel-connector { width: 2px; height: 16px; background: var(--black); margin: 0 auto; position: relative; z-index: 1; }
+.funnel-connector::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid var(--black); }
+
+/* DETAIL PANEL */
+.stage-detail { padding: 3rem; border-bottom: 1.5px solid var(--black); }
+.stage-detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--black); border: 1.5px solid var(--black); }
+.stage-detail-card { background: var(--white); padding: 1.5rem; }
+.sdc-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.75rem; }
+.sdc-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.sdc-items { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.sdc-items li { font-size: 0.82rem; color: var(--gray); line-height: 1.45; padding-left: 1rem; position: relative; }
+.sdc-items li::before { content: '→'; position: absolute; left: 0; color: var(--yellow-dark); font-size: 0.72rem; top: 1px; }
+.sdc-items li strong { color: var(--black); font-weight: 500; }
+
+/* SMALL BIZ EXAMPLES */
+.examples-section { padding: 3rem; }
+.examples-title { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+.examples-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
+.examples-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1.5px solid var(--black); }
+.example-col { background: var(--white); padding: 1.5rem; }
+.example-biz { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.04em; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--gray-light); }
+.example-stage { margin-bottom: 1rem; }
+.example-stage-name { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.example-stage-name.t { color: #0F6E56; }
+.example-stage-name.m { color: var(--yellow-dark); }
+.example-stage-name.b { color: var(--red); }
+.example-stage-text { font-size: 0.82rem; color: var(--gray); line-height: 1.55; }
+.example-stage-text strong { color: var(--black); font-weight: 500; }
+
+/* ================================
+   TAB 2: DICTIONARY
+================================ */
+.dict-tab { padding: 0; }
+
+.dict-search-bar { padding: 1.5rem 2rem; border-bottom: 1.5px solid var(--black); background: var(--gray-light); position: sticky; top: 72px; z-index: 20; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.dict-search-wrap { position: relative; flex: 1; min-width: 200px; }
+.dict-search-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--gray); pointer-events: none; }
+.dict-search-input { width: 100%; padding: 0.7rem 1rem 0.7rem 2.4rem; border: 1.5px solid var(--black); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--black); outline: none; transition: border-color 0.2s; }
+.dict-search-input:focus { border-color: var(--yellow-dark); }
+.dict-search-input::placeholder { color: var(--gray); }
+.dict-clear { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1rem; display: none; padding: 0; line-height: 1; }
+.dict-clear.show { display: block; }
+.dict-filter-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.dict-pill { padding: 0.3rem 0.75rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; border: 1.5px solid var(--gray); background: transparent; color: var(--gray); transition: all 0.15s; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+.dict-pill:hover { border-color: var(--black); color: var(--black); }
+.dict-pill.active { border-color: var(--black); background: var(--black); color: var(--white); }
+
+.dict-results-count { padding: 0.65rem 2rem; border-bottom: 1px solid var(--gray-light); font-size: 0.78rem; color: var(--gray); display: none; }
+.dict-results-count span { font-weight: 500; color: var(--black); }
+
+.dict-main { }
+.dict-category { border-bottom: 1.5px solid var(--black); }
+.dict-category:last-child { border-bottom: none; }
+.dict-cat-header { padding: 1rem 2rem; background: var(--black); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+.dict-cat-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.06em; color: var(--yellow); }
+.dict-cat-count { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.dict-terms-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.dict-category.collapsed .dict-terms-grid { display: none; }
+.dict-term { padding: 1.75rem 2rem; border-right: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light); transition: background 0.15s; }
+.dict-term:nth-child(even) { border-right: none; }
+.dict-term:hover { background: rgba(242,201,76,0.05); }
+.dict-term.hidden { display: none; }
+.dict-acronym { display: inline-block; font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.08em; background: var(--yellow); color: var(--black); padding: 0.12rem 0.55rem; margin-bottom: 0.45rem; }
+.dict-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.03em; line-height: 1.05; margin-bottom: 0.55rem; }
+.dict-plain { font-size: 0.88rem; color: var(--black); line-height: 1.7; margin-bottom: 0.9rem; }
+.dict-example { background: var(--gray-light); padding: 0.8rem 1rem; border-left: 3px solid var(--yellow-dark); font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+.dict-example::before { content: 'Real world: '; font-weight: 500; color: var(--yellow-dark); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 0.25rem; }
+.dict-no-results { padding: 4rem 2rem; text-align: center; color: var(--gray); display: none; }
+.dict-no-results-big { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--gray-light); margin-bottom: 0.75rem; }
+
+/* ================================
+   COMING SOON TABS
+================================ */
+.coming-soon-tab { padding: 4rem 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; text-align: center; gap: 1rem; }
+.cs-big { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--gray-light); line-height: 1; }
+.cs-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; }
+.cs-sub { font-size: 0.92rem; color: var(--gray); line-height: 1.7; max-width: 360px; }
+.cs-badge { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; background: rgba(242,201,76,0.2); color: var(--yellow-dark); }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 1000px) {
+  nav { padding: 1rem 1.25rem; }
+  .page-header { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
+  .header-right { padding: 2rem 1.5rem; }
+  .basics-wrap { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; flex-direction: row; flex-wrap: wrap; padding: 1rem; gap: 0.35rem; border-right: none; border-bottom: 1.5px solid var(--black); }
+  .sidebar-section { padding: 0; border-bottom: none; }
+  .sidebar-label { display: none; }
+  .tab-btn { width: auto; margin-bottom: 0; padding: 0.5rem 0.85rem; }
+  .tab-text .tab-sub { display: none; }
+  .funnel-hero { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; }
+  .funnel-visual-section { padding: 2rem 1.5rem; }
+  .funnel-tier-info { display: none; }
+  .stage-detail { padding: 2rem 1.5rem; }
+  .stage-detail-grid { grid-template-columns: 1fr; }
+  .examples-section { padding: 2rem 1.5rem; }
+  .examples-grid { grid-template-columns: 1fr; }
+  .dict-terms-grid { grid-template-columns: 1fr; }
+  .dict-term { border-right: none; }
+  .dict-search-bar { padding: 1.25rem 1.5rem; }
+  .dict-results-count { padding: 0.65rem 1.5rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+@media (max-width: 600px) {
+  .funnel-hero { padding: 1.5rem; }
+  .coming-soon-tab { padding: 3rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">Learn / Marketing Basics</div>
+    <h1 class="page-title">The stuff nobody <span class="accent">bothered to explain.</span></h1>
+    <p class="page-intro">Everything you need to understand how marketing actually works. <strong>Not theory. Not textbook.</strong> Real explanations with real examples from real small businesses.</p>
+  </div>
+  <div class="header-right">
+    <p>This is where all the educational content lives. Pick a topic from the left and dig in. More gets added here regularly so you don't need to go anywhere else.</p>
+    <div class="header-tabs-preview">
+      <div class="header-tab-item">
+        <div class="header-tab-dot" style="background:var(--yellow)"></div>
+        <span class="header-tab-name">The Dictionary</span>
+        <span class="header-tab-badge badge-live">Live</span>
+      </div>
+      <div class="header-tab-item">
+        <div class="header-tab-dot" style="background:#1D9E75"></div>
+        <span class="header-tab-name">The Funnel</span>
+        <span class="header-tab-badge badge-live">Live</span>
+      </div>
+      <div class="header-tab-item">
+        <div class="header-tab-dot" style="background:var(--gray)"></div>
+        <span class="header-tab-name">Ad Platforms 101</span>
+        <span class="header-tab-badge badge-soon">Soon</span>
+      </div>
+      <div class="header-tab-item">
+        <div class="header-tab-dot" style="background:var(--gray)"></div>
+        <span class="header-tab-name">Email Marketing 101</span>
+        <span class="header-tab-badge badge-soon">Soon</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="basics-wrap">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Live now</div>
+      <button class="tab-btn active" onclick="switchTab('dictionary', this)">
+        <span class="tab-icon">📖</span>
+        <span class="tab-text"><span class="tab-name">The Dictionary</span><span class="tab-sub">60+ terms explained</span></span>
+        <span class="tab-badge tb-live">Live</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('funnel', this)">
+        <span class="tab-icon">↓</span>
+        <span class="tab-text"><span class="tab-name">The Funnel</span><span class="tab-sub">TOFU, MOFU, BOFU</span></span>
+        <span class="tab-badge tb-live">Live</span>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Coming soon</div>
+      <button class="tab-btn coming" onclick="switchTab('ads', this)">
+        <span class="tab-icon">📢</span>
+        <span class="tab-text"><span class="tab-name">Ad Platforms 101</span><span class="tab-sub">Facebook, Google, Meta</span></span>
+        <span class="tab-badge tb-soon">Soon</span>
+      </button>
+      <button class="tab-btn coming" onclick="switchTab('email101', this)">
+        <span class="tab-icon">✉</span>
+        <span class="tab-text"><span class="tab-name">Email Marketing 101</span><span class="tab-sub">Lists, sequences, deliverability</span></span>
+        <span class="tab-badge tb-soon">Soon</span>
+      </button>
+      <button class="tab-btn coming" onclick="switchTab('social', this)">
+        <span class="tab-icon">📱</span>
+        <span class="tab-text"><span class="tab-name">Social Media</span><span class="tab-sub">What actually works</span></span>
+        <span class="tab-badge tb-soon">Soon</span>
+      </button>
+      <button class="tab-btn coming" onclick="switchTab('seo', this)">
+        <span class="tab-icon">🔍</span>
+        <span class="tab-text"><span class="tab-name">SEO Basics</span><span class="tab-sub">Getting found on Google</span></span>
+        <span class="tab-badge tb-soon">Soon</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-area">
+
+    <!-- TAB: THE FUNNEL -->
+    <div class="tab-content" id="tab-funnel">
+
+      <div class="funnel-hero">
+        <div class="funnel-hero-left">
+          <h2>TOFU, MOFU, BOFU.<br><span class="accent">Now you know what that means.</span></h2>
+          <p>Every marketing strategy has three jobs. Get people to know you exist. Get interested people to consider you. Get ready people to actually buy. Marketers gave these jobs fancy names and turned it into a diagram.</p>
+          <p><strong>Here's the plain English version.</strong> Click each stage to see what it means, what kind of content belongs there, and what a real small business should actually be doing at each step.</p>
+        </div>
+        <div class="funnel-hero-right">
+          <div class="funnel-stage-card tofu active" onclick="activateStage('tofu')">
+            <div class="fsc-letter">T</div>
+            <div class="fsc-content">
+              <div class="fsc-name">TOFU — Top of Funnel</div>
+              <div class="fsc-tagline">They don't know you exist yet</div>
+            </div>
+          </div>
+          <div class="funnel-stage-card mofu" onclick="activateStage('mofu')">
+            <div class="fsc-letter">M</div>
+            <div class="fsc-content">
+              <div class="fsc-name">MOFU — Middle of Funnel</div>
+              <div class="fsc-tagline">They're interested but not ready</div>
+            </div>
+          </div>
+          <div class="funnel-stage-card bofu" onclick="activateStage('bofu')">
+            <div class="fsc-letter">B</div>
+            <div class="fsc-content">
+              <div class="fsc-name">BOFU — Bottom of Funnel</div>
+              <div class="fsc-tagline">They're ready to make a decision</div>
+            </div>
+          </div>
+          <div class="funnel-stage-card" style="background:var(--black);border-color:var(--black)" onclick="activateStage('after')">
+            <div class="fsc-letter" style="background:rgba(242,201,76,0.15);color:var(--yellow)">★</div>
+            <div class="fsc-content">
+              <div class="fsc-name" style="color:var(--white)">After Purchase</div>
+              <div class="fsc-tagline" style="color:rgba(255,255,255,0.45)">The most overlooked stage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-visual-section">
+        <div class="funnel-visual-title">The funnel, visualized</div>
+        <div class="funnel-diagram">
+
+          <div class="funnel-tier tier-tofu active" id="tier-tofu" onclick="activateStage('tofu')">
+            <div class="funnel-tier-inner">
+              <div class="funnel-tier-shape" style="clip-path: polygon(5% 0%, 95% 0%, 88% 100%, 12% 100%)">
+                <div class="tier-label">TOFU</div>
+                <div class="tier-sublabel">Awareness Stage</div>
+              </div>
+              <div class="funnel-tier-info">
+                <div class="tier-info-stage">Top of funnel</div>
+                <div class="tier-info-title">Get on their radar</div>
+                <div class="tier-info-desc">Blog posts, social content, videos, ads to cold audiences. Give before you ask.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="funnel-connector"></div>
+
+          <div class="funnel-tier tier-mofu" id="tier-mofu" onclick="activateStage('mofu')">
+            <div class="funnel-tier-inner">
+              <div class="funnel-tier-shape" style="clip-path: polygon(12% 0%, 88% 0%, 80% 100%, 20% 100%)">
+                <div class="tier-label">MOFU</div>
+                <div class="tier-sublabel">Consideration Stage</div>
+              </div>
+              <div class="funnel-tier-info">
+                <div class="tier-info-stage">Middle of funnel</div>
+                <div class="tier-info-title">Stay in their mind</div>
+                <div class="tier-info-desc">Email nurture, retargeting, case studies, free resources. Build trust over time.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="funnel-connector"></div>
+
+          <div class="funnel-tier tier-bofu" id="tier-bofu" onclick="activateStage('bofu')">
+            <div class="funnel-tier-inner">
+              <div class="funnel-tier-shape" style="clip-path: polygon(20% 0%, 80% 0%, 70% 100%, 30% 100%)">
+                <div class="tier-label">BOFU</div>
+                <div class="tier-sublabel">Decision Stage</div>
+              </div>
+              <div class="funnel-tier-info">
+                <div class="tier-info-stage">Bottom of funnel</div>
+                <div class="tier-info-title">Make it easy to say yes</div>
+                <div class="tier-info-desc">Free trials, consultations, demos, testimonials, strong offers. Remove all friction.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="funnel-connector"></div>
+
+          <div class="funnel-tier tier-after" id="tier-after" onclick="activateStage('after')">
+            <div class="funnel-tier-inner">
+              <div class="funnel-tier-shape" style="clip-path: polygon(30% 0%, 70% 0%, 65% 100%, 35% 100%)">
+                <div class="tier-label" style="font-size:1.1rem">After</div>
+                <div class="tier-sublabel">Retention Stage</div>
+              </div>
+              <div class="funnel-tier-info">
+                <div class="tier-info-stage">After purchase</div>
+                <div class="tier-info-title">Keep them and get referrals</div>
+                <div class="tier-info-desc">Onboarding, check-ins, loyalty programs, referral asks. Cheapest leads you'll ever get.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DETAIL PANEL -->
+      <div class="stage-detail" id="stage-detail">
+        <div class="stage-detail-grid" id="stage-detail-grid"></div>
+      </div>
+
+      <!-- SMALL BIZ EXAMPLES -->
+      <div class="examples-section">
+        <div class="examples-title">What this looks like for real businesses</div>
+        <div class="examples-grid">
+          <div class="example-col">
+            <div class="example-biz">Martial Arts School</div>
+            <div class="example-stage">
+              <div class="example-stage-name t">TOFU</div>
+              <div class="example-stage-text">Facebook video showing a <strong>kids class in action</strong>. Parents who don't know the school yet see it. No selling, just showing.</div>
+            </div>
+            <div class="example-stage">
+              <div class="example-stage-name m">MOFU</div>
+              <div class="example-stage-text">Parents who clicked the video get <strong>retargeted with a free trial offer</strong>. Also an email sequence that answers "is martial arts right for my kid?"</div>
+            </div>
+            <div class="example-stage">
+              <div class="example-stage-name b">BOFU</div>
+              <div class="example-stage-text"><strong>"Book a free trial class this week"</strong> ad. Urgency. Specific. Low risk offer. Goes to people who already engaged with MOFU content.</div>
+            </div>
+          </div>
+          <div class="example-col">
+            <div class="example-biz">Home Services (Plumber)</div>
+            <div class="example-stage">
+              <div class="example-stage-name t">TOFU</div>
+              <div class="example-stage-text">Blog post: <strong>"5 signs you need to call a plumber before it becomes an emergency."</strong> Shows up in Google. Builds trust before anyone needs them.</div>
+            </div>
+            <div class="example-stage">
+              <div class="example-stage-name m">MOFU</div>
+              <div class="example-stage-text">Retargeting ad to people who read the blog. Also a <strong>Google Business profile</strong> with 40+ reviews for when people search for plumbers.</div>
+            </div>
+            <div class="example-stage">
+              <div class="example-stage-name b">BOFU</div>
+              <div class="example-stage-text">Google search ad for <strong>"emergency plumber [city]"</strong>. People searching this are ready to hire someone in the next 30 minutes.</div>
+            </div>
+          </div>
+          <div class="example-col">
+            <div class="example-biz">Med Spa / Wellness</div>
+            <div class="example-stage">
+              <div class="example-stage-name t">TOFU</div>
+              <div class="example-stage-text">Instagram before and after content. <strong>Educational posts about treatments.</strong> People scroll, learn, and start recognizing the brand.</div>
+            </div>
+            <div class="example-stage">
+              <div class="example-stage-name m">MOFU</div>
+              <div class="example-stage-text">Email sequence after someone downloads a <strong>"what to expect from your first botox appointment"</strong> guide. Answers objections. Builds trust.</div>
+            </div>
+            <div class="example-stage">
+              <div class="example-stage-name b">BOFU</div>
+              <div class="example-stage-text"><strong>"Book your consultation, first visit 20% off."</strong> Specific offer. Low commitment ask. Goes to warm audiences who've already engaged.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DICTIONARY -->
+    <div class="tab-content active" id="tab-dictionary">
+      <div class="dict-search-bar">
+        <div class="dict-search-wrap">
+          <span class="dict-search-icon">&#9906;</span>
+          <input class="dict-search-input" type="text" id="dict-search" placeholder='Search any term or acronym... try "CAC" or "funnel"'>
+          <button class="dict-clear" id="dict-clear" onclick="clearDictSearch()">&#215;</button>
+        </div>
+        <div class="dict-filter-pills" id="dict-pills"></div>
+      </div>
+      <div class="dict-results-count" id="dict-results-count">
+        Showing <span id="dict-results-num">0</span> results for "<span id="dict-results-query"></span>"
+        <button onclick="clearDictSearch()" style="background:none;border:none;color:var(--yellow-dark);font-size:0.78rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:0.5rem">Clear</button>
+      </div>
+      <div id="dict-main"></div>
+      <div class="dict-no-results" id="dict-no-results">
+        <div class="dict-no-results-big">¯\_(ツ)_/¯</div>
+        <p style="font-size:0.9rem;color:var(--gray);line-height:1.65">Nothing matched that. Try a different word.<br>Don't see a term you've heard? Drop it in the Venmo note.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON TABS -->
+    <div class="tab-content" id="tab-ads">
+      <div class="coming-soon-tab">
+        <div class="cs-big">📢</div>
+        <div class="cs-badge">Coming soon</div>
+        <div class="cs-title">Ad Platforms 101</div>
+        <p class="cs-sub">Facebook vs Google vs Instagram. What each one is actually good for, what it costs, and how to know if it's working. Plain English. No agency speak.</p>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-email101">
+      <div class="coming-soon-tab">
+        <div class="cs-big">✉</div>
+        <div class="cs-badge">Coming soon</div>
+        <div class="cs-title">Email Marketing 101</div>
+        <p class="cs-sub">How to build a list, what to send, how often to send it, and why your emails might be going to spam. Everything you need to know before you pay for Mailchimp.</p>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-social">
+      <div class="coming-soon-tab">
+        <div class="cs-big">📱</div>
+        <div class="cs-badge">Coming soon</div>
+        <div class="cs-title">Social Media</div>
+        <p class="cs-sub">What platforms actually make sense for your type of business, what to post, and how to stop feeling like you're screaming into the void.</p>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-seo">
+      <div class="coming-soon-tab">
+        <div class="cs-big">🔍</div>
+        <div class="cs-badge">Coming soon</div>
+        <div class="cs-title">SEO Basics</div>
+        <p class="cs-sub">How to get your business to show up on Google without paying for ads. What actually moves the needle and what is just SEO agency nonsense.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+// =============================================
+// TAB SWITCHING
+// =============================================
+function switchTab(id, btn) {
+  if (btn.classList.contains('coming')) return;
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// =============================================
+// FUNNEL STAGE DATA
+// =============================================
+const STAGE_DATA = {
+  tofu: {
+    cols: [
+      { label: 'What it is', title: 'Awareness', items: ['The widest part of the funnel', 'People who don\'t know you exist yet', 'Your job is to get on their radar', 'No selling at this stage. None.', 'Give value. Build familiarity.'] },
+      { label: 'Content that works', title: 'TOFU content', items: ['<strong>Social media posts</strong> that educate or entertain', '<strong>Blog posts</strong> answering questions people actually search', '<strong>Short videos</strong> showing your work or expertise', '<strong>Podcasts or interviews</strong> where you share knowledge', '<strong>Paid awareness ads</strong> to cold audiences'] },
+      { label: 'The goal', title: 'Make them remember you', items: ['Not to sell. Not to convert. Not even to get a click.', 'The goal is for someone to see your name enough times that when they need what you offer, they think of you first.', 'This is a long game. Most businesses skip it and wonder why word of mouth is weak.'] },
+    ]
+  },
+  mofu: {
+    cols: [
+      { label: 'What it is', title: 'Consideration', items: ['People who know you exist and are curious', 'They\'re comparing options. You\'re one of them.', 'Your job is to build trust and stay top of mind', 'They might take months to decide. That\'s normal.', 'This is where most small businesses give up too early.'] },
+      { label: 'Content that works', title: 'MOFU content', items: ['<strong>Email nurture sequences</strong> with helpful content', '<strong>Retargeting ads</strong> to people who visited your site', '<strong>Case studies</strong> showing real results', '<strong>Free guides or resources</strong> they can download', '<strong>Webinars or demos</strong> that answer their questions'] },
+      { label: 'The goal', title: 'Be the obvious choice', items: ['By the time someone is ready to buy, you want them to feel like they already know and trust you.', 'If your competitor shows up at decision time and you don\'t, they win. Even if your product is better.', 'Consistency in the middle of the funnel is what turns interest into sales.'] },
+    ]
+  },
+  bofu: {
+    cols: [
+      { label: 'What it is', title: 'Decision', items: ['People who are actively ready to buy right now', 'They\'re looking for a reason to say yes or no', 'Your job is to make yes as easy as possible', 'Remove every possible obstacle and objection', 'This is where you spend the least but convert the most'] },
+      { label: 'Content that works', title: 'BOFU content', items: ['<strong>Free trials or consultations</strong> with low commitment', '<strong>Strong offers</strong> with urgency or limited availability', '<strong>Testimonials and reviews</strong> from people like them', '<strong>Demos or walkthroughs</strong> of exactly what they get', '<strong>Clear guarantees</strong> that remove risk'] },
+      { label: 'The goal', title: 'Close the deal', items: ['Get them over the line. One clear call to action. One next step.', 'Don\'t confuse them with options. Don\'t make them dig for pricing. Don\'t make them think too hard.', 'The best BOFU content answers the one question standing between them and buying: "Is this worth it?"'] },
+    ]
+  },
+  after: {
+    cols: [
+      { label: 'What it is', title: 'Retention', items: ['People who already paid you. Your best asset.', 'Most businesses forget about customers the moment they pay', 'Your job is to keep them and turn them into advocates', 'Referrals from happy clients close at 3-4x higher rates', 'Keeping a client costs 5-7x less than acquiring a new one'] },
+      { label: 'Content that works', title: 'Retention content', items: ['<strong>Onboarding sequences</strong> that set expectations and build excitement', '<strong>Check-in emails</strong> that show you care beyond the transaction', '<strong>Loyalty programs</strong> or exclusive member perks', '<strong>Referral asks</strong> at the moment they\'re happiest', '<strong>Upsell and cross-sell offers</strong> that genuinely add value'] },
+      { label: 'The goal', title: 'Turn clients into marketers', items: ['A happy client who refers one person has just generated the cheapest lead you\'ll ever get.', 'The after stage is the most overlooked part of the funnel. Everyone obsesses over getting new clients. The real money is in keeping the ones you have.', 'Build a system that asks every happy client for a review and a referral. Not sometimes. Every time.'] },
+    ]
+  }
+};
+
+function activateStage(stage) {
+  // update cards
+  document.querySelectorAll('.funnel-stage-card').forEach(c => c.classList.remove('active'));
+  const cardMap = { tofu: 0, mofu: 1, bofu: 2, after: 3 };
+  document.querySelectorAll('.funnel-stage-card')[cardMap[stage]].classList.add('active');
+
+  // update tiers
+  ['tofu','mofu','bofu','after'].forEach(s => {
+    document.getElementById('tier-' + s)?.classList.remove('active');
+  });
+  document.getElementById('tier-' + stage)?.classList.add('active');
+
+  // render detail
+  const data = STAGE_DATA[stage];
+  document.getElementById('stage-detail-grid').innerHTML = data.cols.map(col => `
+    <div class="stage-detail-card">
+      <div class="sdc-label">${col.label}</div>
+      <div class="sdc-title">${col.title}</div>
+      <ul class="sdc-items">
+        ${col.items.map(i => `<li>${i}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+// init funnel
+activateStage('tofu');
+
+// =============================================
+// DICTIONARY DATA
+// =============================================
+const DICT_CATS = [
+  { id: 'acronyms',  label: 'The Acronyms' },
+  { id: 'funnel',    label: 'Funnel & Lead Gen' },
+  { id: 'analytics', label: 'Analytics & Tracking' },
+  { id: 'buzzwords', label: 'Buzzwords & BS Bingo' },
+];
+
+const DICT_TERMS = [
+  { cat:'acronyms', acronym:'CAC', name:'Customer Acquisition Cost', plain:'How much money you spent in total to get one new paying customer. Add up everything you spent on marketing and sales, then divide by how many new customers you got.', example:'You spent $2,000 on Facebook ads in March and got 20 new clients. Your CAC is $100. Whether that\'s good or bad depends entirely on what those clients are worth to you.' },
+  { cat:'acronyms', acronym:'LTV', name:'Lifetime Value', plain:'The total amount of money a customer is expected to spend with you over the entire time they\'re your customer. Not just their first purchase.', example:'A gym member pays $50 per month and stays for an average of 18 months. Their LTV is $900. Knowing this tells you how much you can afford to spend to get them in the door.' },
+  { cat:'acronyms', acronym:'ROI', name:'Return on Investment', plain:'How much you got back compared to how much you put in. If you spent $500 and made $2,000, your ROI is 4x.', example:'You ran a $500 Google Ads campaign. It brought in 3 new clients worth $600 each. That\'s $1,800 in revenue. Your ROI is 3.6x. You made $3.60 for every dollar you spent.' },
+  { cat:'acronyms', acronym:'ROAS', name:'Return on Ad Spend', plain:'How much revenue your ads generated compared to what you paid for them. Used a lot in ecommerce.', example:'You spent $1,000 on Instagram ads. Those ads directly led to $4,500 in sales. Your ROAS is 4.5x. Most businesses want a ROAS of at least 3x to be profitable.' },
+  { cat:'acronyms', acronym:'CTR', name:'Click Through Rate', plain:'The percentage of people who saw your ad or email and actually clicked on it. Tells you how compelling your message is.', example:'You sent an email to 1,000 people. 45 of them clicked the link. Your CTR is 4.5%. Average email CTR is around 2 to 3%, so 4.5% is solid.' },
+  { cat:'acronyms', acronym:'CPL', name:'Cost Per Lead', plain:'How much you spent to get one person to raise their hand and say they\'re interested. Different from CAC because a lead isn\'t a customer yet.', example:'You spent $1,000 on Facebook ads and got 50 people to fill out your contact form. Your CPL is $20. Now you need to figure out how many of those 50 actually become clients.' },
+  { cat:'acronyms', acronym:'CPC', name:'Cost Per Click', plain:'How much you pay every time someone clicks on your ad. You\'re charged per click whether or not that person ever buys anything.', example:'Your Google Ad has a $2.50 CPC. 100 people click. You spent $250. If only 3 of them book an appointment, your cost per appointment is $83.' },
+  { cat:'acronyms', acronym:'CPM', name:'Cost Per Thousand Impressions', plain:'The price you pay for your ad to be shown 1,000 times. Doesn\'t matter if anyone clicks. You\'re paying for eyeballs.', example:'Your Facebook campaign has a $15 CPM. That means every 1,000 times your ad shows up in someone\'s feed costs you $15. Good for brand awareness, not great for direct response.' },
+  { cat:'acronyms', acronym:'CRO', name:'Conversion Rate Optimization', plain:'Making more of the people who already visit your website actually do something. Instead of more traffic, you make existing traffic work harder.', example:'Your website gets 1,000 visitors per month and 10 fill out the contact form. That\'s 1%. CRO means figuring out why the other 990 people left without doing anything.' },
+  { cat:'acronyms', acronym:'MQL', name:'Marketing Qualified Lead', plain:'A lead your marketing team has decided is worth passing to sales because they\'ve shown enough interest.', example:'Someone downloaded your free guide and then visited your pricing page twice. Your system flags them as an MQL. Not every lead gets this treatment, just the ones who look ready.' },
+  { cat:'acronyms', acronym:'CTA', name:'Call to Action', plain:'The thing you want someone to do next. A button, a link, a phrase. The answer to "okay I\'ve read this, now what?"', example:'At the bottom of your ad: "Book a free trial class today." That\'s your CTA. If you don\'t tell people what to do next, most of them won\'t figure it out on their own.' },
+  { cat:'acronyms', acronym:'KPI', name:'Key Performance Indicator', plain:'A number you track to know if something is working. The key part means you pick the ones that actually matter for your goals, not everything.', example:'For a local gym, KPIs might be new members per month, monthly churn rate, and cost per lead. Not Instagram followers, unless those directly affect the bottom line.' },
+  { cat:'acronyms', acronym:'TOFU/MOFU/BOFU', name:'Top / Middle / Bottom of Funnel', plain:'Where someone is in their buying journey. Top means they just discovered you exist. Middle means they\'re interested but comparing. Bottom means they\'re close to buying.', example:'A blog post about "how to pick a martial arts school" is TOFU content. A free trial offer is BOFU. You need different messages for different stages.' },
+  { cat:'acronyms', acronym:'B2B/B2C', name:'Business to Business / Consumer', plain:'B2B means you sell to other businesses. B2C means you sell directly to individual people. The marketing approach is totally different for each.', example:'A gym is B2C. A gym software company is B2B. B2C decisions are usually faster and more emotional. B2B decisions take longer and involve more people.' },
+  { cat:'acronyms', acronym:'A/B Test', name:'A/B Testing', plain:'Showing two different versions of something to different people at the same time to see which performs better. Then keeping the winner.', example:'You run two Facebook ads. Same image, two different headlines. After 500 impressions each, one gets twice as many clicks. You kill the loser and scale the winner.' },
+  { cat:'funnel', name:'Lead', plain:'Any person who has shown some interest in what you sell. They raised their hand somehow, filled out a form, called you, walked in, clicked an ad.', example:'Someone sees your Facebook ad for a free HVAC inspection and fills out the form. They\'re a lead. They haven\'t hired you yet but they showed interest.' },
+  { cat:'funnel', name:'Conversion', plain:'When someone takes the action you wanted them to take. A conversion could be filling out a form, booking an appointment, making a purchase, or signing a contract.', example:'Out of 100 people who land on your website, 4 fill out your contact form. You have a 4% conversion rate. The goal of most marketing is to increase this number.' },
+  { cat:'funnel', name:'Lead Magnet', plain:'Something free you offer in exchange for someone\'s contact information. You give them value upfront and they give you permission to follow up.', example:'A chiropractor offers a free "5 exercises to fix lower back pain" PDF. You download it and give your email. Now they have your contact info and can follow up.' },
+  { cat:'funnel', name:'Landing Page', plain:'A single web page with one job: get the visitor to do one specific thing. No navigation menu, no distractions. Just the offer and a way to take action.', example:'Your Facebook ad sends people to a page with one button: "Claim my free class." No links to your about page. One page. One goal. Way higher conversion than your homepage.' },
+  { cat:'funnel', name:'Nurture', plain:'Staying in touch with leads who aren\'t ready to buy yet so that when they are ready, they think of you first. Usually done through email sequences.', example:'Someone downloads your free guide but doesn\'t book a call. Over the next 3 weeks they get 4 emails with useful tips. On week 4 they book because they\'ve seen your name a dozen times.' },
+  { cat:'funnel', name:'Retargeting', plain:'Showing ads specifically to people who have already visited your website or engaged with your content. How you "follow" people around the internet after they leave your site.', example:'Someone browses your roofing company website but doesn\'t call. For the next two weeks they see your ad everywhere. Those people are 70% more likely to convert than cold audiences.' },
+  { cat:'funnel', name:'Churn', plain:'Customers who stop buying from you or cancel. High churn means you\'re trying to fill a leaky bucket.', example:'Your gym has 100 members. Every month 8 cancel but you bring in 10 new ones. Your churn rate is 8%. Cutting that to 4% doubles retention without spending a dollar more on ads.' },
+  { cat:'funnel', name:'Referral', plain:'A new customer who found you because an existing customer told them about you. The cheapest and highest quality lead you can get.', example:'Your client tells their neighbor "use my guy for landscaping, he\'s great." The neighbor calls you. These leads close at 3 to 4x the rate of cold leads and almost always cost you nothing.' },
+  { cat:'funnel', name:'Upsell', plain:'Getting an existing customer to buy a more expensive version or additional thing. Increases revenue without finding a new customer.', example:'A client books a monthly massage. You upsell them to a membership that includes 2 massages plus yoga access. Same client. More revenue. Zero acquisition cost.' },
+  { cat:'analytics', name:'Impression', plain:'One time your ad or content was shown to someone. Doesn\'t mean they read it, clicked it, or even noticed it. Just that it appeared on their screen.', example:'Your ad got 10,000 impressions. That means it showed up on someone\'s screen 10,000 times. Could be 10,000 different people or the same 100 people seeing it 100 times.' },
+  { cat:'analytics', name:'Bounce Rate', plain:'The percentage of people who land on your website and leave without doing anything. No clicks, no form fills, nothing.', example:'Your homepage has a 75% bounce rate. 3 out of 4 visitors leave immediately. Either your page loads too slow, doesn\'t match what they expected, or doesn\'t give them a clear next step.' },
+  { cat:'analytics', name:'Attribution', plain:'Figuring out which marketing channel actually deserves credit for a sale. If someone saw your ad, then Googled you, then clicked an email before buying, which one gets credit?', example:'A client books after clicking an email. But three weeks ago they also clicked a Facebook ad. Attribution is the attempt to figure out which touchpoint made them decide to buy.' },
+  { cat:'analytics', name:'Open Rate', plain:'The percentage of people on your email list who opened a particular email. Tells you whether your subject line was good enough to get someone to click.', example:'You send an email to 500 people. 110 open it. Your open rate is 22%. Average is around 20 to 25%. Below 15% usually means your subject lines need work or your list is stale.' },
+  { cat:'analytics', name:'Conversion Rate', plain:'The percentage of people who took the action you wanted out of everyone who had the opportunity. Works for websites, ads, emails, anything.', example:'200 people visited your service page. 8 filled out the contact form. Your conversion rate is 4%. Improving this by 1% can double your leads without spending more on ads.' },
+  { cat:'analytics', name:'Pixel', plain:'A tiny piece of code on your website that reports back to Facebook or Google whenever someone visits. How the platforms know who saw your ad and then came to your site.', example:'You install the Facebook pixel on your website. Now Facebook knows when someone who saw your ad visited your site. This is what allows retargeting to work.' },
+  { cat:'analytics', name:'Dashboard', plain:'A single screen that shows you all your most important numbers at once so you can see how things are performing without hunting through multiple reports.', example:'A good dashboard for a local gym shows: new leads this week, cost per lead, trial bookings, show rate, and new memberships. One glance tells you if the business is healthy.' },
+  { cat:'analytics', name:'Benchmark', plain:'An industry average that tells you what good, okay, or bad looks like for a given metric. Without benchmarks you have no idea if your numbers are actually good or just feel good.', example:'Your email open rate is 18%. Is that good? For home services the average is about 22%, so 18% is slightly below average. Knowing this tells you where to focus.' },
+  { cat:'buzzwords', name:'Demand Generation', plain:'Marketing that creates awareness and interest before someone is ready to buy. The goal is to get on their radar so when they need you they think of you first.', example:'A plumber posts helpful videos about "how to know when to call a plumber." Nobody needs a plumber right now but when their pipe bursts they remember the guy who seemed to know his stuff.' },
+  { cat:'buzzwords', name:'Lead Generation', plain:'Marketing that goes after people who are actively looking for what you sell right now. The goal is to get them to raise their hand.', example:'The same plumber runs a Google Ad that shows up when someone searches "emergency plumber near me." That person needs a plumber right now. Lead gen captures active demand.' },
+  { cat:'buzzwords', name:'Content Marketing', plain:'Creating useful or entertaining stuff that attracts people to your business without directly selling to them. Blogs, videos, social posts, guides.', example:'A nutritionist writes weekly Instagram posts about easy meal prep. No pitching. Just useful content. After three months someone who\'s been following finally books a consultation.' },
+  { cat:'buzzwords', name:'Value Proposition', plain:'The clear answer to "why should I buy from you instead of everyone else?" A real reason someone would choose you. Not a slogan.', example:'"We guarantee our HVAC service within 24 hours or the diagnostic is free." That\'s a value proposition. Specific, different, solves a real fear. "Quality service you can trust" is not.' },
+  { cat:'buzzwords', name:'Social Proof', plain:'Evidence that other people have used and liked your product or service. Reviews, testimonials, case studies. It says "don\'t just take our word for it."', example:'"Over 200 families in Austin trust us with their pets" or a wall of five-star Google reviews. People are far more likely to buy if they can see others already did.' },
+  { cat:'buzzwords', name:'Segmentation', plain:'Splitting your audience into smaller groups based on what they have in common so you can send more relevant messages to each group.', example:'Instead of emailing all 500 people the same thing, you email the 100 who haven\'t booked in 60 days a "we miss you" offer, and the active members an upsell. Better results both ways.' },
+  { cat:'buzzwords', name:'Drip Campaign', plain:'A series of emails sent automatically over time. Triggered by an action someone takes, like signing up for your list, and then dripping out on a schedule.', example:'Someone books a free consultation on your website. They automatically get: a confirmation, a day-before reminder, a post-consult follow-up, and a "ready to get started?" email three days later. All automated.' },
+  { cat:'buzzwords', name:'Organic Reach', plain:'How many people see your content without you paying to promote it. Based on how good the content is and how the algorithm feels about it.', example:'You post a funny behind-the-scenes video at your shop. Nobody paid to promote it but 4,000 people see it because 200 people shared it. Free but harder to scale than paid.' },
+  { cat:'buzzwords', name:'Deliverability', plain:'Whether your emails actually land in the inbox instead of spam. Technical and either set up right or it isn\'t.', example:'You send 1,000 emails and only 600 people ever see them because 400 went to junk. Your message might be great but it doesn\'t matter if it never arrives.' },
+];
+
+// =============================================
+// DICTIONARY LOGIC
+// =============================================
+let dictCategory = 'all';
+let dictQuery = '';
+
+function initDict() {
+  buildDictPills();
+  renderDict();
+}
+
+function buildDictPills() {
+  const wrap = document.getElementById('dict-pills');
+  const all = [{ id:'all', label:'All' }, ...DICT_CATS];
+  wrap.innerHTML = all.map(c => `
+    <button class="dict-pill ${c.id === dictCategory ? 'active' : ''}"
+      onclick="setDictCat('${c.id}')">${c.label}</button>
+  `).join('');
+}
+
+function setDictCat(cat) {
+  dictCategory = cat;
+  buildDictPills();
+  renderDict();
+}
+
+function renderDict() {
+  const main = document.getElementById('dict-main');
+  main.innerHTML = '';
+  const q = dictQuery.toLowerCase().trim();
+  let total = 0;
+
+  DICT_CATS.forEach(cat => {
+    if (dictCategory !== 'all' && dictCategory !== cat.id) return;
+    const terms = DICT_TERMS.filter(t => {
+      if (t.cat !== cat.id) return false;
+      if (!q) return true;
+      return ((t.acronym||'') + ' ' + t.name + ' ' + t.plain + ' ' + t.example).toLowerCase().includes(q);
+    });
+    if (!terms.length) return;
+    total += terms.length;
+
+    const sec = document.createElement('div');
+    sec.className = 'dict-category';
+    sec.innerHTML = `
+      <div class="dict-cat-header" onclick="this.closest('.dict-category').classList.toggle('collapsed')">
+        <span class="dict-cat-name">${cat.label}</span>
+        <span class="dict-cat-count">${terms.length} term${terms.length !== 1 ? 's' : ''}</span>
+      </div>
+      <div class="dict-terms-grid">
+        ${terms.map(t => `
+          <div class="dict-term">
+            ${t.acronym ? `<div class="dict-acronym">${t.acronym}</div>` : ''}
+            <div class="dict-name">${t.name}</div>
+            <div class="dict-plain">${t.plain}</div>
+            <div class="dict-example">${t.example}</div>
+          </div>`).join('')}
+      </div>`;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('dict-no-results').style.display = total === 0 ? 'block' : 'none';
+  const rc = document.getElementById('dict-results-count');
+  if (q) {
+    rc.style.display = 'block';
+    document.getElementById('dict-results-num').textContent = total;
+    document.getElementById('dict-results-query').textContent = dictQuery;
+  } else {
+    rc.style.display = 'none';
+  }
+}
+
+const dictSearchEl = document.getElementById('dict-search');
+dictSearchEl.addEventListener('input', function() {
+  dictQuery = this.value;
+  document.getElementById('dict-clear').classList.toggle('show', !!this.value);
+  renderDict();
+});
+
+function clearDictSearch() {
+  dictSearchEl.value = '';
+  dictQuery = '';
+  document.getElementById('dict-clear').classList.remove('show');
+  document.getElementById('dict-results-count').style.display = 'none';
+  renderDict();
+}
+
+initDict();
+</script>
+<script src="themes.js"></script>
+<script id="didm-nav-script">
+function didmNavToggle() {
+  var btn = document.getElementById('didm-nb');
+  var menu = document.getElementById('didm-nm');
+  if (!btn || !menu) return;
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  var wrap = document.getElementById('didm-nw');
+  if (wrap && !wrap.contains(e.target)) {
+    var b = document.getElementById('didm-nb');
+    var m = document.getElementById('didm-nm');
+    if (b) b.classList.remove('open');
+    if (m) m.classList.remove('open');
+  }
+});
+</script>
+<style id="didm-nav-style">
+.nav-dd-wrap { position: relative; }
+.nav-dd-btn { background: none; border: 1.5px solid var(--black); padding: 0.4rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; color: var(--black); display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; white-space: nowrap; }
+.nav-dd-btn:hover { background: var(--gray-light, #e8e4da); }
+.nav-dd-btn .chev { font-size: 0.55rem; transition: transform 0.2s; display: inline-block; }
+.nav-dd-btn.open .chev { transform: rotate(180deg); }
+.nav-dd-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; background: var(--white, #f5f2eb); border: 1.5px solid var(--black, #0f0f0f); min-width: 190px; z-index: 300; flex-direction: column; box-shadow: 2px 4px 0 rgba(0,0,0,0.08); }
+.nav-dd-menu.open { display: flex; }
+.nav-dd-menu a { display: block; padding: 0.75rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--black, #0f0f0f); text-decoration: none; border-bottom: 1px solid var(--gray-light, #e8e4da); transition: background 0.1s; }
+.nav-dd-menu a:last-child { border-bottom: none; }
+.nav-dd-menu a:hover { background: var(--gray-light, #e8e4da); }
+.nav-dd-menu a.active { color: var(--yellow-dark, #d4a800); }
+</style>
+<div class="nav-dd-wrap" id="didm-nw" style="display:none">
+  <button class="nav-dd-btn" id="didm-nb" onclick="didmNavToggle()">Menu <span class="chev">&#9660;</span></button>
+  <div class="nav-dd-menu" id="didm-nm">
+    <a href="index.html">Home</a>
+    <a href="5ps.html">The 5 P's</a>
+    <a href="funnel.html">Lead Funnel</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="roi.html">ROI Calculator</a>
+    <a href="basics.html" class="active">Marketing Basics</a>
+    <a href="about.html">About Zach</a>
+  </div>
+</div>
+<script>
+(function() {
+  var wrap = document.getElementById('didm-nw');
+  var nav = document.querySelector('nav');
+  if (wrap && nav) { wrap.style.display = ''; nav.appendChild(wrap); }
+})();
+</script>
+</body>
+</html>
