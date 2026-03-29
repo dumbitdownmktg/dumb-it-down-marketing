@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Budget Planner | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+.page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.header-left { padding: 4rem 3rem; border-right: 1.5px solid var(--black); }
+.page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.25rem; }
+.page-title .accent { color: var(--yellow-dark); }
+.page-intro { font-size: 1rem; color: var(--gray); line-height: 1.75; max-width: 440px; }
+.page-intro strong { color: var(--black); font-weight: 500; }
+.header-right { background: var(--black); padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; }
+.how-step { display: flex; gap: 1rem; align-items: flex-start; }
+.how-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 28px; height: 28px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.how-text { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.55; padding-top: 4px; }
+.how-text strong { color: var(--white); font-weight: 500; }
+
+/* STAGE SELECTOR */
+.stage-bar { border-bottom: 1.5px solid var(--black); padding: 1.5rem 3rem; background: var(--gray-light); display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.stage-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; color: var(--gray); white-space: nowrap; }
+.stage-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.stage-pill { padding: 0.4rem 1rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; border: 1.5px solid var(--gray); background: transparent; color: var(--gray); transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+.stage-pill:hover { border-color: var(--black); color: var(--black); }
+.stage-pill.active { border-color: var(--black); background: var(--black); color: var(--white); }
+
+/* TOOL LAYOUT */
+.tool-wrap { display: grid; grid-template-columns: 380px 1fr; border-bottom: 1.5px solid var(--black); min-height: 80vh; }
+.inputs-panel { border-right: 1.5px solid var(--black); }
+.panel-section { padding: 2rem; border-bottom: 1px solid var(--gray-light); }
+.panel-section:last-child { border-bottom: none; }
+.panel-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.75rem; }
+.panel-label::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
+.panel-hint { font-size: 0.75rem; color: var(--gray); margin-top: -0.6rem; margin-bottom: 1rem; line-height: 1.5; }
+
+.input-group { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+.input-group:last-child { margin-bottom: 0; }
+.input-group label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
+.input-wrap { position: relative; }
+.input-prefix { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--gray); pointer-events: none; }
+.tool-input { width: 100%; padding: 0.65rem 0.75rem 0.65rem 1.75rem; border: 1.5px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--black); outline: none; transition: border-color 0.2s; -moz-appearance: textfield; }
+.tool-input::-webkit-inner-spin-button, .tool-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.tool-input:focus { border-color: var(--black); }
+
+/* CHANNEL TOGGLES */
+.channel-row { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 1.5px solid var(--gray-light); margin-bottom: 0.4rem; cursor: pointer; transition: all 0.15s; user-select: none; }
+.channel-row:last-child { margin-bottom: 0; }
+.channel-row.active { border-color: var(--black); }
+.channel-row:not(.active) { opacity: 0.45; }
+.ch-left { display: flex; align-items: center; gap: 0.65rem; }
+.ch-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ch-name { font-size: 0.85rem; font-weight: 500; }
+.ch-check { width: 16px; height: 16px; border: 1.5px solid var(--gray-light); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+.channel-row.active .ch-check { border-color: var(--black); background: var(--black); color: var(--white); }
+
+/* RESULTS */
+.results-panel { padding: 0; }
+.empty-result { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 500px; color: var(--gray); text-align: center; gap: 1rem; }
+.empty-big { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--gray-light); line-height: 1; }
+
+/* BUDGET HERO */
+.budget-hero { background: var(--black); padding: 2.5rem 3rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; }
+.bh-stat { padding: 0 1.5rem; border-right: 1px solid rgba(255,255,255,0.1); }
+.bh-stat:first-child { padding-left: 0; }
+.bh-stat:last-child { border-right: none; }
+.bh-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.4rem; }
+.bh-val { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; line-height: 1; color: var(--yellow); margin-bottom: 0.2rem; }
+.bh-sub { font-size: 0.75rem; color: rgba(255,255,255,0.4); line-height: 1.45; }
+
+/* STAGE CALLOUT */
+.stage-callout { padding: 1.25rem 2rem; border-bottom: 1.5px solid var(--black); font-size: 0.88rem; line-height: 1.7; }
+.stage-callout strong { font-weight: 500; }
+.stage-callout.starting { border-left: 4px solid var(--green); background: rgba(42,157,92,0.07); }
+.stage-callout.growing  { border-left: 4px solid var(--yellow-dark); background: rgba(242,201,76,0.08); }
+.stage-callout.scaling  { border-left: 4px solid #378ADD; background: rgba(55,138,221,0.07); }
+
+/* CHANNEL BREAKDOWN */
+.channel-breakdown { border-bottom: 1.5px solid var(--black); }
+.cb-header { padding: 1rem 2rem; background: var(--black); display: grid; grid-template-columns: 1fr 80px 80px 80px; gap: 0.5rem; }
+.cb-hcell { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-align: right; }
+.cb-hcell:first-child { text-align: left; }
+.ch-result-row { display: grid; grid-template-columns: 1fr 80px 80px 80px; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--gray-light); align-items: center; transition: background 0.15s; }
+.ch-result-row:last-child { border-bottom: none; }
+.ch-result-row:hover { background: rgba(242,201,76,0.04); }
+.ch-result-name { display: flex; align-items: center; gap: 0.6rem; }
+.ch-result-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.ch-result-label { font-size: 0.88rem; font-weight: 500; }
+.ch-result-sub { font-size: 0.72rem; color: var(--gray); margin-top: 1px; }
+.ch-result-cell { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; text-align: right; line-height: 1; }
+.ch-result-cell .cell-sub { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; color: var(--gray); font-weight: 400; display: block; }
+.pct-bar-wrap { height: 3px; background: var(--gray-light); margin-top: 4px; }
+.pct-bar { height: 3px; transition: width 0.4s; }
+
+/* TIMELINE */
+.timeline-section { padding: 2rem; border-bottom: 1.5px solid var(--black); }
+.timeline-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+.timeline-label::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
+.timeline-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+.tl-row { display: grid; grid-template-columns: 140px 1fr auto; gap: 1rem; align-items: center; }
+.tl-channel { font-size: 0.82rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+.tl-bar-wrap { height: 24px; background: var(--gray-light); position: relative; overflow: hidden; }
+.tl-bar { height: 100%; display: flex; align-items: center; padding-left: 0.5rem; transition: width 0.5s; }
+.tl-bar-label { font-size: 0.65rem; font-weight: 500; color: white; white-space: nowrap; letter-spacing: 0.04em; }
+.tl-time { font-size: 0.72rem; color: var(--gray); white-space: nowrap; text-align: right; }
+
+/* TESTING FRAMEWORK */
+.testing-section { padding: 2rem; }
+.test-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--black); border: 1.5px solid var(--black); margin-top: 1.25rem; }
+.test-card { background: var(--white); padding: 1.25rem; }
+.test-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; color: var(--yellow-dark); margin-bottom: 0.25rem; }
+.test-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.test-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+.test-desc strong { color: var(--black); font-weight: 500; }
+.hormozi-callout { margin-top: 1.25rem; padding: 1.25rem 1.5rem; background: var(--black); color: var(--white); }
+.hormozi-callout p { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.65); }
+.hormozi-callout p strong { color: var(--yellow); font-weight: 500; }
+
+/* NEXT STEPS */
+.ns-wrap { border: 1.5px solid var(--black); margin: 2rem; }
+.ns-head { background: var(--black); color: var(--yellow); font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; padding: 1rem 1.5rem; }
+.ns-body { display: grid; grid-template-columns: repeat(3,1fr); }
+.ns-item { padding: 1.25rem 1.5rem; border-right: 1px solid var(--gray-light); }
+.ns-item:last-child { border-right: none; }
+.ns-n { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 26px; height: 26px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; }
+.ns-t { font-weight: 500; font-size: 0.85rem; line-height: 1.3; margin-bottom: 0.4rem; }
+.ns-d { font-size: 0.78rem; color: var(--gray); line-height: 1.6; }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.25rem; }
+  .page-header { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
+  .header-right { padding: 2rem 1.5rem; }
+  .stage-bar { padding: 1.25rem 1.5rem; }
+  .tool-wrap { grid-template-columns: 1fr; }
+  .inputs-panel { border-right: none; border-bottom: 1.5px solid var(--black); }
+  .budget-hero { grid-template-columns: 1fr; gap: 1.5rem; }
+  .bh-stat { padding: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.25rem; }
+  .cb-header, .ch-result-row { grid-template-columns: 1fr 70px 70px; }
+  .cb-header > *:last-child, .ch-result-row > *:last-child { display: none; }
+  .tl-row { grid-template-columns: 100px 1fr auto; }
+  .test-grid { grid-template-columns: 1fr; }
+  .ns-body { grid-template-columns: 1fr; }
+  .ns-item { border-right: none; border-bottom: 1px solid var(--gray-light); }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+<style id="didm-nav-style">
+.dnav{display:flex;align-items:center;gap:0.5rem;}
+.dnav-dd{position:relative;}
+.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
+.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
+.dnav-btn.open .chev{transform:rotate(180deg);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:200px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.open{display:flex;}
+.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
+.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
+.dnav-menu a:last-child{border-bottom:none;}
+.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
+.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
+.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
+.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
+.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">Tool 05 / Ad Budget Planner</div>
+    <h1 class="page-title">More money does not mean <span class="accent">more leads.</span></h1>
+    <p class="page-intro">How you split your budget matters more than how much you spend. <strong>Enter your monthly budget, pick where you are in your business, and get a channel-by-channel breakdown with realistic timelines</strong> for when to expect results.</p>
+  </div>
+  <div class="header-right">
+    <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Pick your stage.</strong> Just starting out, actively growing, or trying to scale what's already working.</div></div>
+    <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Enter your monthly budget</strong> and toggle which channels make sense for your business.</div></div>
+    <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Get a split, a timeline, and a testing framework</strong> so you know what to spend, when to expect results, and how to find out what's actually working.</div></div>
+  </div>
+</div>
+
+<!-- STAGE SELECTOR -->
+<div class="stage-bar">
+  <span class="stage-label">Where are you:</span>
+  <div class="stage-pills">
+    <button class="stage-pill active" onclick="setStage('starting')">Just starting out</button>
+    <button class="stage-pill" onclick="setStage('growing')">Actively growing</button>
+    <button class="stage-pill" onclick="setStage('scaling')">Scaling what works</button>
+  </div>
+</div>
+
+<div class="tool-wrap">
+  <div class="inputs-panel">
+
+    <div class="panel-section">
+      <div class="panel-label">Monthly budget</div>
+      <div class="input-group">
+        <label>Total marketing spend per month</label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input class="tool-input" type="number" id="inp-budget" placeholder="1000" oninput="recalc()">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Monthly revenue (optional)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input class="tool-input" type="number" id="inp-revenue" placeholder="20000" oninput="recalc()">
+        </div>
+      </div>
+      <div id="budget-pct-note" style="display:none;margin-top:0.5rem;font-size:0.75rem;color:var(--gray);line-height:1.5;padding:0.5rem 0.75rem;background:var(--gray-light);"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Channels to include</div>
+      <p class="panel-hint">Toggle on the channels that make sense for your business right now.</p>
+      <div id="channel-list"></div>
+    </div>
+
+  </div>
+
+  <div class="results-panel" id="results-panel">
+    <div class="empty-result">
+      <div class="empty-big">$</div>
+      <p style="font-size:0.9rem;color:var(--gray);line-height:1.65;max-width:280px">Enter your monthly budget and pick your channels to see your breakdown.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+// ---- DATA ----
+const CHANNELS = [
+  {
+    id:'google', name:'Google Ads', color:'#EA4335', on:true,
+    desc:'High intent. People searching for what you sell right now.',
+    splits: { starting:30, growing:35, scaling:30 },
+    timeline: { weeks:2, label:'Results in 2-4 weeks', bar:15 },
+    tips: 'Start with exact match keywords only. 5 to 10 tight keywords beats 100 broad ones every time.',
+  },
+  {
+    id:'facebook', name:'Facebook / Meta', color:'#1877F2', on:true,
+    desc:'Best for awareness and retargeting. Lower intent than Google.',
+    splits: { starting:25, growing:25, scaling:20 },
+    timeline: { weeks:4, label:'Results in 4-8 weeks', bar:30 },
+    tips: 'Facebook needs volume to learn. Give it at least 50 conversions before judging the campaign.',
+  },
+  {
+    id:'instagram', name:'Instagram', color:'#C13584', on:false,
+    desc:'Visual businesses. Awareness play. Pairs well with Facebook.',
+    splits: { starting:10, growing:15, scaling:15 },
+    timeline: { weeks:6, label:'Results in 6-10 weeks', bar:45 },
+    tips: 'Video outperforms static 3 to 1. Reels over everything else right now.',
+  },
+  {
+    id:'seo', name:'SEO / Content', color:'#2a9d5c', on:false,
+    desc:'Long game. Compounds over time. Eventually your cheapest lead.',
+    splits: { starting:20, growing:15, scaling:20 },
+    timeline: { weeks:24, label:'Results in 6-12 months', bar:100 },
+    tips: 'Publish one genuinely useful piece per week. Answer real questions people search. No tricks.',
+  },
+  {
+    id:'email', name:'Email Marketing', color:'#F4A261', on:false,
+    desc:'Highest ROI channel for most businesses. Works on existing leads.',
+    splits: { starting:10, growing:10, scaling:10 },
+    timeline: { weeks:3, label:'Results in 3-6 weeks', bar:20 },
+    tips: 'One email per week. Useful content, not just promotions. Subject lines matter more than anything else.',
+  },
+  {
+    id:'referral', name:'Referral Program', color:'#7F77DD', on:false,
+    desc:'Lowest cost, highest quality leads. Most businesses ignore this.',
+    splits: { starting:15, growing:10, scaling:10 },
+    timeline: { weeks:8, label:'Results in 8-12 weeks', bar:55 },
+    tips: 'Ask every happy client at the peak of their satisfaction. Not months later. Right when they are happiest.',
+  },
+];
+
+const STAGE_DATA = {
+  starting: {
+    label: 'Just starting out',
+    callout: '<strong>When you are just starting, your job is to find out what works, not to scale.</strong> Keep your budget tight, run 2 to 3 channels max, and track everything. Every dollar right now is research. You are buying information, not leads.',
+    cls: 'starting',
+  },
+  growing: {
+    label: 'Actively growing',
+    callout: '<strong>You know what works.</strong> Now you put more behind it. At this stage you should be doubling down on your best channel while keeping 20 to 30% aside to test one new thing at a time. Never stop testing.',
+    cls: 'growing',
+  },
+  scaling: {
+    label: 'Scaling what works',
+    callout: '<strong>Scaling is not just spending more.</strong> It is keeping your unit economics intact as you grow. Watch your CAC closely. The moment your cost per lead starts climbing, stop increasing spend and fix the funnel first.',
+    cls: 'scaling',
+  },
+};
+
+let activeStage = 'starting';
+
+function setStage(stage) {
+  activeStage = stage;
+  document.querySelectorAll('.stage-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  recalc();
+}
+
+function initChannels() {
+  document.getElementById('channel-list').innerHTML = CHANNELS.map(ch => `
+    <div class="channel-row ${ch.on?'active':''}" id="chrow-${ch.id}" onclick="toggleCh('${ch.id}')">
+      <div class="ch-left">
+        <div class="ch-dot" style="background:${ch.color}"></div>
+        <div>
+          <div class="ch-name">${ch.name}</div>
+          <div style="font-size:0.7rem;color:var(--gray);margin-top:1px">${ch.desc}</div>
+        </div>
+      </div>
+      <div class="ch-check">${ch.on?'&#10003;':''}</div>
+    </div>`).join('');
+}
+
+function toggleCh(id) {
+  const ch = CHANNELS.find(c=>c.id===id);
+  if (ch) { ch.on = !ch.on; initChannels(); recalc(); }
+}
+
+function recalc() {
+  const budget  = parseFloat(document.getElementById('inp-budget').value)||0;
+  const revenue = parseFloat(document.getElementById('inp-revenue').value)||0;
+  const active  = CHANNELS.filter(c=>c.on);
+  const panel   = document.getElementById('results-panel');
+
+  // Budget as % of revenue hint
+  const pctNote = document.getElementById('budget-pct-note');
+  if (budget > 0 && revenue > 0) {
+    const pct = (budget/revenue*100).toFixed(1);
+    const verdict = pct < 5 ? 'That is on the low side. Most growing businesses spend 7 to 15%.' : pct > 20 ? 'That is on the high end. Make sure every channel is earning its keep.' : 'That is a healthy percentage for a growing business.';
+    pctNote.style.display = 'block';
+    pctNote.innerHTML = `You are spending <strong>${pct}%</strong> of revenue on marketing. ${verdict}`;
+  } else {
+    pctNote.style.display = 'none';
+  }
+
+  if (!budget || !active.length) {
+    panel.innerHTML = `<div class="empty-result"><div class="empty-big">$</div><p style="font-size:0.9rem;color:var(--gray);line-height:1.65;max-width:280px">Enter your monthly budget and pick your channels to see your breakdown.</p></div>`;
+    return;
+  }
+
+  // Normalize splits to 100%
+  const totalSplit = active.reduce((a,c)=>a+c.splits[activeStage],0);
+  const channels = active.map(c => ({
+    ...c,
+    pct: Math.round((c.splits[activeStage]/totalSplit)*100),
+    amount: Math.round((c.splits[activeStage]/totalSplit)*budget),
+  }));
+
+  const sd = STAGE_DATA[activeStage];
+  const totalBudget = channels.reduce((a,c)=>a+c.amount,0);
+
+  // HERO
+  const heroHTML = `
+    <div class="budget-hero">
+      <div class="bh-stat">
+        <div class="bh-label">Total monthly budget</div>
+        <div class="bh-val">$${budget.toLocaleString()}</div>
+        <div class="bh-sub">Across ${active.length} channel${active.length!==1?'s':''}</div>
+      </div>
+      <div class="bh-stat">
+        <div class="bh-label">Stage</div>
+        <div class="bh-val" style="font-size:1.4rem">${sd.label}</div>
+        <div class="bh-sub">Allocation optimized for this stage</div>
+      </div>
+      <div class="bh-stat">
+        <div class="bh-label">Fastest return</div>
+        <div class="bh-val" style="font-size:1.4rem">${channels.sort((a,b)=>a.timeline.weeks-b.timeline.weeks)[0].name}</div>
+        <div class="bh-sub">${channels.sort((a,b)=>a.timeline.weeks-b.timeline.weeks)[0].timeline.label}</div>
+      </div>
+    </div>`;
+
+  // STAGE CALLOUT
+  const calloutHTML = `<div class="stage-callout ${sd.cls}">${sd.callout}</div>`;
+
+  // CHANNEL BREAKDOWN
+  const breakdownHTML = `
+    <div class="channel-breakdown">
+      <div class="cb-header">
+        <span class="cb-hcell">Channel</span>
+        <span class="cb-hcell">Monthly</span>
+        <span class="cb-hcell">Split</span>
+        <span class="cb-hcell">Timeline</span>
+      </div>
+      ${channels.sort((a,b)=>b.amount-a.amount).map(c=>`
+        <div class="ch-result-row">
+          <div class="ch-result-name">
+            <div class="ch-result-dot" style="background:${c.color}"></div>
+            <div>
+              <div class="ch-result-label">${c.name}</div>
+              <div class="ch-result-sub">${c.tips}</div>
+              <div class="pct-bar-wrap"><div class="pct-bar" style="width:${c.pct}%;background:${c.color}"></div></div>
+            </div>
+          </div>
+          <div class="ch-result-cell">$${c.amount.toLocaleString()}<span class="cell-sub">per month</span></div>
+          <div class="ch-result-cell">${c.pct}%<span class="cell-sub">of budget</span></div>
+          <div class="ch-result-cell" style="font-size:0.72rem;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--gray)">${c.timeline.label}</div>
+        </div>`).join('')}
+    </div>`;
+
+  // TIMELINE VISUAL
+  const timelineHTML = `
+    <div class="timeline-section">
+      <div class="timeline-label">When to expect results by channel</div>
+      <div class="timeline-grid">
+        ${channels.sort((a,b)=>a.timeline.weeks-b.timeline.weeks).map(c=>`
+          <div class="tl-row">
+            <div class="tl-channel">
+              <div style="width:8px;height:8px;border-radius:50%;background:${c.color};flex-shrink:0"></div>
+              ${c.name}
+            </div>
+            <div class="tl-bar-wrap">
+              <div class="tl-bar" style="width:${Math.min(c.timeline.bar,100)}%;background:${c.color}">
+                <span class="tl-bar-label">${c.timeline.label.replace('Results in ','')}</span>
+              </div>
+            </div>
+            <div class="tl-time">${c.timeline.label.replace('Results in ','')}</div>
+          </div>`).join('')}
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--gray);padding-top:0.25rem;">
+          <span>Week 1</span><span>Month 3</span><span>Month 6</span><span>Month 12+</span>
+        </div>
+      </div>
+      <div style="margin-top:1.25rem;padding:1rem 1.25rem;background:var(--gray-light);font-size:0.82rem;color:var(--gray);line-height:1.65;">
+        <strong style="color:var(--black);font-weight:500">The most common mistake:</strong> turning off a channel before it has had enough time to work. Give every channel at least 3x its timeline before making a verdict. Slow does not mean broken.
+      </div>
+    </div>`;
+
+  // TESTING FRAMEWORK
+  const testingHTML = `
+    <div class="testing-section">
+      <div class="timeline-label">The testing framework that actually works</div>
+      <div class="test-grid">
+        <div class="test-card">
+          <div class="test-num">3-5</div>
+          <div class="test-title">Ads running at once</div>
+          <div class="test-desc">Never run one ad. Run 3 to 5 variations at the same time. <strong>Change only one thing between each ad</strong>: the headline, the image, the CTA color, the first line of copy. One variable at a time.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-num">2x</div>
+          <div class="test-title">Minimum timeline</div>
+          <div class="test-desc">Wait for at least <strong>2x the expected result timeline</strong> before drawing conclusions. If Google Ads typically shows results in 2 weeks, give it 4 before touching anything. Impatience is the most expensive marketing mistake.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-num">1</div>
+          <div class="test-title">Cut the worst, replace it</div>
+          <div class="test-desc">After the minimum timeline, <strong>cut the single worst performer</strong>. Replace it with a new variation that changes one thing from the current winner. You are always competing against your best. This is how you compound.</div>
+        </div>
+      </div>
+      <div class="hormozi-callout">
+        <p><strong>The Hormozi approach:</strong> Run 20 to 100 ads for the same offer. Change one variable per ad. After enough data, cut the bottom half. Replace with new variations. Scale the winner. Repeat forever. Most small businesses run 1 ad, wait 2 weeks, declare it dead, and quit. <strong>The winner is always the person still testing.</strong></p>
+      </div>
+    </div>`;
+
+  // NEXT STEPS
+  const steps = [];
+  if (activeStage === 'starting') {
+    steps.push({ t:'Pick two channels max', d:'Spreading $'+budget.toLocaleString()+' across everything means nothing gets enough budget to learn. Pick the two highest-potential channels for your business and go all in.' });
+    steps.push({ t:'Set a 90-day rule', d:'Commit to 90 days before making any major changes. Every channel needs time to learn. Changing things every 2 weeks means you never find out what works.' });
+    steps.push({ t:'Track one conversion', d:'Pick one thing to optimize for. Not clicks, not impressions. Book an appointment, fill out a form, make a call. Everything else is noise until that number improves.' });
+  } else if (activeStage === 'growing') {
+    steps.push({ t:'Double your best channel', d:'Whatever is working, put more behind it before expanding. Most businesses plateau because they spread budget instead of concentrating it.' });
+    steps.push({ t:'Add one new channel quarterly', d:'Once your primary channel is optimized, add one new one. Test it with 15 to 20% of your budget for 90 days. If it works, grow it. If not, drop it.' });
+    steps.push({ t:'Start a referral system', d:'At your stage, every happy client should be asked for a referral at the peak of their satisfaction. This is your cheapest lead source and most businesses never systemize it.' });
+  } else {
+    steps.push({ t:'Watch your CAC not your spend', d:'As you scale, cost per acquisition tends to creep up. The moment CAC rises more than 20% from your baseline, pause and diagnose before adding more budget.' });
+    steps.push({ t:'Test creative relentlessly', d:'At scale, audience saturation happens fast. Fresh creative every 4 to 6 weeks is not optional. Your offer might be great but if people have seen the ad 10 times they will ignore it.' });
+    steps.push({ t:'Build your owned audience', d:'Paid channels can disappear overnight. At your stage, investing in email list building and SEO is how you reduce dependence on platforms you do not control.' });
+  }
+
+  const nextHTML = `
+    <div class="ns-wrap">
+      <div class="ns-head">What to do with this</div>
+      <div class="ns-body">
+        ${steps.map((s,i)=>`<div class="ns-item"><div class="ns-n">${i+1}</div><div class="ns-t">${s.t}</div><div class="ns-d">${s.d}</div></div>`).join('')}
+      </div>
+    </div>`;
+
+  panel.innerHTML = heroHTML + calloutHTML + breakdownHTML + timelineHTML + testingHTML + nextHTML;
+}
+
+initChannels();
+recalc();
+</script>
+<script src="themes.js"></script>
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+      <a href="funnel.html">Lead Funnel</a>
+      <a href="calculator.html">Cost Per Lead</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="budget.html" class="active">Budget Planner</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html">Marketing Basics</a>
+    </div>
+  </div>
+  <a href="about.html" class="dnav-solo">About Zach</a>
+</div>
+<script>
+(function(){
+  var wrap=document.getElementById('didm-dnav');
+  var nav=document.querySelector('nav');
+  if(wrap&&nav){nav.appendChild(wrap);}
+})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(btnId,menuId){
+    var btn=document.getElementById(btnId),menu=document.getElementById(menuId);
+    if(!btn||!menu)return;
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isOpen=menu.classList.contains('open');
+      closeAll();
+      if(!isOpen){menu.classList.add('open');btn.classList.add('open');}
+    });
+  }
+  function closeAll(){
+    document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});
+    document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});
+  }
+  document.addEventListener('click',closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
+})();
+</script>
+</body>
+</html>
