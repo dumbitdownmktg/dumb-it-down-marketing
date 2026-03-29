@@ -279,17 +279,13 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
     <!-- STEP 3: FUNNEL STAGES -->
     <div class="panel-section">
       <div class="panel-label">Step 3: Your funnel stages</div>
-      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Drag to reorder. Name each step in your process.</p>
+      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Name each step. Enter how many people reach it per month. Drag to reorder.</p>
       <div id="stages-list"></div>
       <button class="add-stage-btn" onclick="addStage()">+ Add a stage</button>
-    </div>
-
-    <!-- COUNT PER STAGE -->
-    <div class="panel-section">
-      <div class="panel-label">How many reach each stage?</div>
-      <div id="stage-counts"></div>
       <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;">Monthly averages are fine. Ballpark beats nothing.</p>
     </div>
+
+
 
   </div>
 
@@ -454,25 +450,21 @@ function renderStages() {
       <input class="stage-input" type="text" placeholder="Stage name..."
         value="${s.name}"
         onchange="updateStageName(${s.id},this.value)">
-      ${stages.length > 1 ? `<button class="stage-del" onclick="removeStage(${s.id})">&#215;</button>` : ''}
-    </div>`).join('');
-
-  document.getElementById('stage-counts').innerHTML = stages.map(s => `
-    <div class="count-row">
-      <span class="count-label">${s.name||'Unnamed stage'}</span>
       <input class="count-input" type="number" placeholder="0"
         value="${s.count||''}"
-        oninput="stageCountChange(${s.id},this.value)">
+        title="How many reach this stage per month?"
+        oninput="stageCountChange(${s.id},this.value)"
+        onclick="event.stopPropagation()"
+        style="width:64px;flex-shrink:0">
+      ${stages.length > 1 ? `<button class="stage-del" onclick="removeStage(${s.id})">&#215;</button>` : ''}
     </div>`).join('');
 }
 
 // onchange fires on blur so it doesn't re-render while typing mid-word
 function updateStageName(id, val) {
   const s = stages.find(s=>s.id===id);
-  if (s) {
-    s.name = val;
-    const labels = document.querySelectorAll('#stage-counts .count-label');
-    stages.forEach((st, i) => { if (labels[i]) labels[i].textContent = st.name || 'Unnamed stage'; });
+  if (s) { s.name = val; render(); }
+});
     render();
   }
 }
