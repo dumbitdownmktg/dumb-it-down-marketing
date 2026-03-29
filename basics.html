@@ -804,37 +804,8 @@ function clearDictSearch() {
 initDict();
 </script>
 <script src="themes.js"></script>
-<script id="didm-nav-script">
-function didmNavToggle() {
-  var btn = document.getElementById('didm-nb');
-  var menu = document.getElementById('didm-nm');
-  if (!btn || !menu) return;
-  btn.classList.toggle('open');
-  menu.classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  var wrap = document.getElementById('didm-nw');
-  if (wrap && !wrap.contains(e.target)) {
-    var b = document.getElementById('didm-nb');
-    var m = document.getElementById('didm-nm');
-    if (b) b.classList.remove('open');
-    if (m) m.classList.remove('open');
-  }
-});
-</script>
-<style id="didm-nav-style">
-.nav-dd-wrap { position: relative; }
-.nav-dd-btn { background: none; border: 1.5px solid var(--black); padding: 0.4rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; color: var(--black); display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; white-space: nowrap; }
-.nav-dd-btn:hover { background: var(--gray-light, #e8e4da); }
-.nav-dd-btn .chev { font-size: 0.55rem; transition: transform 0.2s; display: inline-block; }
-.nav-dd-btn.open .chev { transform: rotate(180deg); }
-.nav-dd-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; background: var(--white, #f5f2eb); border: 1.5px solid var(--black, #0f0f0f); min-width: 190px; z-index: 300; flex-direction: column; box-shadow: 2px 4px 0 rgba(0,0,0,0.08); }
-.nav-dd-menu.open { display: flex; }
-.nav-dd-menu a { display: block; padding: 0.75rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--black, #0f0f0f); text-decoration: none; border-bottom: 1px solid var(--gray-light, #e8e4da); transition: background 0.1s; }
-.nav-dd-menu a:last-child { border-bottom: none; }
-.nav-dd-menu a:hover { background: var(--gray-light, #e8e4da); }
-.nav-dd-menu a.active { color: var(--yellow-dark, #d4a800); }
-</style>
+
+
 <div class="nav-dd-wrap" id="didm-nw" style="display:none">
   <button class="nav-dd-btn" id="didm-nb" onclick="didmNavToggle()">Menu <span class="chev">&#9660;</span></button>
   <div class="nav-dd-menu" id="didm-nm">
@@ -852,6 +823,64 @@ document.addEventListener('click', function(e) {
   var wrap = document.getElementById('didm-nw');
   var nav = document.querySelector('nav');
   if (wrap && nav) { wrap.style.display = ''; nav.appendChild(wrap); }
+})();
+</script>
+<style id="didm-nav-style">
+.dnav { display:flex; align-items:center; gap:0.5rem; }
+.dnav-dd { position:relative; }
+.dnav-btn { background:none; border:1.5px solid var(--black,#0f0f0f); padding:0.4rem 0.9rem; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; color:var(--black,#0f0f0f); display:flex; align-items:center; gap:0.4rem; transition:background 0.15s; white-space:nowrap; }
+.dnav-btn:hover, .dnav-btn.open { background:var(--black,#0f0f0f); color:var(--white,#f5f2eb); }
+.dnav-btn .chev { font-size:0.5rem; transition:transform 0.2s; display:inline-block; }
+.dnav-btn.open .chev { transform:rotate(180deg); }
+.dnav-menu { display:none; position:absolute; top:calc(100% + 6px); left:0; background:var(--white,#f5f2eb); border:1.5px solid var(--black,#0f0f0f); min-width:200px; z-index:300; flex-direction:column; box-shadow:2px 4px 0 rgba(0,0,0,0.08); }
+.dnav-menu.open { display:flex; }
+.dnav-menu-label { padding:0.5rem 1rem 0.25rem; font-size:0.62rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray,#6b6b6b); border-bottom:1px solid var(--gray-light,#e8e4da); }
+.dnav-menu a { display:block; padding:0.7rem 1.1rem; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--black,#0f0f0f); text-decoration:none; border-bottom:1px solid var(--gray-light,#e8e4da); transition:background 0.1s; }
+.dnav-menu a:last-child { border-bottom:none; }
+.dnav-menu a:hover { background:var(--gray-light,#e8e4da); }
+.dnav-menu a.active { color:var(--yellow-dark,#d4a800); }
+.dnav-solo { display:block; padding:0.4rem 0.9rem; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--black,#0f0f0f); text-decoration:none; border:1.5px solid var(--gray-light,#e8e4da); transition:all 0.15s; white-space:nowrap; }
+.dnav-solo:hover { border-color:var(--black,#0f0f0f); }
+.dnav-solo.active { border-color:var(--yellow-dark,#d4a800); color:var(--yellow-dark,#d4a800); }
+</style>
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+<a href="funnel.html">Lead Funnel</a>
+<a href="calculator.html">Cost Per Lead</a>
+<a href="roi.html">ROI Calculator</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn open" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu open" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html" class="active">Marketing Basics</a>
+    </div>
+  </div>
+  <a href="about.html" class="dnav-solo">About Zach</a>
+</div>
+<script>
+(function(){
+  var wrap=document.getElementById('didm-dnav');
+  var nav=document.querySelector('nav');
+  if(wrap&&nav){ nav.appendChild(wrap); }
+})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(btnId, menuId){
+    var btn=document.getElementById(btnId), menu=document.getElementById(menuId);
+    if(!btn||!menu) return;
+    btn.addEventListener('click',function(e){ e.stopPropagation(); var o=menu.classList.contains('open'); closeAll(); if(!o){ menu.classList.add('open'); btn.classList.add('open'); }});
+  }
+  function closeAll(){ document.querySelectorAll('.dnav-menu').forEach(function(m){ m.classList.remove('open'); }); document.querySelectorAll('.dnav-btn').forEach(function(b){ b.classList.remove('open'); }); }
+  document.addEventListener('click', closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
 })();
 </script>
 </body>
