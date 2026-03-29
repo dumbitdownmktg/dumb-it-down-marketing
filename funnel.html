@@ -464,9 +464,6 @@ function renderStages() {
 function updateStageName(id, val) {
   const s = stages.find(s=>s.id===id);
   if (s) { s.name = val; render(); }
-});
-    render();
-  }
 }
 
 function stageCountChange(id, val) {
