@@ -321,9 +321,9 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
         <span class="header-tab-badge badge-soon">Soon</span>
       </div>
       <div class="header-tab-item">
-        <div class="header-tab-dot" style="background:var(--gray)"></div>
+        <div class="header-tab-dot" style="background:#F4A261"></div>
         <span class="header-tab-name">Email Marketing 101</span>
-        <span class="header-tab-badge badge-soon">Soon</span>
+        <span class="header-tab-badge badge-live">Live</span>
       </div>
     </div>
   </div>
@@ -351,11 +351,6 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
       <button class="tab-btn coming" onclick="switchTab('ads', this)">
         <span class="tab-icon">📢</span>
         <span class="tab-text"><span class="tab-name">Ad Platforms 101</span><span class="tab-sub">Facebook, Google, Meta</span></span>
-        <span class="tab-badge tb-soon">Soon</span>
-      </button>
-      <button class="tab-btn coming" onclick="switchTab('email101', this)">
-        <span class="tab-icon">✉</span>
-        <span class="tab-text"><span class="tab-name">Email Marketing 101</span><span class="tab-sub">Lists, sequences, deliverability</span></span>
         <span class="tab-badge tb-soon">Soon</span>
       </button>
       <button class="tab-btn coming" onclick="switchTab('social', this)">
@@ -573,12 +568,196 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
       </div>
     </div>
     <div class="tab-content" id="tab-email101">
-      <div class="coming-soon-tab">
-        <div class="cs-big">✉</div>
-        <div class="cs-badge">Coming soon</div>
-        <div class="cs-title">Email Marketing 101</div>
-        <p class="cs-sub">How to build a list, what to send, how often to send it, and why your emails might be going to spam. Everything you need to know before you pay for Mailchimp.</p>
+
+      <!-- WHY EMAIL -->
+      <div class="email-section" style="padding:2.5rem 3rem;border-bottom:1.5px solid var(--black);display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
+        <div>
+          <div class="email-eyebrow">The most underused tool in small business marketing</div>
+          <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.05;margin-bottom:1.25rem">Email is not dead. <span style="color:var(--yellow-dark)">You just have to use it right.</span></h2>
+          <p style="font-size:0.92rem;color:var(--gray);line-height:1.8;margin-bottom:1rem">Most small businesses either have no email strategy or blast the same message to everyone once a month hoping something sticks. Neither works. <strong style="color:var(--black);font-weight:500">The businesses that win with email treat it like a conversation, not a megaphone.</strong></p>
+          <p style="font-size:0.92rem;color:var(--gray);line-height:1.8;margin-bottom:1rem">The average ROI for email marketing is $36 for every $1 spent. That beats every other channel. Not because email is magic, but because you own the list. No algorithm. No platform that can change the rules overnight. Your list is yours.</p>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;margin-top:1.5rem">
+            <div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.85rem 1rem;border:1.5px solid var(--black)">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;color:var(--yellow-dark);min-width:48px">$36</div>
+              <div style="font-size:0.82rem;color:var(--gray);line-height:1.55">Average return for every $1 spent on email marketing. Higher than social, paid search, and display ads.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.85rem 1rem;border:1.5px solid var(--black)">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;color:var(--yellow-dark);min-width:48px">4B+</div>
+              <div style="font-size:0.82rem;color:var(--gray);line-height:1.55">People use email every day. More than any social platform. Your customers are in there.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.85rem 1rem;border:1.5px solid var(--black)">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;color:var(--yellow-dark);min-width:48px">3x</div>
+              <div style="font-size:0.82rem;color:var(--gray);line-height:1.55">More likely to make a purchase from email than from social media. Higher intent, higher conversion.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROI CALCULATOR -->
+        <div style="border:1.5px solid var(--black);">
+          <div style="background:var(--black);padding:1rem 1.5rem;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.06em;color:var(--yellow)">Email ROI Calculator</div>
+          <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem">
+            <div>
+              <label style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:0.35rem">List size</label>
+              <input type="number" id="em-list" placeholder="1000" oninput="calcEmailROI()"
+                style="width:100%;padding:0.55rem 0.75rem;border:1.5px solid var(--gray-light);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none">
+            </div>
+            <div>
+              <label style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:0.35rem">Average open rate %</label>
+              <input type="number" id="em-open" placeholder="22" oninput="calcEmailROI()"
+                style="width:100%;padding:0.55rem 0.75rem;border:1.5px solid var(--gray-light);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none">
+            </div>
+            <div>
+              <label style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:0.35rem">Click through rate %</label>
+              <input type="number" id="em-ctr" placeholder="3" oninput="calcEmailROI()"
+                style="width:100%;padding:0.55rem 0.75rem;border:1.5px solid var(--gray-light);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none">
+            </div>
+            <div>
+              <label style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:0.35rem">Average client value $</label>
+              <input type="number" id="em-acv" placeholder="500" oninput="calcEmailROI()"
+                style="width:100%;padding:0.55rem 0.75rem;border:1.5px solid var(--gray-light);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none">
+            </div>
+            <div>
+              <label style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:0.35rem">Close rate from email %</label>
+              <input type="number" id="em-close" placeholder="10" oninput="calcEmailROI()"
+                style="width:100%;padding:0.55rem 0.75rem;border:1.5px solid var(--gray-light);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none">
+            </div>
+            <div id="em-results" style="display:none;border-top:1.5px solid var(--black);padding-top:1rem;display:flex;flex-direction:column;gap:0.5rem">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
+                <div style="padding:0.75rem;background:var(--gray-light)">
+                  <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.25rem">Emails opened</div>
+                  <div id="em-opens-out" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1"></div>
+                </div>
+                <div style="padding:0.75rem;background:var(--gray-light)">
+                  <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.25rem">Clicks per send</div>
+                  <div id="em-clicks-out" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1"></div>
+                </div>
+              </div>
+              <div style="padding:1rem;background:var(--black)">
+                <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.4rem">Revenue per email send</div>
+                <div id="em-revenue-out" style="font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;color:var(--yellow)"></div>
+                <div id="em-verdict" style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:0.5rem;line-height:1.55"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- SEGMENTATION -->
+      <div style="padding:2.5rem 3rem;border-bottom:1.5px solid var(--black)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem">The single biggest lever in email marketing<span style="flex:1;height:1px;background:var(--gray-light)"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
+          <div>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1.05;margin-bottom:1rem">Niche your list down. <span style="color:var(--yellow-dark)">Talk to one person.</span></h3>
+            <p style="font-size:0.92rem;color:var(--gray);line-height:1.8;margin-bottom:1rem">The number one mistake small businesses make with email is treating their list like one group of people. It is not. A lead who found you on Google is different from a referral. Someone who bought once is different from a long-term client. <strong style="color:var(--black);font-weight:500">When you send the same email to all of them, you are relevant to none of them.</strong></p>
+            <p style="font-size:0.92rem;color:var(--gray);line-height:1.8;margin-bottom:1.25rem">Segmentation is the process of splitting your list into groups so you can send each group a message that actually applies to them. A 10% increase in relevance can double your open rate and triple your conversion rate.</p>
+            <div style="padding:1rem 1.25rem;border-left:4px solid var(--yellow-dark);background:rgba(242,201,76,0.08);font-size:0.85rem;line-height:1.7;color:var(--black)">
+              <strong style="font-weight:500">The rule:</strong> Before every email you write, ask yourself "who exactly is this for?" If the answer is "everyone on my list" then you need to rethink the email.
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.75rem">
+            <div style="font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.25rem">Ways to segment your list</div>
+            <div style="padding:1rem 1.25rem;border:1.5px solid var(--black);display:flex;gap:0.85rem;align-items:flex-start">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;width:32px;height:32px;background:var(--yellow);color:var(--black);display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+              <div><div style="font-weight:500;font-size:0.88rem;margin-bottom:0.2rem">Where they came from</div><div style="font-size:0.78rem;color:var(--gray);line-height:1.55">Facebook lead vs Google search vs referral. Each one has different intent and needs a different message.</div></div>
+            </div>
+            <div style="padding:1rem 1.25rem;border:1.5px solid var(--black);display:flex;gap:0.85rem;align-items:flex-start">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;width:32px;height:32px;background:var(--yellow);color:var(--black);display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+              <div><div style="font-weight:500;font-size:0.88rem;margin-bottom:0.2rem">Where they are in the funnel</div><div style="font-size:0.78rem;color:var(--gray);line-height:1.55">New lead vs booked appointment vs client vs lapsed client. Each stage needs completely different content.</div></div>
+            </div>
+            <div style="padding:1rem 1.25rem;border:1.5px solid var(--black);display:flex;gap:0.85rem;align-items:flex-start">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;width:32px;height:32px;background:var(--yellow);color:var(--black);display:flex;align-items:center;justify-content:justify-start;flex-shrink:0;justify-content:center">3</div>
+              <div><div style="font-weight:500;font-size:0.88rem;margin-bottom:0.2rem">What they care about</div><div style="font-size:0.78rem;color:var(--gray);line-height:1.55">Service type, price point, how long they have been a client. The more specific you get, the more relevant your emails become.</div></div>
+            </div>
+            <div style="padding:1rem 1.25rem;border:1.5px solid var(--black);display:flex;gap:0.85rem;align-items:flex-start">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;width:32px;height:32px;background:var(--yellow);color:var(--black);display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+              <div><div style="font-weight:500;font-size:0.88rem;margin-bottom:0.2rem">How engaged they are</div><div style="font-size:0.78rem;color:var(--gray);line-height:1.55">People who open every email get different content than people who haven't opened in 90 days. Re-engage the cold ones or remove them.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTOMATIONS -->
+      <div style="padding:2.5rem 3rem;border-bottom:1.5px solid var(--black)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem">Set them up once, let them run forever<span style="flex:1;height:1px;background:var(--gray-light)"></span></div>
+        <p style="font-size:0.88rem;color:var(--gray);margin-bottom:1.5rem;line-height:1.65">Every major platform comes with these automations out of the box. Most small businesses never turn them on. <strong style="color:var(--black);font-weight:500">These five sequences alone can move the needle more than any one-off campaign you send.</strong></p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--black);border:1.5px solid var(--black)">
+          <div style="background:var(--white);padding:1.5rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em;margin-bottom:0.35rem">Welcome sequence</div>
+            <div style="font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--green);margin-bottom:0.6rem">Highest ROI automation</div>
+            <p style="font-size:0.82rem;color:var(--gray);line-height:1.65">Triggered the moment someone joins your list. 3 to 5 emails over 1 to 2 weeks. Introduce yourself, set expectations, deliver value, make an offer. This is when they are most interested. Do not waste it.</p>
+          </div>
+          <div style="background:var(--white);padding:1.5rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em;margin-bottom:0.35rem">Lead nurture sequence</div>
+            <div style="font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--yellow-dark);margin-bottom:0.6rem">Turns cold leads warm</div>
+            <p style="font-size:0.82rem;color:var(--gray);line-height:1.65">For leads who did not book right away. Sends over 4 to 8 weeks with helpful content that builds trust. By the time they are ready to buy, you are already the obvious choice because you have been showing up in their inbox.</p>
+          </div>
+          <div style="background:var(--white);padding:1.5rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em;margin-bottom:0.35rem">Appointment reminder</div>
+            <div style="font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--yellow-dark);margin-bottom:0.6rem">Kills no-shows</div>
+            <p style="font-size:0.82rem;color:var(--gray);line-height:1.65">A confirmation email immediately, a reminder 24 hours before, and a morning-of text or email. Businesses that do this see show rates jump 20 to 30 percentage points. This is the easiest win in the whole list.</p>
+          </div>
+          <div style="background:var(--white);padding:1.5rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em;margin-bottom:0.35rem">Re-engagement sequence</div>
+            <div style="font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-bottom:0.6rem">For cold subscribers</div>
+            <p style="font-size:0.82rem;color:var(--gray);line-height:1.65">Anyone who has not opened in 90 days gets a 3-email win-back sequence. If they still don't engage after that, remove them. A clean list of engaged people beats a big list of ghosts every single time.</p>
+          </div>
+          <div style="background:var(--white);padding:1.5rem;grid-column:span 2">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em;margin-bottom:0.35rem">Post-purchase / onboarding sequence</div>
+            <div style="font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--green);margin-bottom:0.6rem">The most overlooked sequence</div>
+            <p style="font-size:0.82rem;color:var(--gray);line-height:1.65;max-width:600px">Triggered when someone becomes a client. Sets expectations, delivers value, checks in, and at the peak of their happiness asks for a review and a referral. Most businesses never send a single email after someone pays them. This sequence is where the real money is. We will cover client marketing in depth in a separate section.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RULES -->
+      <div style="padding:2.5rem 3rem;border-bottom:1.5px solid var(--black)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem">The rules that actually matter<span style="flex:1;height:1px;background:var(--gray-light)"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--black);border:1.5px solid var(--black)">
+          <div style="background:var(--white);padding:1.25rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.4rem">Subject lines win or lose it</div>
+            <p style="font-size:0.8rem;color:var(--gray);line-height:1.6">40% of people decide to open based purely on the subject line. Keep it under 50 characters, make it specific, and never use all caps or excessive punctuation. Test two versions on every send.</p>
+          </div>
+          <div style="background:var(--white);padding:1.25rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.4rem">One email, one job</div>
+            <p style="font-size:0.8rem;color:var(--gray);line-height:1.6">Every email should have exactly one call to action. Not three. Not a button and a link and a PS. One thing you want them to do. The more options you give people, the less likely they are to do any of them.</p>
+          </div>
+          <div style="background:var(--white);padding:1.25rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.4rem">Send consistently</div>
+            <p style="font-size:0.8rem;color:var(--gray);line-height:1.6">Once a week beats once a month every time. Consistency builds trust and trains the inbox algorithm. When you go quiet for 6 weeks and come back hot, your deliverability tanks and your audience forgot who you are.</p>
+          </div>
+          <div style="background:var(--white);padding:1.25rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.4rem">Give before you ask</div>
+            <p style="font-size:0.8rem;color:var(--gray);line-height:1.6">For every promotional email you send, send at least two that are purely useful with no ask. Tips, insights, things they can use. Earn the right to pitch by being consistently valuable first.</p>
+          </div>
+          <div style="background:var(--white);padding:1.25rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.4rem">Clean your list quarterly</div>
+            <p style="font-size:0.8rem;color:var(--gray);line-height:1.6">Remove anyone who hasn't opened in 90 days unless you have a re-engagement sequence running. Sending to unengaged contacts tanks your deliverability and costs you money. A list of 500 engaged people beats 5,000 ghosts.</p>
+          </div>
+          <div style="background:var(--white);padding:1.25rem">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.4rem">Deliverability is a technical problem</div>
+            <p style="font-size:0.8rem;color:var(--gray);line-height:1.6">If your emails go to spam, nothing else matters. Set up SPF, DKIM, and DMARC on your domain. Warm up new domains slowly. Never buy a list. These are table stakes, not advanced tactics.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATFORMS -->
+      <div style="padding:2.5rem 3rem;border-bottom:1.5px solid var(--black)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem">Platform comparison<span style="flex:1;height:1px;background:var(--gray-light)"></span></div>
+        <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1.5rem;line-height:1.65">The best platform is the one you will actually use consistently. That said, here are the honest pros and cons of the main options for small businesses.</p>
+        <div id="platform-list" style="display:flex;flex-direction:column;gap:0;border:1.5px solid var(--black)"></div>
+      </div>
+
+      <!-- COMING MORE -->
+      <div style="padding:2rem 3rem;background:var(--black)">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.04em;color:var(--yellow);margin-bottom:0.35rem">Client marketing is a whole other section.</div>
+            <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);max-width:480px;line-height:1.65">What we covered here is all about lead email marketing. Turning cold contacts into bookings. Once someone becomes a client, the strategy changes completely. Retention sequences, upsell flows, referral asks, loyalty programs. That whole system is coming in the Client Marketing section.</p>
+          </div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:0.78rem;letter-spacing:0.1em;padding:0.5rem 1rem;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.4);text-transform:uppercase">Coming soon</div>
+        </div>
+      </div>
+
     </div>
     <div class="tab-content" id="tab-social">
       <div class="coming-soon-tab">
@@ -821,6 +1000,81 @@ function clearDictSearch() {
 }
 
 initDict();
+
+// ---- EMAIL ROI CALCULATOR ----
+function calcEmailROI() {
+  const list    = parseFloat(document.getElementById('em-list')?.value)||0;
+  const openPct = parseFloat(document.getElementById('em-open')?.value)||0;
+  const ctrPct  = parseFloat(document.getElementById('em-ctr')?.value)||0;
+  const acv     = parseFloat(document.getElementById('em-acv')?.value)||0;
+  const close   = parseFloat(document.getElementById('em-close')?.value)||0;
+  const res     = document.getElementById('em-results');
+  if (!list || !openPct || !ctrPct || !acv || !close || !res) return;
+  const opens   = Math.round(list * openPct/100);
+  const clicks  = Math.round(opens * ctrPct/100);
+  const clients = Math.round(clicks * close/100);
+  const revenue = clients * acv;
+  document.getElementById('em-opens-out').textContent  = opens.toLocaleString();
+  document.getElementById('em-clicks-out').textContent = clicks.toLocaleString();
+  document.getElementById('em-revenue-out').textContent = '$' + revenue.toLocaleString();
+  const verdict = revenue === 0 ? 'Fill in all fields to see your estimate.' :
+    revenue < 500  ? 'Small list or low engagement, but every send compounds. Keep building.' :
+    revenue < 2000 ? 'Solid. One email send can pay for your platform for months.' :
+                     'Strong. This is exactly why email is the highest ROI channel.';
+  document.getElementById('em-verdict').textContent = verdict;
+  res.style.display = 'flex';
+}
+
+// ---- PLATFORM DATA ----
+const PLATFORMS = [
+  { name:'Mailchimp',    price:'Free to 500, then $13+/mo',  best:'Absolute beginners',  pros:['Easiest to learn','Free tier is genuinely useful','Templates for everything'],                    cons:['Gets expensive fast as list grows','Automation is basic on free plan','Support is slow'] },
+  { name:'Klaviyo',      price:'Free to 250, then $20+/mo',  best:'Ecommerce businesses', pros:['Best-in-class segmentation','Deep Shopify integration','Powerful flows'],                        cons:['Overkill for service businesses','Steeper learning curve','Pricier at scale'] },
+  { name:'ActiveCampaign',price:'From $29/mo',               best:'Service businesses',   pros:['Best automation builder','CRM built in','Excellent deliverability'],                              cons:['Not cheap','Takes time to learn properly','No real free tier'] },
+  { name:'Beehiiv',      price:'Free to 2500, then $42/mo',  best:'Newsletter creators',  pros:['Built for newsletters','Clean subscriber analytics','Monetization tools built in'],               cons:['Limited automation','Not ideal for service businesses','Less CRM functionality'] },
+  { name:'ConvertKit',   price:'Free to 1000, then $25+/mo', best:'Creators and coaches', pros:['Very clean interface','Good tagging and segmentation','Landing pages included'],                  cons:['Limited templates','Automation less visual than ActiveCampaign','Ecommerce limited'] },
+  { name:'HubSpot',      price:'Free CRM, email from $18/mo',best:'Growing businesses',   pros:['Full CRM included','Excellent reporting','Scales to enterprise'],                                cons:['Free tier very limited','Gets expensive quickly','Overkill for very small businesses'] },
+  { name:'Constant Contact',price:'From $12/mo',             best:'Traditional businesses',pros:['Simple and reliable','Good event marketing tools','Phone support included'],                     cons:['Dated interface','Automation is basic','Less innovative than competitors'] },
+  { name:'MailerLite',   price:'Free to 1000, then $9+/mo',  best:'Budget-conscious starts',pros:['Very affordable','Good automation for the price','Clean builder'],                             cons:['Smaller feature set','Deliverability can vary','Support slower on free plan'] },
+];
+
+function renderPlatforms() {
+  const el = document.getElementById('platform-list');
+  if (!el) return;
+  el.innerHTML = PLATFORMS.map((p,i) => `
+    <div style="border-bottom:1px solid var(--gray-light);${i===PLATFORMS.length-1?'border-bottom:none':''}">
+      <div style="padding:1rem 1.5rem;display:grid;grid-template-columns:180px 1fr 1fr 160px;gap:1rem;align-items:start;cursor:pointer;transition:background 0.15s"
+        onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'grid':'none'">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em">${p.name}</div>
+          <div style="font-size:0.72rem;color:var(--green);font-weight:500;margin-top:2px">${p.best}</div>
+        </div>
+        <div>
+          <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-bottom:0.35rem">Pros</div>
+          ${p.pros.map(pr=>`<div style="font-size:0.78rem;color:var(--gray);line-height:1.5;padding-left:0.75rem;position:relative;margin-bottom:2px"><span style="position:absolute;left:0;color:var(--green)">+</span>${pr}</div>`).join('')}
+        </div>
+        <div>
+          <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-bottom:0.35rem">Cons</div>
+          ${p.cons.map(c=>`<div style="font-size:0.78rem;color:var(--gray);line-height:1.5;padding-left:0.75rem;position:relative;margin-bottom:2px"><span style="position:absolute;left:0;color:var(--red)">-</span>${c}</div>`).join('')}
+        </div>
+        <div>
+          <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-bottom:0.35rem">Pricing</div>
+          <div style="font-size:0.78rem;color:var(--black);line-height:1.5">${p.price}</div>
+          <div style="font-size:0.68rem;color:var(--gray);margin-top:0.5rem">Click to collapse</div>
+        </div>
+      </div>
+      <div style="display:none;padding:0 1.5rem 1rem;font-size:0.78rem;color:var(--gray)">
+        Click the row above to toggle details.
+      </div>
+    </div>`).join('');
+
+  // Open all by default
+  el.querySelectorAll('[onclick]').forEach(row => {
+    row.nextElementSibling.style.display = 'none';
+  });
+}
+
+renderPlatforms();
+
 </script>
 <script src="themes.js"></script>
 
