@@ -1272,6 +1272,13 @@ buildQuestion();
   </div>
   <a href="about.html" class="dnav-solo">About Zach</a>
 </div>
+<script>
+(function(){
+  var wrap = document.getElementById('didm-dnav');
+  var nav = document.querySelector('nav');
+  if (wrap && nav) { nav.appendChild(wrap); }
+})();
+</script>
 
 
 </body>

@@ -640,6 +640,13 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
   </div>
   <a href="about.html" class="dnav-solo active">About Zach</a>
 </div>
+<script>
+(function(){
+  var wrap = document.getElementById('didm-dnav');
+  var nav = document.querySelector('nav');
+  if (wrap && nav) { nav.appendChild(wrap); }
+})();
+</script>
 
 
 </body>
