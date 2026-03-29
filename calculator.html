@@ -227,6 +227,8 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
       <a href="5ps.html">The 5 P's</a>
       <a href="funnel.html">Lead Funnel</a>
       <a href="calculator.html" class="active">Calculator</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="about.html">About Zach</a>
     </div>
   </div>
 </nav>
@@ -410,7 +412,22 @@ function toggleSrc(id) {
 
 function updateSrc(id, field, val) {
   const s = SOURCES.find(s=>s.id===id);
-  if (s) { s[field] = val; renderSources(); recalc(); }
+  if (s) {
+    s[field] = val;
+    // KEY FIX: only re-render website conv rate badge, never the full input list
+    if (field === 'visitors' || field === 'leads') {
+      const ws = SOURCES.find(s=>s.isWebsite);
+      if (ws) {
+        const cr = convRate(parseFloat(ws.visitors), parseFloat(ws.leads));
+        const cw = document.querySelector('.conv-display');
+        const cs = document.querySelector('.bench-strip');
+        if (cr !== null) {
+          if (cw) { cw.querySelector('.conv-num').textContent = cr.toFixed(2) + '%'; const b = convBadge(cr); if (b && cw.querySelector('.conv-badge')) cw.querySelector('.conv-badge').outerHTML = b; }
+        }
+      }
+    }
+    recalc();
+  }
 }
 
 function addCustom() {

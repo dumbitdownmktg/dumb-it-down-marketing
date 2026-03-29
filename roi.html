@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing ROI Calculator | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+/* PAGE HEADER */
+.page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.header-left { padding: 4rem 3rem; border-right: 1.5px solid var(--black); }
+.page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+.page-title .accent { color: var(--yellow-dark); }
+.page-intro { font-size: 1rem; color: var(--gray); line-height: 1.75; max-width: 440px; }
+.page-intro strong { color: var(--black); font-weight: 500; }
+.header-right { background: var(--black); padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+.how-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); margin-bottom: 0.25rem; }
+.how-step { display: flex; gap: 1rem; align-items: flex-start; }
+.how-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 28px; height: 28px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.how-text { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.55; padding-top: 4px; }
+.how-text strong { color: var(--white); font-weight: 500; }
+
+/* INDUSTRY SELECTOR */
+.industry-bar { border-bottom: 1.5px solid var(--black); padding: 1.5rem 3rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; background: var(--gray-light); }
+.industry-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.1em; color: var(--gray); white-space: nowrap; }
+.industry-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.industry-pill { padding: 0.35rem 0.85rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; border: 1.5px solid var(--gray); background: transparent; color: var(--gray); transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+.industry-pill:hover { border-color: var(--black); color: var(--black); }
+.industry-pill.active { border-color: var(--black); background: var(--black); color: var(--white); }
+
+/* MAIN TOOL */
+.tool-wrap { display: grid; grid-template-columns: 420px 1fr; border-bottom: 1.5px solid var(--black); min-height: 80vh; }
+
+/* INPUTS */
+.inputs-panel { border-right: 1.5px solid var(--black); }
+.panel-section { padding: 2rem; border-bottom: 1px solid var(--gray-light); }
+.panel-section:last-child { border-bottom: none; }
+.panel-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+.panel-label::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
+.panel-hint { font-size: 0.75rem; color: var(--gray); line-height: 1.5; margin-top: -0.75rem; margin-bottom: 1rem; }
+
+.input-stack { display: flex; flex-direction: column; gap: 1rem; }
+.input-group { display: flex; flex-direction: column; gap: 0.3rem; }
+.input-group label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); display: flex; align-items: center; justify-content: space-between; }
+.input-group label span { font-size: 0.68rem; color: var(--gray-light); letter-spacing: 0.04em; text-transform: none; font-weight: 400; }
+.input-wrap { position: relative; }
+.input-prefix { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--gray); pointer-events: none; }
+.input-suffix { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--gray); pointer-events: none; }
+.tool-input { width: 100%; padding: 0.7rem 0.75rem 0.7rem 1.75rem; border: 1.5px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--black); outline: none; transition: border-color 0.2s; -moz-appearance: textfield; }
+.tool-input::-webkit-outer-spin-button, .tool-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.tool-input:focus { border-color: var(--black); }
+.tool-input.no-prefix { padding-left: 0.75rem; }
+.tool-input.has-suffix { padding-right: 2rem; }
+
+/* slider */
+.slider-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+.slider-row { display: flex; align-items: center; gap: 0.75rem; }
+.slider-row input[type=range] { flex: 1; }
+.slider-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; min-width: 48px; text-align: right; line-height: 1; }
+.bench-hint { font-size: 0.72rem; color: var(--gray); padding: 0.35rem 0.6rem; background: var(--gray-light); display: inline-block; margin-top: 0.25rem; }
+.bench-hint.good { background: rgba(42,157,92,0.1); color: var(--green); }
+.bench-hint.ok { background: rgba(242,201,76,0.15); color: var(--yellow-dark); }
+.bench-hint.bad { background: rgba(232,64,64,0.08); color: var(--red); }
+
+/* RESULTS */
+.results-panel { padding: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; color: var(--gray); text-align: center; gap: 1rem; }
+.empty-big { font-family: 'Bebas Neue', sans-serif; font-size: 6rem; color: var(--gray-light); line-height: 1; }
+
+/* GRADE HERO */
+.grade-hero { background: var(--black); padding: 2.5rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; position: relative; overflow: hidden; }
+.grade-bg { position: absolute; right: -10px; top: -20px; font-family: 'Bebas Neue', sans-serif; font-size: 16rem; color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none; }
+.grade-letter { font-family: 'Bebas Neue', sans-serif; font-size: 6rem; line-height: 1; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; border: 3px solid; flex-shrink: 0; position: relative; z-index: 1; }
+.grade-A { color: var(--yellow); border-color: var(--yellow); }
+.grade-B { color: #5DCAA5; border-color: #5DCAA5; }
+.grade-C { color: #EF9F27; border-color: #EF9F27; }
+.grade-D { color: #F0997B; border-color: #F0997B; }
+.grade-F { color: var(--red); border-color: var(--red); }
+.grade-right { position: relative; z-index: 1; }
+.grade-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+.grade-headline { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.05; color: var(--white); margin-bottom: 0.6rem; }
+.grade-sub { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+.grade-sub strong { color: var(--white); font-weight: 500; }
+
+/* METRICS GRID */
+.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1.5px solid var(--black); }
+.metric-box { background: var(--white); padding: 1.25rem 1.5rem; }
+.metric-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.35rem; }
+.metric-val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; margin-bottom: 0.25rem; }
+.metric-val.good { color: var(--green); }
+.metric-val.warn { color: #EF9F27; }
+.metric-val.bad { color: var(--red); }
+.metric-sub { font-size: 0.73rem; color: var(--gray); line-height: 1.45; }
+
+/* BUDGET RECOMMENDATION */
+.budget-rec { border: 1.5px solid var(--black); }
+.budget-rec-header { background: var(--yellow); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.budget-rec-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.04em; }
+.budget-rec-badge { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; background: var(--black); color: var(--yellow); padding: 0.25rem 0.65rem; }
+.budget-rec-body { padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.budget-col-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+.budget-row { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--gray-light); font-size: 0.85rem; gap: 1rem; }
+.budget-row:last-child { border-bottom: none; }
+.budget-row-label { color: var(--gray); }
+.budget-row-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--black); }
+.budget-row-val.highlight { color: var(--green); }
+.budget-row-val.low { color: var(--red); }
+
+/* VERDICT */
+.verdict { padding: 1.25rem 1.5rem; font-size: 0.9rem; line-height: 1.7; }
+.verdict.A { border-left: 4px solid var(--yellow); background: rgba(242,201,76,0.08); }
+.verdict.B { border-left: 4px solid #2a9d5c; background: rgba(42,157,92,0.07); }
+.verdict.C { border-left: 4px solid #EF9F27; background: rgba(239,159,39,0.08); }
+.verdict.D { border-left: 4px solid #F0997B; background: rgba(240,153,123,0.08); }
+.verdict.F { border-left: 4px solid var(--red); background: rgba(232,64,64,0.07); }
+.verdict strong { font-weight: 500; }
+
+/* NEXT STEPS */
+.ns-wrap { border: 1.5px solid var(--black); }
+.ns-head { background: var(--black); color: var(--yellow); font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; padding: 1rem 1.5rem; }
+.ns-body { display: grid; grid-template-columns: repeat(3,1fr); }
+.ns-item { padding: 1.25rem 1.5rem; border-right: 1px solid var(--gray-light); display: flex; flex-direction: column; gap: 0.5rem; }
+.ns-item:last-child { border-right: none; }
+.ns-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 26px; height: 26px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; }
+.ns-title { font-weight: 500; font-size: 0.85rem; line-height: 1.3; }
+.ns-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.6; }
+
+/* INDUSTRY BENCHMARK COMPARE */
+.bench-compare { border: 1.5px solid var(--black); }
+.bench-compare-head { background: var(--black); color: rgba(255,255,255,0.5); font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; padding: 0.75rem 1.5rem; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem; }
+.bench-compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem; padding: 0.85rem 1.5rem; border-top: 1px solid var(--gray-light); align-items: center; }
+.bench-compare-row:hover { background: var(--gray-light); }
+.bcr-metric { font-size: 0.85rem; font-weight: 500; }
+.bcr-yours { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; }
+.bcr-industry { font-size: 0.82rem; color: var(--gray); }
+.bcr-status { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; width: fit-content; }
+.s-good { background: rgba(42,157,92,0.12); color: var(--green); }
+.s-ok   { background: rgba(242,201,76,0.2); color: var(--yellow-dark); }
+.s-bad  { background: rgba(232,64,64,0.1); color: var(--red); }
+
+.btn-row { display: flex; gap: 0.75rem; }
+.btn-primary { padding: 0.85rem 2rem; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--black); cursor: pointer; transition: background 0.2s, color 0.2s; }
+.btn-primary:hover { background: var(--yellow); color: var(--black); border-color: var(--black); }
+.btn-secondary { padding: 0.85rem 1.5rem; background: transparent; color: var(--black); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--black); cursor: pointer; transition: background 0.2s; }
+.btn-secondary:hover { background: var(--gray-light); }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 1000px) {
+  nav { padding: 1rem 1.25rem; }
+  .page-header { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
+  .header-right { padding: 2rem 1.5rem; }
+  .tool-wrap { grid-template-columns: 1fr; }
+  .inputs-panel { border-right: none; border-bottom: 1.5px solid var(--black); }
+  .results-panel { padding: 2rem 1.5rem; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .grade-hero { grid-template-columns: 1fr; gap: 1rem; }
+  .grade-letter { width: 72px; height: 72px; font-size: 4rem; }
+  .budget-rec-body { grid-template-columns: 1fr; }
+  .ns-body { grid-template-columns: 1fr; }
+  .ns-item { border-right: none; border-bottom: 1px solid var(--gray-light); }
+  .bench-compare-head, .bench-compare-row { grid-template-columns: 1fr 1fr 1fr; }
+  .bench-compare-head > *:nth-child(3), .bench-compare-row > *:nth-child(3) { display: none; }
+  .industry-bar { padding: 1.25rem 1.5rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+  .panel-section { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">Tool 04 / Marketing ROI Calculator</div>
+    <h1 class="page-title">Is your marketing <span class="accent">actually working?</span></h1>
+    <p class="page-intro">Not "is it doing something." <strong>Is it working hard enough for what you're paying for it.</strong> Plug in your numbers and get a grade, a benchmark against your industry, and exactly what you should do next.</p>
+  </div>
+  <div class="header-right">
+    <div class="how-title">What you get</div>
+    <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>A letter grade</strong> on your current marketing ROI. A through F. No sugarcoating.</div></div>
+    <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>A recommended budget</strong> based on your revenue and what businesses like yours actually spend.</div></div>
+    <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Industry benchmarks</strong> so you know if you're ahead, behind, or just wasting money differently than everyone else.</div></div>
+  </div>
+</div>
+
+<!-- INDUSTRY SELECTOR -->
+<div class="industry-bar">
+  <span class="industry-label">Your industry:</span>
+  <div class="industry-pills" id="industry-pills"></div>
+</div>
+
+<div class="tool-wrap">
+  <div class="inputs-panel">
+
+    <div class="panel-section">
+      <div class="panel-label">Your business</div>
+      <div class="input-stack">
+        <div class="input-group">
+          <label>Monthly revenue <span>what comes in the door</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="tool-input" type="number" id="inp-revenue" placeholder="25000" oninput="recalc()">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Average client value <span>per client, lifetime or one-time</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="tool-input" type="number" id="inp-acv" placeholder="1500" oninput="recalc()">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>New clients per month</label>
+          <div class="input-wrap">
+            <span class="input-prefix">#</span>
+            <input class="tool-input" type="number" id="inp-newclients" placeholder="10" oninput="recalc()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Your marketing</div>
+      <div class="input-stack">
+        <div class="input-group">
+          <label>Monthly marketing spend <span>everything: ads, agency, tools</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="tool-input" type="number" id="inp-spend" placeholder="2000" oninput="recalc()">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Close rate <span>leads that become clients</span></label>
+          <div class="slider-wrap">
+            <div class="slider-row">
+              <input type="range" id="inp-close" min="1" max="100" value="25" step="1" oninput="recalc()">
+              <span class="slider-val" id="close-val">25%</span>
+            </div>
+            <span class="bench-hint" id="close-bench">Industry average: loading...</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Client retention <span>% who stay or come back</span></label>
+          <div class="slider-wrap">
+            <div class="slider-row">
+              <input type="range" id="inp-retain" min="1" max="100" value="60" step="1" oninput="recalc()">
+              <span class="slider-val" id="retain-val">60%</span>
+            </div>
+            <span class="bench-hint" id="retain-bench">Industry average: loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="results-panel" id="results-panel">
+    <div class="empty-state">
+      <div class="empty-big">?</div>
+      <p style="font-size:0.9rem;color:var(--gray);line-height:1.65;max-width:300px">Fill in your numbers on the left and we'll tell you exactly where you stand.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+// ---- INDUSTRY BENCHMARKS ----
+const INDUSTRIES = {
+  general: {
+    label: 'General',
+    budgetPct: [5, 12],
+    closeRate: [20, 35],
+    retention: [55, 75],
+    cac: [50, 200],
+    roiGood: 5,
+    roiOk: 2.5,
+  },
+  fitness: {
+    label: 'Fitness / Martial Arts',
+    budgetPct: [7, 15],
+    closeRate: [25, 45],
+    retention: [60, 80],
+    cac: [40, 120],
+    roiGood: 6,
+    roiOk: 3,
+  },
+  home: {
+    label: 'Home Services',
+    budgetPct: [5, 10],
+    closeRate: [30, 55],
+    retention: [45, 70],
+    cac: [80, 300],
+    roiGood: 4,
+    roiOk: 2,
+  },
+  restaurant: {
+    label: 'Restaurant / Food',
+    budgetPct: [3, 9],
+    closeRate: [15, 30],
+    retention: [30, 60],
+    cac: [10, 50],
+    roiGood: 4,
+    roiOk: 2,
+  },
+  health: {
+    label: 'Health / Med Spa',
+    budgetPct: [8, 18],
+    closeRate: [30, 55],
+    retention: [65, 85],
+    cac: [100, 350],
+    roiGood: 6,
+    roiOk: 3,
+  },
+  realestate: {
+    label: 'Real Estate',
+    budgetPct: [10, 20],
+    closeRate: [10, 25],
+    retention: [20, 45],
+    cac: [500, 2000],
+    roiGood: 5,
+    roiOk: 2.5,
+  },
+};
+
+let activeIndustry = 'general';
+
+// ---- INIT INDUSTRY PILLS ----
+function initPills() {
+  document.getElementById('industry-pills').innerHTML = Object.entries(INDUSTRIES).map(([key, ind]) => `
+    <button class="industry-pill ${key === activeIndustry ? 'active' : ''}"
+      onclick="setIndustry('${key}')">${ind.label}</button>
+  `).join('');
+}
+
+function setIndustry(key) {
+  activeIndustry = key;
+  initPills();
+  updateBenchHints();
+  recalc();
+}
+
+function updateBenchHints() {
+  const ind = INDUSTRIES[activeIndustry];
+  const closeVal = parseInt(document.getElementById('inp-close').value) || 25;
+  const retainVal = parseInt(document.getElementById('inp-retain').value) || 60;
+
+  const closeAvg = Math.round((ind.closeRate[0] + ind.closeRate[1]) / 2);
+  const retainAvg = Math.round((ind.retention[0] + ind.retention[1]) / 2);
+
+  const closeBench = document.getElementById('close-bench');
+  closeBench.textContent = `${ind.label} average: ${ind.closeRate[0]}% to ${ind.closeRate[1]}%`;
+  closeBench.className = 'bench-hint ' + (closeVal >= ind.closeRate[1] ? 'good' : closeVal >= ind.closeRate[0] ? 'ok' : 'bad');
+
+  const retainBench = document.getElementById('retain-bench');
+  retainBench.textContent = `${ind.label} average: ${ind.retention[0]}% to ${ind.retention[1]}%`;
+  retainBench.className = 'bench-hint ' + (retainVal >= ind.retention[1] ? 'good' : retainVal >= ind.retention[0] ? 'ok' : 'bad');
+}
+
+// ---- SLIDER LIVE LABELS ----
+document.getElementById('inp-close').addEventListener('input', function() {
+  document.getElementById('close-val').textContent = this.value + '%';
+  updateBenchHints();
+});
+document.getElementById('inp-retain').addEventListener('input', function() {
+  document.getElementById('retain-val').textContent = this.value + '%';
+  updateBenchHints();
+});
+
+// ---- GRADE LOGIC ----
+function getGrade(roi, ind) {
+  if (roi >= ind.roiGood * 1.5) return { letter: 'A', label: 'Crushing it', color: 'A' };
+  if (roi >= ind.roiGood)        return { letter: 'B', label: 'Solid work', color: 'B' };
+  if (roi >= ind.roiOk)          return { letter: 'C', label: 'Room to grow', color: 'C' };
+  if (roi >= 1)                  return { letter: 'D', label: 'Barely breaking even', color: 'D' };
+  return                                { letter: 'F', label: 'Losing money', color: 'F' };
+}
+
+function getVerdict(grade, roi, spend, recBudgetLow, recBudgetHigh, revenue, cac, acv, closeRate, ind) {
+  const overspend = spend > recBudgetHigh;
+  const underspend = spend < recBudgetLow;
+
+  const verdicts = {
+    A: `<strong>Your marketing is genuinely working.</strong> A ${roi.toFixed(1)}x return means every dollar you spend is bringing back ${roi.toFixed(1)} dollars. The question now isn't whether to keep going. It's whether you can scale without breaking what's already working. Before you double the budget, make sure your operations can handle the volume.`,
+    B: `<strong>You're in good shape but not maximizing it yet.</strong> A ${roi.toFixed(1)}x return is solid. ${underspend ? `You're actually underspending for your revenue. Businesses in ${ind.label} typically invest ${ind.budgetPct[0]} to ${ind.budgetPct[1]}% of revenue in marketing. You have room to spend more and grow faster.` : overspend ? `Your spend is on the high side. Make sure you know exactly which channels are driving the most returns before adding more budget.` : `Your spend is in the right range. Focus on improving your close rate and retention to push this toward an A.`}`,
+    C: `<strong>The math works but barely.</strong> ${roi.toFixed(1)}x is positive but thin. ${overspend ? `You're spending more than businesses in ${ind.label} typically do. Either your campaigns need tightening or you need to improve how many of those leads actually close.` : `The issue isn't necessarily spend. At a ${closeRate}% close rate, you're leaving money on the table before it even gets to marketing. Improving how you convert leads will move this grade faster than any ad change.`}`,
+    D: `<strong>You're close to breaking even and that's not a good place to be.</strong> At ${roi.toFixed(1)}x you're getting something back but not enough to justify the risk. The fix is usually one of three things: lower your cost per lead, improve your close rate, or increase what each client is worth to you. Pick one and go hard on it.`,
+    F: `<strong>Right now your marketing is costing more than it's making back.</strong> That's fixable but it requires honesty about where the breakdown is. Is it traffic that doesn't convert? Leads that don't close? Clients that don't stick? Use the funnel tool to map exactly where you're losing people before you spend another dollar.`,
+  };
+  return verdicts[grade.letter];
+}
+
+// ---- MAIN CALC ----
+function recalc() {
+  const revenue    = parseFloat(document.getElementById('inp-revenue').value)    || 0;
+  const acv        = parseFloat(document.getElementById('inp-acv').value)        || 0;
+  const newClients = parseFloat(document.getElementById('inp-newclients').value) || 0;
+  const spend      = parseFloat(document.getElementById('inp-spend').value)      || 0;
+  const closeRate  = parseInt(document.getElementById('inp-close').value)        || 25;
+  const retention  = parseInt(document.getElementById('inp-retain').value)       || 60;
+
+  updateBenchHints();
+
+  const panel = document.getElementById('results-panel');
+
+  if (!revenue || !acv || !newClients || !spend) {
+    panel.innerHTML = `<div class="empty-state"><div class="empty-big">?</div><p style="font-size:0.9rem;color:var(--gray);line-height:1.65;max-width:300px">Fill in your numbers on the left and we'll tell you exactly where you stand.</p></div>`;
+    return;
+  }
+
+  const ind = INDUSTRIES[activeIndustry];
+
+  // ---- CORE CALCULATIONS ----
+  const revenueFromMarketing = newClients * acv;
+  const roi                  = spend > 0 ? revenueFromMarketing / spend : 0;
+  const cac                  = newClients > 0 ? spend / newClients : 0;
+  const spendPct             = revenue > 0 ? (spend / revenue) * 100 : 0;
+  const recBudgetLow         = revenue * (ind.budgetPct[0] / 100);
+  const recBudgetHigh        = revenue * (ind.budgetPct[1] / 100);
+  const ltv                  = acv * (1 + (retention / 100));
+  const ltvCacRatio          = cac > 0 ? ltv / cac : 0;
+  const revenuePerDollar     = spend > 0 ? revenueFromMarketing / spend : 0;
+
+  const grade = getGrade(roi, ind);
+  const verdict = getVerdict(grade, roi, spend, recBudgetLow, recBudgetHigh, revenue, cac, acv, closeRate, ind);
+
+  // ---- SPEND STATUS ----
+  const spendStatus = spend < recBudgetLow ? 'underspending' : spend > recBudgetHigh ? 'overspending' : 'on target';
+  const spendDiff   = spend < recBudgetLow ? recBudgetLow - spend : spend - recBudgetHigh;
+
+  // ---- NEXT STEPS ----
+  const steps = [];
+  if (closeRate < ind.closeRate[0])  steps.push({ title: 'Fix your close rate first', desc: `At ${closeRate}% you're below the ${ind.label} average of ${ind.closeRate[0]} to ${ind.closeRate[1]}%. Improving this moves your ROI more than any budget change.` });
+  if (retention < ind.retention[0])  steps.push({ title: 'Retention is leaking money', desc: `At ${retention}% retention you're churning more than you should. A 10% lift in retention typically costs less than acquiring the same number of new clients.` });
+  if (spendStatus === 'underspending') steps.push({ title: 'You can afford to spend more', desc: `${ind.label} businesses invest ${ind.budgetPct[0]} to ${ind.budgetPct[1]}% of revenue in marketing. You're at ${spendPct.toFixed(1)}%. There's room to grow faster.` });
+  if (spendStatus === 'overspending')  steps.push({ title: 'Audit your spend before adding more', desc: `You're above the typical ${ind.label} range. Make sure you know exactly which channels are earning their keep before increasing budget.` });
+  if (ltvCacRatio < 3) steps.push({ title: 'Lifetime value needs work', desc: `Your LTV to CAC ratio is ${ltvCacRatio.toFixed(1)}x. The goal is 3x or higher. Increasing retention or upsells is the fastest path.` });
+  if (steps.length < 3) steps.push({ title: 'Track cost per closed client', desc: `You know your cost per lead. Now track how many of those leads close and what it costs to get one paying client. That number tells you everything.` });
+  if (steps.length < 3) steps.push({ title: 'Test one thing at a time', desc: `Always be testing but only change one variable at a time. Change your ad creative, your offer, or your landing page. Never all three at once or you won't know what moved the needle.` });
+
+  // ---- BENCHMARK COMPARE ----
+  const benchRows = [
+    {
+      metric: 'Marketing spend',
+      yours: spendPct.toFixed(1) + '%',
+      industry: `${ind.budgetPct[0]} to ${ind.budgetPct[1]}%`,
+      status: spendStatus === 'on target' ? 'good' : spendStatus === 'underspending' ? 'ok' : 'bad',
+      statusLabel: spendStatus === 'on target' ? 'On target' : spendStatus === 'underspending' ? 'Under' : 'Over',
+    },
+    {
+      metric: 'Close rate',
+      yours: closeRate + '%',
+      industry: `${ind.closeRate[0]} to ${ind.closeRate[1]}%`,
+      status: closeRate >= ind.closeRate[1] ? 'good' : closeRate >= ind.closeRate[0] ? 'ok' : 'bad',
+      statusLabel: closeRate >= ind.closeRate[1] ? 'Above avg' : closeRate >= ind.closeRate[0] ? 'Average' : 'Below avg',
+    },
+    {
+      metric: 'Retention',
+      yours: retention + '%',
+      industry: `${ind.retention[0]} to ${ind.retention[1]}%`,
+      status: retention >= ind.retention[1] ? 'good' : retention >= ind.retention[0] ? 'ok' : 'bad',
+      statusLabel: retention >= ind.retention[1] ? 'Above avg' : retention >= ind.retention[0] ? 'Average' : 'Below avg',
+    },
+    {
+      metric: 'Cost per client',
+      yours: '$' + Math.round(cac).toLocaleString(),
+      industry: `$${ind.cac[0]} to $${ind.cac[1]}`,
+      status: cac <= ind.cac[0] ? 'good' : cac <= ind.cac[1] ? 'ok' : 'bad',
+      statusLabel: cac <= ind.cac[0] ? 'Great' : cac <= ind.cac[1] ? 'Average' : 'High',
+    },
+  ];
+
+  panel.innerHTML = `
+    <div class="grade-hero">
+      <div class="grade-bg">${grade.letter}</div>
+      <div class="grade-letter grade-${grade.letter}">${grade.letter}</div>
+      <div class="grade-right">
+        <div class="grade-eyebrow">Your marketing ROI grade</div>
+        <div class="grade-headline">${grade.label}. ${roi.toFixed(1)}x return on your marketing spend.</div>
+        <div class="grade-sub">For every <strong>$1</strong> you spend on marketing you're getting back <strong>$${revenuePerDollar.toFixed(2)}</strong> in client revenue. ${ind.label !== 'General' ? `The benchmark for ${ind.label} is ${ind.roiOk}x to ${ind.roiGood}x.` : ''}</div>
+      </div>
+    </div>
+
+    <div class="verdict ${grade.letter}">${verdict}</div>
+
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <div class="metric-label">Marketing ROI</div>
+        <div class="metric-val ${roi >= ind.roiGood ? 'good' : roi >= ind.roiOk ? 'warn' : 'bad'}">${roi.toFixed(1)}x</div>
+        <div class="metric-sub">Revenue generated per dollar spent</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Cost per new client</div>
+        <div class="metric-val ${cac <= ind.cac[0] ? 'good' : cac <= ind.cac[1] ? 'warn' : 'bad'}">$${Math.round(cac).toLocaleString()}</div>
+        <div class="metric-sub">${ind.label} range: $${ind.cac[0]} to $${ind.cac[1]}</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">LTV to CAC ratio</div>
+        <div class="metric-val ${ltvCacRatio >= 3 ? 'good' : ltvCacRatio >= 1.5 ? 'warn' : 'bad'}">${ltvCacRatio.toFixed(1)}x</div>
+        <div class="metric-sub">Aim for 3x or higher. You are at ${ltvCacRatio.toFixed(1)}x.</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Spend as % of revenue</div>
+        <div class="metric-val ${spendStatus === 'on target' ? 'good' : 'warn'}">${spendPct.toFixed(1)}%</div>
+        <div class="metric-sub">${ind.label} target: ${ind.budgetPct[0]} to ${ind.budgetPct[1]}%</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Estimated client LTV</div>
+        <div class="metric-val">$${Math.round(ltv).toLocaleString()}</div>
+        <div class="metric-sub">ACV adjusted for ${retention}% retention rate</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Revenue from new clients</div>
+        <div class="metric-val good">$${Math.round(revenueFromMarketing).toLocaleString()}</div>
+        <div class="metric-sub">${newClients} clients × $${acv.toLocaleString()} avg value</div>
+      </div>
+    </div>
+
+    <div class="budget-rec">
+      <div class="budget-rec-header">
+        <div class="budget-rec-title">What you should be spending</div>
+        <div class="budget-rec-badge">Based on ${ind.label} benchmarks</div>
+      </div>
+      <div class="budget-rec-body">
+        <div>
+          <div class="budget-col-title">Recommended range</div>
+          <div class="budget-row"><span class="budget-row-label">Low end (${ind.budgetPct[0]}%)</span><span class="budget-row-val">$${Math.round(recBudgetLow).toLocaleString()}/mo</span></div>
+          <div class="budget-row"><span class="budget-row-label">High end (${ind.budgetPct[1]}%)</span><span class="budget-row-val">$${Math.round(recBudgetHigh).toLocaleString()}/mo</span></div>
+          <div class="budget-row"><span class="budget-row-label">You're currently spending</span><span class="budget-row-val ${spendStatus==='on target'?'highlight':spendStatus==='overspending'?'low':''}">$${Math.round(spend).toLocaleString()}/mo</span></div>
+        </div>
+        <div>
+          <div class="budget-col-title">What that means</div>
+          ${spendStatus === 'on target'
+            ? `<p style="font-size:0.85rem;color:var(--gray);line-height:1.7">Your spend is right in the sweet spot for ${ind.label}. Focus on optimizing what you already have rather than just adding more budget.</p>`
+            : spendStatus === 'underspending'
+            ? `<p style="font-size:0.85rem;color:var(--gray);line-height:1.7">You're spending <strong style="color:var(--black)">$${Math.round(spendDiff).toLocaleString()}/mo less</strong> than the low end of what ${ind.label} businesses typically invest. You may be leaving growth on the table.</p>`
+            : `<p style="font-size:0.85rem;color:var(--gray);line-height:1.7">You're spending <strong style="color:var(--black)">$${Math.round(spendDiff).toLocaleString()}/mo more</strong> than the high end of what ${ind.label} businesses typically invest. Make sure every dollar has a job.</p>`
+          }
+        </div>
+      </div>
+    </div>
+
+    ${ind.label !== 'General' ? `
+    <div class="bench-compare">
+      <div class="bench-compare-head">
+        <span>Metric</span><span>Your number</span><span>Industry average</span><span>Status</span>
+      </div>
+      ${benchRows.map(r => `
+        <div class="bench-compare-row">
+          <span class="bcr-metric">${r.metric}</span>
+          <span class="bcr-yours">${r.yours}</span>
+          <span class="bcr-industry">${r.industry}</span>
+          <span class="bcr-status s-${r.status}">${r.statusLabel}</span>
+        </div>`).join('')}
+    </div>` : ''}
+
+    <div class="ns-wrap">
+      <div class="ns-head">What to do with this</div>
+      <div class="ns-body">
+        ${steps.slice(0,3).map((s,i) => `
+          <div class="ns-item">
+            <div class="ns-num">${i+1}</div>
+            <div class="ns-title">${s.title}</div>
+            <div class="ns-desc">${s.desc}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="window.print()">Print / Save results</button>
+      <button class="btn-secondary" onclick="resetAll()">Start over</button>
+    </div>
+  `;
+}
+
+function resetAll() {
+  ['inp-revenue','inp-acv','inp-newclients','inp-spend'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('inp-close').value = 25;
+  document.getElementById('inp-retain').value = 60;
+  document.getElementById('close-val').textContent = '25%';
+  document.getElementById('retain-val').textContent = '60%';
+  recalc();
+}
+
+initPills();
+updateBenchHints();
+recalc();
+</script>
+<script src="email-capture.js"></script>
+<script src="themes.js"></script>
+<script id="didm-nav-script">
+function didmNavToggle() {
+  var btn = document.getElementById('didm-nb');
+  var menu = document.getElementById('didm-nm');
+  if (!btn || !menu) return;
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  var wrap = document.getElementById('didm-nw');
+  if (wrap && !wrap.contains(e.target)) {
+    var b = document.getElementById('didm-nb');
+    var m = document.getElementById('didm-nm');
+    if (b) b.classList.remove('open');
+    if (m) m.classList.remove('open');
+  }
+});
+</script>
+<style id="didm-nav-style">
+.nav-dd-wrap { position: relative; }
+.nav-dd-btn { background: none; border: 1.5px solid var(--black); padding: 0.4rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; color: var(--black); display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; white-space: nowrap; }
+.nav-dd-btn:hover { background: var(--gray-light, #e8e4da); }
+.nav-dd-btn .chev { font-size: 0.55rem; transition: transform 0.2s; display: inline-block; }
+.nav-dd-btn.open .chev { transform: rotate(180deg); }
+.nav-dd-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; background: var(--white, #f5f2eb); border: 1.5px solid var(--black, #0f0f0f); min-width: 190px; z-index: 300; flex-direction: column; box-shadow: 2px 4px 0 rgba(0,0,0,0.08); }
+.nav-dd-menu.open { display: flex; }
+.nav-dd-menu a { display: block; padding: 0.75rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--black, #0f0f0f); text-decoration: none; border-bottom: 1px solid var(--gray-light, #e8e4da); transition: background 0.1s; }
+.nav-dd-menu a:last-child { border-bottom: none; }
+.nav-dd-menu a:hover { background: var(--gray-light, #e8e4da); }
+.nav-dd-menu a.active { color: var(--yellow-dark, #d4a800); }
+</style>
+<div class="nav-dd-wrap" id="didm-nw" style="display:none">
+  <button class="nav-dd-btn" id="didm-nb" onclick="didmNavToggle()">Menu <span class="chev">&#9660;</span></button>
+  <div class="nav-dd-menu" id="didm-nm">
+    <a href="index.html">Home</a>
+    <a href="5ps.html">The 5 P's</a>
+    <a href="funnel.html">Lead Funnel</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="roi.html" class="active">ROI Calculator</a>
+  </div>
+</div>
+<script>
+// Move nav dropdown into nav
+(function() {
+  var wrap = document.getElementById('didm-nw');
+  var nav = document.querySelector('nav');
+  if (wrap && nav) { wrap.style.display = ''; nav.appendChild(wrap); }
+})();
+</script>
+</body>
+</html>

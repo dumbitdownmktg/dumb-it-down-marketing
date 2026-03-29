@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Zach | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; --purple: #7F77DD; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+/* HERO */
+.about-hero { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); min-height: 72vh; }
+.hero-left { background: var(--black); padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+.hero-left-bg { position: absolute; bottom: -60px; left: -30px; font-family: 'Bebas Neue', sans-serif; font-size: 22rem; color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none; user-select: none; }
+.hero-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.25rem; }
+.hero-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4.5rem, 11vw, 9rem); line-height: 0.9; letter-spacing: 0.02em; color: var(--yellow); margin-bottom: 0.5rem; position: relative; }
+.hero-lastname { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 4rem); line-height: 1; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); margin-bottom: 2rem; position: relative; }
+.hero-location { font-size: 0.82rem; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; position: relative; display: flex; align-items: center; gap: 0.5rem; }
+.hero-right { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; gap: 1.75rem; border-left: 1.5px solid var(--black); }
+.hero-right .big { font-size: 1.15rem; color: var(--black); font-weight: 300; line-height: 1.75; }
+.hero-right .big strong { font-weight: 500; }
+.hero-right p { font-size: 0.95rem; color: var(--gray); line-height: 1.8; }
+.hero-right p strong { color: var(--black); font-weight: 500; }
+
+/* CREDENTIALS STRIP */
+.creds-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--black); border-bottom: 1.5px solid var(--black); }
+.cred-box { background: var(--white); padding: 1.75rem 2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.cred-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; line-height: 1; color: var(--black); }
+.cred-num .accent { color: var(--yellow-dark); }
+.cred-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
+.cred-sub { font-size: 0.78rem; color: var(--gray); line-height: 1.4; }
+
+/* EXPERTISE */
+.expertise { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.exp-left { padding: 4rem; border-right: 1.5px solid var(--black); }
+.exp-left h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; margin-bottom: 1.75rem; }
+.exp-left h2 .accent { color: var(--yellow-dark); }
+.exp-left p { font-size: 0.92rem; color: var(--gray); line-height: 1.8; margin-bottom: 1.1rem; max-width: 480px; }
+.exp-left p strong { color: var(--black); font-weight: 500; }
+
+.skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+.skill-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.3rem 0.75rem; border: 1.5px solid var(--black); color: var(--black); background: transparent; }
+
+.exp-right { padding: 4rem; display: flex; flex-direction: column; gap: 0; }
+
+.timeline-item { padding: 1.75rem 0; border-bottom: 1px solid var(--gray-light); display: flex; flex-direction: column; gap: 0.6rem; }
+.timeline-item:last-child { border-bottom: none; }
+.timeline-role { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; }
+.timeline-period { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+.timeline-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+.timeline-desc strong { color: var(--black); font-weight: 500; }
+.timeline-stats { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.4rem; }
+.timeline-stat { font-size: 0.72rem; font-weight: 500; padding: 0.2rem 0.65rem; background: rgba(242,201,76,0.15); color: var(--yellow-dark); letter-spacing: 0.05em; }
+
+/* TOOLS BUILT WITH */
+.built-with { border-bottom: 1.5px solid var(--black); padding: 3rem 4rem; }
+.built-with h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; margin-bottom: 1.5rem; }
+.tools-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.tool-badge { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 1rem; border: 1.5px solid var(--black); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; }
+.tool-badge .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* FUN SECTION */
+.fun-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+
+/* BJJ */
+.bjj-block { padding: 4rem; border-right: 1.5px solid var(--black); }
+.fun-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.75rem; }
+.fun-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.05; margin-bottom: 1.5rem; }
+.fun-title .accent { color: var(--yellow-dark); }
+
+.belt-display { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; }
+.belt-visual { display: flex; align-items: center; gap: 0; height: 28px; }
+.belt-main { background: #5c1a9b; height: 28px; width: 140px; border-radius: 3px 0 0 3px; }
+.belt-tip { background: var(--black); height: 28px; width: 40px; border-radius: 0 3px 3px 0; display: flex; align-items: center; justify-content: center; gap: 3px; padding: 0 6px; }
+.belt-stripe { width: 5px; height: 16px; background: white; border-radius: 1px; }
+.belt-label { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em; color: #5c1a9b; }
+
+.bjj-body p { font-size: 0.9rem; color: var(--gray); line-height: 1.75; margin-bottom: 1rem; }
+.bjj-body p strong { color: var(--black); font-weight: 500; }
+
+.moves-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+.move-card { border: 1.5px solid var(--black); padding: 1rem; }
+.move-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.move-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.5; }
+
+/* MTG */
+.mtg-block { padding: 4rem; background: #1a0a2e; color: #e8d5ff; }
+.mtg-block .fun-tag { color: #9b7fd4; }
+.mtg-block .fun-title { color: #f0e6ff; }
+.mtg-block .fun-title .accent { color: var(--yellow); }
+
+.mtg-card-display { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin: 1.5rem 0; }
+
+/* Hand-drawn MTG card style */
+.mtg-card {
+  width: 200px;
+  background: linear-gradient(145deg, #2a1a4e, #1a0a2e);
+  border: 2px solid #9b7fd4;
+  border-radius: 10px;
+  padding: 0.6rem;
+  font-family: serif;
+  position: relative;
+  box-shadow: 0 0 20px rgba(155,127,212,0.3), inset 0 0 30px rgba(0,0,0,0.3);
+  flex-shrink: 0;
+}
+
+.mtg-card-inner {
+  border: 1px solid rgba(155,127,212,0.4);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.mtg-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 0.5rem;
+  background: rgba(0,0,0,0.4);
+  font-size: 0.62rem;
+  font-weight: bold;
+  color: #e8d5ff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.mtg-card-cost {
+  display: flex;
+  gap: 2px;
+}
+
+.mana-sym {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.mana-g { background: #1a7a1a; color: white; }
+.mana-w { background: #e8d5a0; color: #2a2a00; }
+.mana-1 { background: #888; color: white; }
+
+.mtg-art {
+  width: 100%;
+  height: 110px;
+  background: linear-gradient(180deg, #1a4a1a 0%, #2d6b2d 30%, #8B4513 60%, #5a3010 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shire landscape art */
+.shire-sky { position: absolute; top: 0; left: 0; right: 0; height: 45%; background: linear-gradient(180deg, #b8d4e8 0%, #d4e8d4 100%); }
+.shire-hill { position: absolute; bottom: 35%; left: -10%; width: 120%; height: 45%; background: #4a8a2a; border-radius: 50% 50% 0 0; }
+.shire-hill2 { position: absolute; bottom: 30%; right: -5%; width: 70%; height: 38%; background: #3a7a1a; border-radius: 50% 50% 0 0; }
+.shire-ground { position: absolute; bottom: 0; left: 0; right: 0; height: 38%; background: #6b4a1a; }
+.hobbit-hole { position: absolute; bottom: 32%; left: 50%; transform: translateX(-50%); width: 28px; height: 20px; }
+.hh-door { width: 14px; height: 20px; background: #8B4513; border-radius: 7px 7px 0 0; margin: 0 auto; border: 1px solid #5a3010; }
+.hh-door-circle { width: 8px; height: 8px; border-radius: 50%; background: #f2c94c; margin: 3px auto; }
+.hobbit-figure { position: absolute; bottom: 35%; font-size: 10px; }
+.sam { left: 30%; }
+.frodo { left: 45%; }
+.mtg-tree { position: absolute; font-size: 18px; bottom: 38%; }
+.tree1 { left: 10%; }
+.tree2 { right: 15%; }
+.path { position: absolute; bottom: 30%; left: 0; right: 0; height: 6px; background: #c4a464; opacity: 0.6; }
+
+.mtg-card-type { padding: 0.25rem 0.5rem; background: rgba(0,0,0,0.4); font-size: 0.55rem; color: #b8a0d4; font-family: 'DM Sans', sans-serif; font-style: italic; border-top: 1px solid rgba(155,127,212,0.2); border-bottom: 1px solid rgba(155,127,212,0.2); }
+
+.mtg-card-text { padding: 0.4rem 0.5rem; font-size: 0.5rem; color: #d4c0f0; line-height: 1.5; font-family: 'DM Sans', sans-serif; background: rgba(0,0,0,0.2); min-height: 52px; }
+
+.mtg-card-bottom { padding: 0.2rem 0.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); font-size: 0.5rem; color: #9b7fd4; font-family: 'DM Sans', sans-serif; }
+
+.card-pair { display: flex; gap: -20px; position: relative; }
+.card-pair .mtg-card:last-child { margin-left: -30px; margin-top: 20px; }
+
+.mtg-body p { font-size: 0.88rem; color: #b8a0d4; line-height: 1.75; margin-bottom: 0.85rem; }
+.mtg-body p strong { color: #e8d5ff; font-weight: 500; }
+
+.deck-stat { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0; border-bottom: 1px solid rgba(155,127,212,0.2); }
+.deck-stat:last-child { border-bottom: none; }
+.deck-stat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.deck-stat-text { font-size: 0.82rem; color: #b8a0d4; }
+.deck-stat-text strong { color: #e8d5ff; font-weight: 500; }
+
+/* MARTIAL ARTS SCHOOL */
+.martial-section { background: var(--black); color: var(--white); padding: 5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; border-bottom: 1.5px solid var(--black); align-items: center; }
+.martial-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
+.martial-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1; color: var(--yellow); margin-bottom: 1.5rem; }
+.martial-body p { font-size: 0.92rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 1rem; }
+.martial-body p strong { color: var(--white); font-weight: 500; }
+.funnel-example { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; }
+.funnel-example-title { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.25rem; }
+.funnel-step { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 1rem; }
+.funnel-step:last-child { border-bottom: none; }
+.funnel-step-name { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+.funnel-step-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--yellow); line-height: 1; }
+.funnel-step-drop { font-size: 0.72rem; color: var(--red); font-weight: 500; }
+.funnel-connector-small { width: 1px; height: 12px; background: rgba(255,255,255,0.15); margin: 0 auto; }
+
+/* BELIEFS */
+.beliefs-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.beliefs-left { padding: 4rem; border-right: 1.5px solid var(--black); }
+.beliefs-left h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.05; margin-bottom: 2rem; }
+.beliefs-left h2 .accent { color: var(--yellow-dark); }
+.beliefs-left p { font-size: 0.92rem; color: var(--gray); line-height: 1.8; margin-bottom: 1.1rem; max-width: 460px; }
+.beliefs-left p strong { color: var(--black); font-weight: 500; }
+.beliefs-right { padding: 4rem; display: flex; flex-direction: column; }
+.belief-item { padding: 1.6rem 0; border-bottom: 1px solid var(--gray-light); display: flex; gap: 1.25rem; align-items: flex-start; }
+.belief-item:last-child { border-bottom: none; }
+.belief-icon { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 34px; height: 34px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.belief-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.belief-text p { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+
+/* TOOLS CALLOUT */
+.tools-callout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--black); border-top: 1.5px solid var(--black); border-bottom: 1.5px solid var(--black); }
+.tcc { background: var(--white); padding: 2rem; text-decoration: none; color: var(--black); display: flex; flex-direction: column; gap: 0.75rem; transition: background 0.2s; }
+.tcc:hover { background: var(--black); color: var(--white); }
+.tcc:hover .tcc-num { color: var(--yellow); }
+.tcc:hover .tcc-desc { color: rgba(255,255,255,0.5); }
+.tcc:hover .tcc-arrow { border-color: var(--yellow); color: var(--yellow); }
+.tcc-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; color: var(--gray-light); transition: color 0.2s; }
+.tcc-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.03em; line-height: 1.1; }
+.tcc-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.6; flex: 1; transition: color 0.2s; }
+.tcc-arrow { width: 30px; height: 30px; border: 1.5px solid var(--black); display: flex; align-items: center; justify-content: center; margin-top: auto; transition: all 0.2s; }
+
+/* VENMO */
+.venmo-section { background: var(--black); color: var(--white); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; border-bottom: 1.5px solid var(--black); }
+.venmo-left h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--yellow); margin-bottom: 0.5rem; }
+.venmo-left p { font-size: 0.88rem; color: rgba(255,255,255,0.5); max-width: 460px; line-height: 1.65; }
+.venmo-btn { display: inline-block; padding: 0.9rem 2.25rem; background: var(--yellow); color: var(--black); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border: 1.5px solid var(--yellow); transition: background 0.2s; white-space: nowrap; }
+.venmo-btn:hover { background: var(--white); border-color: var(--white); }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.25rem; }
+  .about-hero, .expertise, .fun-section, .martial-section, .beliefs-section { grid-template-columns: 1fr; }
+  .hero-left { padding: 3.5rem 2rem; min-height: 50vh; }
+  .hero-right { padding: 3rem 2rem; border-left: none; border-top: 1.5px solid var(--black); }
+  .creds-strip { grid-template-columns: 1fr 1fr; }
+  .exp-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 3rem 2rem; }
+  .exp-right { padding: 3rem 2rem; }
+  .bjj-block { border-right: none; border-bottom: 1.5px solid var(--black); padding: 3rem 2rem; }
+  .mtg-block { padding: 3rem 2rem; }
+  .martial-section { padding: 3rem 2rem; gap: 2.5rem; }
+  .beliefs-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 3rem 2rem; }
+  .beliefs-right { padding: 3rem 2rem; }
+  .built-with { padding: 2.5rem 2rem; }
+  .tools-callout { grid-template-columns: 1fr 1fr; }
+  .venmo-section { padding: 2.5rem 2rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .creds-strip { grid-template-columns: 1fr; }
+  .moves-grid { grid-template-columns: 1fr; }
+  .tools-callout { grid-template-columns: 1fr; }
+  .card-pair .mtg-card:last-child { margin-left: -20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<!-- HERO -->
+<div class="about-hero">
+  <div class="hero-left">
+    <div class="hero-left-bg">Z</div>
+    <div class="hero-tag">The person behind all of this</div>
+    <div class="hero-name">Zach</div>
+    <div class="hero-lastname">Maldonado</div>
+    <div class="hero-location">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="5" r="2.5" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><path d="M6 1C3.79 1 2 2.79 2 5c0 3 4 7 4 7s4-4 4-7c0-2.21-1.79-4-4-4z" stroke="rgba(255,255,255,0.35)" stroke-width="1" fill="none"/></svg>
+      Austin, TX
+    </div>
+  </div>
+  <div class="hero-right">
+    <p class="big">Not a marketing agency. Not a guru. <strong>Just someone with 4+ years building the systems that make marketing actually work</strong>, who got tired of watching good business owners waste money because nobody explained the basics.</p>
+    <p>I spend my days building CRM automations, email lifecycle programs, and revenue attribution systems for companies. I spend my free time on the BJJ mats and across a Magic: The Gathering table. And somewhere in between all of that, I built this.</p>
+    <p>Everything on this site is stuff I've either done professionally or watched small businesses struggle with firsthand. <strong>Including my own family's martial arts school.</strong> None of it is theory.</p>
+  </div>
+</div>
+
+<!-- CREDENTIALS STRIP -->
+<div class="creds-strip">
+  <div class="cred-box">
+    <div class="cred-num">4<span class="accent">+</span></div>
+    <div class="cred-label">Years in marketing ops</div>
+    <div class="cred-sub">CRM, automation, lifecycle, and revenue attribution</div>
+  </div>
+  <div class="cred-box">
+    <div class="cred-num">$1.09<span class="accent">M</span></div>
+    <div class="cred-label">Pipeline influenced</div>
+    <div class="cred-sub">Through email, lifecycle, and funnel optimization</div>
+  </div>
+  <div class="cred-box">
+    <div class="cred-num">1.29<span class="accent">M</span></div>
+    <div class="cred-label">Emails sent</div>
+    <div class="cred-sub">99.67% deliverability. Yes, really.</div>
+  </div>
+  <div class="cred-box">
+    <div class="cred-num">45.8<span class="accent">%</span></div>
+    <div class="cred-label">YoY CTR increase</div>
+    <div class="cred-sub">From systematic A/B testing on subject lines, copy, and CTAs</div>
+  </div>
+</div>
+
+<!-- EXPERTISE -->
+<div class="expertise">
+  <div class="exp-left">
+    <h2>What I actually <span class="accent">do</span> for a living</h2>
+    <p>My day job is lifecycle and email operations. That means I build the systems that decide who gets what email, when, and why. CRM architecture, automation flows, segmentation, deliverability, revenue attribution.</p>
+    <p>The boring version: I make sure the right message gets to the right person at the right time without ending up in spam. <strong>The real version: I build the plumbing that turns leads into customers.</strong></p>
+    <p>I've done this at a marketing agency working with clients across industries and before that at an outsourced sales and marketing firm. HubSpot is my home base but I've worked in Pardot, Mailchimp, Zoho, and a bunch of outbound tools.</p>
+    <p>The stuff I built this site with: ChatGPT and Claude for writing and building, GitHub for version control, and Netlify for hosting. Zero agency. Zero budget. Just tools and stubbornness.</p>
+    <div class="skills-grid">
+      <span class="skill-tag">HubSpot</span>
+      <span class="skill-tag">Lifecycle Marketing</span>
+      <span class="skill-tag">Email Automation</span>
+      <span class="skill-tag">Segmentation</span>
+      <span class="skill-tag">Revenue Attribution</span>
+      <span class="skill-tag">Deliverability</span>
+      <span class="skill-tag">A/B Testing</span>
+      <span class="skill-tag">CRM Architecture</span>
+      <span class="skill-tag">Funnel Optimization</span>
+      <span class="skill-tag">Marketing Ops</span>
+      <span class="skill-tag">Claude</span>
+      <span class="skill-tag">ChatGPT</span>
+      <span class="skill-tag">GitHub</span>
+      <span class="skill-tag">Netlify</span>
+    </div>
+  </div>
+  <div class="exp-right">
+    <div class="timeline-item">
+      <div class="timeline-role">Lifecycle & Email Operations Manager</div>
+      <div class="timeline-period">Marketing Agency &nbsp;·&nbsp; May 2023 – Present</div>
+      <div class="timeline-desc">
+        Owned the full email lifecycle from lead capture through re-engagement, sales handoff, and expansion. Built persona and intent-based nurture streams. Designed onboarding, reactivation, and upsell paths driven by behavioral signals. <strong>Managed authentication and inbox placement across SPF, DKIM, and DMARC.</strong> Ran A/B testing on subject lines, copy, CTAs, and layouts.
+      </div>
+      <div class="timeline-stats">
+        <span class="timeline-stat">$1.09M+ pipeline influenced</span>
+        <span class="timeline-stat">$362K direct revenue</span>
+        <span class="timeline-stat">99.67% deliverability</span>
+        <span class="timeline-stat">45.8% YoY CTR lift</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-role">Lifecycle Email & Automation Specialist</div>
+      <div class="timeline-period">Outsourced Sales & Marketing Firm &nbsp;·&nbsp; Jan 2022 – May 2023</div>
+      <div class="timeline-desc">
+        Built lead nurture, drip, and re-engagement programs in HubSpot and Pardot. Created segmented journeys for trials, webinars, and gated content. Maintained list hygiene, deliverability, and performance tracking. Produced dashboards for engagement and conversion analysis.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-role">Education</div>
+      <div class="timeline-period">Texas State University &nbsp;·&nbsp; BASc Business Administration</div>
+      <div class="timeline-desc">Bachelor of Applied Science in Business Administration. Associate of Arts from Central Texas College.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS BUILT WITH -->
+<div class="built-with">
+  <h3>Built this site with</h3>
+  <div class="tools-row">
+    <div class="tool-badge"><div class="dot" style="background:#10a37f"></div>ChatGPT</div>
+    <div class="tool-badge"><div class="dot" style="background:#d97757"></div>Claude</div>
+    <div class="tool-badge"><div class="dot" style="background:#0f0f0f"></div>GitHub</div>
+    <div class="tool-badge"><div class="dot" style="background:#00ad9f"></div>Netlify</div>
+    <div class="tool-badge"><div class="dot" style="background:#f2c94c"></div>Zero budget</div>
+    <div class="tool-badge"><div class="dot" style="background:#e84040"></div>A lot of stubbornness</div>
+  </div>
+</div>
+
+<!-- FUN SECTION -->
+<div class="fun-section">
+
+  <!-- BJJ -->
+  <div class="bjj-block">
+    <div class="fun-tag">When I'm not building funnels</div>
+    <h2 class="fun-title">Purple belt.<br><span class="accent">4 stripes.</span></h2>
+
+    <div class="belt-display">
+      <div class="belt-visual">
+        <div class="belt-main"></div>
+        <div class="belt-tip">
+          <div class="belt-stripe"></div>
+          <div class="belt-stripe"></div>
+          <div class="belt-stripe"></div>
+          <div class="belt-stripe"></div>
+        </div>
+      </div>
+      <div class="belt-label">Brazilian Jiu-Jitsu</div>
+    </div>
+
+    <div class="bjj-body">
+      <p>I train BJJ and have for a while. Purple belt with 4 stripes means you're past the point where you're just surviving and into the point where you have a game. <strong>My game is pressure.</strong></p>
+      <p>I'm not the flashiest person on the mat. I don't do a lot of leg locks or spinning stuff. I like to get heavy, stay heavy, and make people uncomfortable until they give me something.</p>
+      <p>When they give me something, it's usually one of these:</p>
+    </div>
+
+    <div class="moves-grid">
+      <div class="move-card">
+        <div class="move-name">Kimura</div>
+        <div class="move-desc">Shoulder lock from almost anywhere. If I get the grip, it's usually over. Works as a sweep, a control, or a finish.</div>
+      </div>
+      <div class="move-card">
+        <div class="move-name">Paper Cutter Choke</div>
+        <div class="move-desc">Half guard top position. Pressure based. Very much my style. Slow, methodical, and then suddenly it's done.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MTG -->
+  <div class="mtg-block">
+    <div class="fun-tag" style="color:#9b7fd4">Also on the weekends</div>
+    <h2 class="fun-title">Magic: The <span class="accent">Gathering</span></h2>
+
+    <div class="mtg-card-display">
+      <div class="card-pair">
+
+        <!-- Frodo Card -->
+        <div class="mtg-card">
+          <div class="mtg-card-inner">
+            <div class="mtg-card-header">
+              <span style="font-size:0.58rem">Frodo, Adventurous Hobbit</span>
+              <div class="mtg-card-cost">
+                <div class="mana-sym mana-1">1</div>
+                <div class="mana-sym mana-w">W</div>
+              </div>
+            </div>
+            <div class="mtg-art">
+              <div class="shire-sky"></div>
+              <div class="shire-hill2"></div>
+              <div class="shire-hill"></div>
+              <div class="shire-ground"></div>
+              <div class="path"></div>
+              <div class="hobbit-hole">
+                <div class="hh-door"><div class="hh-door-circle"></div></div>
+              </div>
+              <div class="mtg-tree tree1" style="color:#2d6b2d;font-size:16px">🌳</div>
+              <div class="mtg-tree tree2" style="color:#1a4a1a;font-size:14px">🌲</div>
+              <div class="hobbit-figure frodo" style="color:#c8a060;font-size:9px">🧙</div>
+            </div>
+            <div class="mtg-card-type">Legendary Creature — Halfling Scout</div>
+            <div class="mtg-card-text">
+              <div style="margin-bottom:4px;font-style:italic">"Partner with Samwise Gamgee"</div>
+              Whenever Frodo attacks, you may sacrifice a Food. If you do, put a +1/+1 counter on Frodo and he gains indestructible until end of turn.
+              <div style="margin-top:6px;text-align:right;font-weight:bold">1/1</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sam Card -->
+        <div class="mtg-card" style="margin-top:24px">
+          <div class="mtg-card-inner">
+            <div class="mtg-card-header">
+              <span style="font-size:0.58rem">Samwise Gamgee</span>
+              <div class="mtg-card-cost">
+                <div class="mana-sym mana-1">1</div>
+                <div class="mana-sym mana-g">G</div>
+              </div>
+            </div>
+            <div class="mtg-art" style="background:linear-gradient(180deg,#1a3a1a 0%,#2d5a2d 40%,#8B6914 70%,#5a4a10 100%)">
+              <div class="shire-sky" style="background:linear-gradient(180deg,#c8e0b8 0%,#d8e8c8 100%)"></div>
+              <div class="shire-hill" style="background:#3a6a1a"></div>
+              <div class="shire-ground" style="background:#7a5a1a"></div>
+              <div class="path" style="background:#d4a464"></div>
+              <div class="hobbit-figure sam" style="color:#a07030;font-size:9px;bottom:36%">🧑</div>
+              <div style="position:absolute;bottom:36%;left:60%;font-size:8px">🍳</div>
+            </div>
+            <div class="mtg-card-type">Legendary Creature — Halfling Peasant</div>
+            <div class="mtg-card-text">
+              <div style="margin-bottom:4px;font-style:italic">"Partner with Frodo, Adventurous Hobbit"</div>
+              Whenever another creature enters under your control, create a Food token. When Samwise enters, return target creature card from your graveyard to your hand.
+              <div style="margin-top:6px;text-align:right;font-weight:bold">1/1</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mtg-body">
+      <p>Currently running a <strong>Hobbits Food deck</strong> built around Sam and Frodo as partners. The whole thing is basically a value engine that makes Food tokens, uses them to protect Frodo, and grinds the game out until you win through sheer resource advantage.</p>
+      <p>Which, now that I think about it, is exactly how I play BJJ. Pressure. Resources. Patience. Eventual submission.</p>
+    </div>
+
+    <div>
+      <div class="deck-stat"><div class="deck-stat-dot" style="background:#4a8a2a"></div><div class="deck-stat-text"><strong>Format:</strong> Commander / EDH</div></div>
+      <div class="deck-stat"><div class="deck-stat-dot" style="background:#f2c94c"></div><div class="deck-stat-text"><strong>Strategy:</strong> Food tokens, value engine, protect the ring-bearer</div></div>
+      <div class="deck-stat"><div class="deck-stat-dot" style="background:#7F77DD"></div><div class="deck-stat-text"><strong>Colors:</strong> Green / White (Selesnya)</div></div>
+      <div class="deck-stat"><div class="deck-stat-dot" style="background:#e84040"></div><div class="deck-stat-text"><strong>Win con:</strong> Overwhelm through incremental advantage</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MARTIAL ARTS SCHOOL -->
+<div class="martial-section">
+  <div>
+    <div class="martial-label">Where this site started</div>
+    <div class="martial-title">My family runs a martial arts school.</div>
+    <div class="martial-body">
+      <p>Not a franchise. Not a chain. A real small business that lives and dies on how many people walk through the door each month.</p>
+      <p>I watched leads come in from ads and disappear. I watched money get spent without anyone knowing if it was working. I watched a front desk with no follow-up system and no way to track who showed up versus who enrolled.</p>
+      <p><strong>The problem wasn't the marketing. The problem was nobody could see the full picture.</strong> This site is built to fix exactly that. For the school. For the gym. For the plumber who's great at plumbing but has never heard of a cost per lead.</p>
+    </div>
+  </div>
+  <div>
+    <div class="funnel-example">
+      <div class="funnel-example-title">The martial arts school funnel — real numbers</div>
+      <div class="funnel-step"><span class="funnel-step-name">Leads from ads (monthly)</span><span class="funnel-step-num">100</span></div>
+      <div class="funnel-connector-small"></div>
+      <div class="funnel-step"><span class="funnel-step-name">Scheduled a trial class</span><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span class="funnel-step-num">55</span><span class="funnel-step-drop">45% dropped here</span></div></div>
+      <div class="funnel-connector-small"></div>
+      <div class="funnel-step"><span class="funnel-step-name">Actually showed up</span><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span class="funnel-step-num">38</span><span class="funnel-step-drop">31% dropped here</span></div></div>
+      <div class="funnel-connector-small"></div>
+      <div class="funnel-step"><span class="funnel-step-name">Enrolled as a member</span><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span class="funnel-step-num">18</span><span class="funnel-step-drop">53% dropped here</span></div></div>
+      <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1);font-size:0.75rem;color:rgba(255,255,255,0.3);line-height:1.5">18% overall close rate. Industry average is 25 to 45%. Fixing the trial presentation moved this to 28% in 60 days.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BELIEFS -->
+<div class="beliefs-section">
+  <div class="beliefs-left">
+    <h2>What I believe about <span class="accent">marketing</span></h2>
+    <p>Most marketing advice is written for people who already understand marketing. Which is great if you went to school for it. Most small business owners didn't.</p>
+    <p>They're running a business. They're doing the actual work. Marketing is the thing they know they should be better at but never have the time or the right language to figure out.</p>
+    <p><strong>Complicated is easier to sell. Simple is harder to build.</strong> That's why this site exists.</p>
+  </div>
+  <div class="beliefs-right">
+    <div class="belief-item">
+      <div class="belief-icon">01</div>
+      <div class="belief-text"><h3>Give more than you ask for</h3><p>Everything here is free. No email wall before the results, no upsell hiding at the end. Good information given away because it's the right thing to do.</p></div>
+    </div>
+    <div class="belief-item">
+      <div class="belief-icon">02</div>
+      <div class="belief-text"><h3>Keep it simple</h3><p>If you need a marketing degree to understand the marketing advice, the advice is the problem. Plain language. Always.</p></div>
+    </div>
+    <div class="belief-item">
+      <div class="belief-icon">03</div>
+      <div class="belief-text"><h3>Always be testing</h3><p>Nothing here is gospel. Try it, track it, adjust. Your data tells the real story.</p></div>
+    </div>
+    <div class="belief-item">
+      <div class="belief-icon">04</div>
+      <div class="belief-text"><h3>Honest beats polished</h3><p>A D grade with a clear explanation of why beats a nicely designed report that doesn't tell you anything useful.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS CALLOUT -->
+<div class="tools-callout">
+  <a href="5ps.html" class="tcc">
+    <div class="tcc-num">01</div>
+    <div class="tcc-name">The 5 P's Diagnostic</div>
+    <p class="tcc-desc">Find your strongest marketing lever and get a plan built around it.</p>
+    <div class="tcc-arrow">→</div>
+  </a>
+  <a href="funnel.html" class="tcc">
+    <div class="tcc-num">02</div>
+    <div class="tcc-name">Lead Funnel Visualizer</div>
+    <p class="tcc-desc">See exactly where you're losing people between first contact and closed client.</p>
+    <div class="tcc-arrow">→</div>
+  </a>
+  <a href="calculator.html" class="tcc">
+    <div class="tcc-num">03</div>
+    <div class="tcc-name">Cost Per Lead Calculator</div>
+    <p class="tcc-desc">Find out what each lead source costs and whether the math works in your favor.</p>
+    <div class="tcc-arrow">→</div>
+  </a>
+  <a href="roi.html" class="tcc">
+    <div class="tcc-num">04</div>
+    <div class="tcc-name">Marketing ROI Calculator</div>
+    <p class="tcc-desc">Get a letter grade on your marketing and a recommended budget based on your industry.</p>
+    <div class="tcc-arrow">→</div>
+  </a>
+</div>
+
+<!-- VENMO -->
+<div class="venmo-section">
+  <div class="venmo-left">
+    <h3>If this helped, cool.</h3>
+    <p>Everything here is free and always will be. But if this saved you even one bad marketing decision, buying me a coffee is a pretty solid ROI. No pressure. Seriously none.</p>
+  </div>
+  <a href="https://venmo.com/u/zachary-maldonado-6" target="_blank" class="venmo-btn">Buy Zach a coffee on Venmo</a>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script src="themes.js"></script>
+<script id="didm-nav-script">
+function didmNavToggle() {
+  var btn = document.getElementById('didm-nb');
+  var menu = document.getElementById('didm-nm');
+  if (!btn || !menu) return;
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  var wrap = document.getElementById('didm-nw');
+  if (wrap && !wrap.contains(e.target)) {
+    var b = document.getElementById('didm-nb');
+    var m = document.getElementById('didm-nm');
+    if (b) b.classList.remove('open');
+    if (m) m.classList.remove('open');
+  }
+});
+</script>
+<style id="didm-nav-style">
+.nav-dd-wrap { position: relative; }
+.nav-dd-btn { background: none; border: 1.5px solid var(--black); padding: 0.4rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; color: var(--black); display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; white-space: nowrap; }
+.nav-dd-btn:hover { background: var(--gray-light, #e8e4da); }
+.nav-dd-btn .chev { font-size: 0.55rem; transition: transform 0.2s; display: inline-block; }
+.nav-dd-btn.open .chev { transform: rotate(180deg); }
+.nav-dd-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; background: var(--white, #f5f2eb); border: 1.5px solid var(--black, #0f0f0f); min-width: 190px; z-index: 300; flex-direction: column; box-shadow: 2px 4px 0 rgba(0,0,0,0.08); }
+.nav-dd-menu.open { display: flex; }
+.nav-dd-menu a { display: block; padding: 0.75rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--black, #0f0f0f); text-decoration: none; border-bottom: 1px solid var(--gray-light, #e8e4da); transition: background 0.1s; }
+.nav-dd-menu a:last-child { border-bottom: none; }
+.nav-dd-menu a:hover { background: var(--gray-light, #e8e4da); }
+.nav-dd-menu a.active { color: var(--yellow-dark, #d4a800); }
+</style>
+<div class="nav-dd-wrap" id="didm-nw" style="display:none">
+  <button class="nav-dd-btn" id="didm-nb" onclick="didmNavToggle()">Menu <span class="chev">&#9660;</span></button>
+  <div class="nav-dd-menu" id="didm-nm">
+    <a href="index.html">Home</a>
+    <a href="5ps.html">The 5 P's</a>
+    <a href="funnel.html">Lead Funnel</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="roi.html">ROI Calculator</a>
+    <a href="about.html" class="active">About Zach</a>
+  </div>
+</div>
+<script>
+(function() {
+  var wrap = document.getElementById('didm-nw');
+  var nav = document.querySelector('nav');
+  if (wrap && nav) { wrap.style.display = ''; nav.appendChild(wrap); }
+})();
+</script>
+</body>
+</html>
