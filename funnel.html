@@ -248,51 +248,58 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
 <div class="tool-wrap">
   <div class="left-panel">
 
-    <!-- STEP 1: FORM FILL (top of funnel) -->
+    <!-- STEP 1: TOTAL LEADS -->
     <div class="panel-section">
-      <div class="panel-label">Step 1: Lead fills out a form</div>
-      <div class="website-input-block">
-        <div class="web-block-title">Website / Organic traffic</div>
-        <div class="web-input-row">
-          <div class="web-input-group">
-            <label>Monthly visitors</label>
-            <div class="web-input-wrap"><span class="web-input-prefix">#</span><input type="number" id="web-visitors" placeholder="1000" oninput="render()"></div>
-          </div>
-          <div class="web-input-group">
-            <label>Forms filled out</label>
-            <div class="web-input-wrap"><span class="web-input-prefix">#</span><input type="number" id="web-leads" placeholder="20" oninput="render()"></div>
-          </div>
-        </div>
-        <div id="conv-inline-wrap"></div>
+      <div class="panel-label">Step 1: Total leads per month</div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">How many leads come into your business each month across all sources combined?</p>
+      <div style="position:relative;">
+        <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gray);pointer-events:none">#</span>
+        <input type="number" id="total-leads" placeholder="100"
+          style="width:100%;padding:0.9rem 0.75rem 0.9rem 2.25rem;border:1.5px solid var(--black);background:var(--white);font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--black);outline:none;-moz-appearance:textfield;"
+          oninput="render()">
       </div>
-      <div id="source-list"></div>
-      <button class="add-stage-btn" onclick="addCustomSource()" style="margin-top:0.75rem">+ Add a custom source</button>
+      <div id="dont-know-callout" style="display:none;margin-top:0.85rem;padding:0.85rem 1rem;border-left:4px solid var(--red);background:rgba(232,64,64,0.07);font-size:0.82rem;color:var(--black);line-height:1.65;">
+        <strong style="font-weight:500">If you don't know this number, that's the first thing to fix.</strong> Not knowing where your leads come from means every dollar you spend on marketing is basically a guess. This is the most important number in your business right now.
+      </div>
     </div>
 
-    <!-- STEP 2: CRM -->
+    <!-- STEP 2: LEAD SOURCES -->
     <div class="panel-section">
-      <div class="panel-label">Step 2: Leads enter your CRM</div>
-      <input class="crm-input" id="crm-name" type="text" placeholder="e.g. HubSpot, spreadsheet, gut feeling..." value="Your CRM" oninput="render()">
-      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;">What do you actually use to track your leads?</p>
+      <div class="panel-label">Step 2: Lead sources</div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Enter how many leads come from each source. Toggle sources on or off. It adds up to show your breakdown.</p>
+      <div id="source-list"></div>
+      <button class="add-stage-btn" onclick="addCustomSource()" style="margin-top:0.75rem">+ Add a custom source</button>
+      <div id="source-total-wrap" style="margin-top:0.85rem;display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0.85rem;background:var(--gray-light);font-size:0.82rem;">
+          <span style="font-weight:500">Total from sources</span>
+          <span id="source-total" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem"></span>
+        </div>
+        <div id="source-mismatch" style="display:none;margin-top:0.5rem;padding:0.6rem 0.85rem;border-left:3px solid var(--yellow-dark);background:rgba(242,201,76,0.1);font-size:0.75rem;color:var(--gray);line-height:1.5;"></div>
+      </div>
     </div>
 
     <!-- STEP 3: FUNNEL STAGES -->
     <div class="panel-section">
       <div class="panel-label">Step 3: Your funnel stages</div>
-      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Name each step. Enter how many people reach it per month. Drag to reorder.</p>
+      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Name each step from lead to client. Enter how many reach it per month. Drag to reorder.</p>
       <div id="stages-list"></div>
       <button class="add-stage-btn" onclick="addStage()">+ Add a stage</button>
       <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;">Monthly averages are fine. Ballpark beats nothing.</p>
     </div>
 
-
+    <!-- CRM -->
+    <div class="panel-section">
+      <div class="panel-label">Your CRM</div>
+      <input class="crm-input" id="crm-name" type="text" placeholder="e.g. HubSpot, spreadsheet, gut feeling..." value="Your CRM" oninput="render()">
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;">What do you actually use to track your leads?</p>
+    </div>
 
   </div>
 
   <div class="right-panel" id="funnel-output">
     <div class="empty-funnel">
       <div class="empty-big">↓</div>
-      <p style="font-size:0.9rem;line-height:1.65;max-width:280px;text-align:center">Turn on some lead sources and fill in your stage counts to see your funnel.</p>
+      <p style="font-size:0.9rem;line-height:1.65;max-width:280px;text-align:center">Enter your total leads and at least one funnel stage to see your funnel.</p>
     </div>
   </div>
 </div>
@@ -373,13 +380,23 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
 <script>
 // ---- DATA ----
 const SOURCES = [
-  { id:1, name:'Facebook Ads', color:'#1877F2', on:true, leads:'' },
-  { id:2, name:'Google Ads',   color:'#EA4335', on:true, leads:'' },
-  { id:3, name:'Instagram',    color:'#C13584', on:false, leads:'' },
-  { id:4, name:'Word of Mouth',color:'#2a9d5c', on:true, leads:'' },
-  { id:5, name:'Referrals',    color:'#F4A261', on:true, leads:'' },
+  { id:1, name:'Facebook Ads',  color:'#1877F2', on:true,  leads:'' },
+  { id:2, name:'Google Ads',    color:'#EA4335', on:true,  leads:'' },
+  { id:3, name:'Instagram',     color:'#C13584', on:false, leads:'' },
+  { id:4, name:'Word of Mouth', color:'#2a9d5c', on:true,  leads:'' },
+  { id:5, name:'Referrals',     color:'#F4A261', on:true,  leads:'' },
+  { id:6, name:'Website',       color:'#0f0f0f', on:false, leads:'' },
 ];
-let nextSrcId = 6;
+let nextSrcId = 7;
+
+const SOURCE_BENCHMARKS = {
+  'Facebook Ads':  { pct: '20-40%', note: 'Typical for service businesses running paid social' },
+  'Google Ads':    { pct: '25-45%', note: 'Often highest intent leads for local services' },
+  'Instagram':     { pct: '10-25%', note: 'Strong for visual industries, lower intent than Google' },
+  'Word of Mouth': { pct: '20-40%', note: 'The best leads you can get. Should be growing over time.' },
+  'Referrals':     { pct: '15-30%', note: 'Similar to word of mouth. High close rate, zero ad cost.' },
+  'Website':       { pct: '10-20%', note: 'Organic traffic. Grows slowly but compounds over time.' },
+};
 
 let stages = [
   { id:1, name:'Schedules appointment', count:'' },
@@ -402,19 +419,37 @@ function initSources() {
         oninput="event.stopPropagation();srcLeadChange(${s.id},this.value)"
         ${s.on?'':'disabled'}>
     </div>`).join('');
-  updateConvRate();
+  updateSourceTotal();
 }
 
-function updateConvRate() {
-  const wv = parseFloat(document.getElementById('web-visitors').value)||0;
-  const wl = parseFloat(document.getElementById('web-leads').value)||0;
-  const cr = wv > 0 && wl > 0 ? (wl/wv)*100 : null;
-  const cw = document.getElementById('conv-inline-wrap');
-  if (cr !== null) {
-    const cls = cr >= 3 ? 'cb-good' : cr >= 1 ? 'cb-ok' : 'cb-bad';
-    const label = cr >= 3 ? 'Good' : cr >= 1 ? 'Okay' : 'Needs work';
-    cw.innerHTML = `<div class="conv-inline"><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:0.65rem;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase">Your conversion rate</div><div class="conv-inline-num">${cr.toFixed(2)}%</div></div><span class="conv-badge ${cls}">${label}</span></div>`;
-  } else { cw.innerHTML = ''; }
+function updateSourceTotal() {
+  const total   = parseFloat(document.getElementById('total-leads').value)||0;
+  const active  = SOURCES.filter(s=>s.on);
+  const srcSum  = active.reduce((a,s)=>a+(parseFloat(s.leads)||0), 0);
+  const wrap    = document.getElementById('source-total-wrap');
+  const totalEl = document.getElementById('source-total');
+  const mismatch= document.getElementById('source-mismatch');
+  const dontKnow= document.getElementById('dont-know-callout');
+
+  // Show dont-know callout if total leads field is empty
+  dontKnow.style.display = (!document.getElementById('total-leads').value) ? 'block' : 'none';
+
+  if (srcSum > 0) {
+    wrap.style.display = 'block';
+    const pct = total > 0 ? Math.round((srcSum/total)*100) : null;
+    totalEl.textContent = srcSum + (pct !== null ? '  ('+pct+'% of total)' : '');
+    if (total > 0 && Math.abs(srcSum - total) > 2) {
+      const diff = srcSum > total ? srcSum - total : total - srcSum;
+      mismatch.style.display = 'block';
+      mismatch.textContent = srcSum > total
+        ? `Your sources add up to ${srcSum} but your total is ${total}. Either increase your total or reduce source counts.`
+        : `Your sources only account for ${srcSum} of your ${total} total leads. Where are the other ${diff} coming from?`;
+    } else {
+      mismatch.style.display = 'none';
+    }
+  } else {
+    wrap.style.display = 'none';
+  }
 }
 
 function toggleSrc(id) {
@@ -422,19 +457,58 @@ function toggleSrc(id) {
   if (s) { s.on = !s.on; initSources(); render(); }
 }
 
-// KEY FIX: only update data, never re-render the inputs (that caused the focus loss bug)
 function srcLeadChange(id, val) {
   const s = SOURCES.find(s=>s.id===id);
-  if (s) { s.leads = val; render(); }
+  if (s) { s.leads = val; updateSourceTotal(); render(); }
 }
 
 function addCustomSource() {
   const name = prompt('Name your lead source (e.g. TikTok, Direct Mail, Events):');
   if (!name || !name.trim()) return;
-  const colors = ['#7F77DD','#D85A30','#BA7517','#378ADD','#639922'];
+  const colors = ['#7F77DD','#D85A30','#BA7517','#378ADD','#639922','#E84040'];
   const color = colors[SOURCES.length % colors.length];
   SOURCES.push({ id: nextSrcId++, name: name.trim(), color, on: true, leads: '' });
   initSources(); render();
+}
+
+// ---- PIE CHART ----
+function drawPie(sources, total) {
+  const canvas = document.getElementById('pie-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = canvas.width/2, cy = canvas.height/2, r = Math.min(cx,cy) - 8;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const data = sources.filter(s => (parseFloat(s.leads)||0) > 0);
+  if (!data.length) return;
+
+  const sum = data.reduce((a,s) => a+(parseFloat(s.leads)||0), 0);
+  let startAngle = -Math.PI/2;
+
+  data.forEach(s => {
+    const val = parseFloat(s.leads)||0;
+    const slice = (val/sum) * Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, startAngle + slice);
+    ctx.closePath();
+    ctx.fillStyle = s.color;
+    ctx.fill();
+    ctx.strokeStyle = 'var(--white, #f5f2eb)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    startAngle += slice;
+  });
+
+  // center label
+  ctx.fillStyle = '#0f0f0f';
+  ctx.font = 'bold 22px "Bebas Neue", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(sum, cx, cy-8);
+  ctx.font = '11px "DM Sans", sans-serif';
+  ctx.fillStyle = '#6b6b6b';
+  ctx.fillText('leads', cx, cy+10);
 }
 
 // ---- STAGES ----
@@ -448,8 +522,7 @@ function renderStages() {
       style="cursor:grab">
       <div class="drag-handle" title="Drag to reorder">&#8597;</div>
       <input class="stage-input" type="text" placeholder="Stage name..."
-        value="${s.name}"
-        onchange="updateStageName(${s.id},this.value)">
+        value="${s.name}" onchange="updateStageName(${s.id},this.value)">
       <input class="count-input" type="number" placeholder="0"
         value="${s.count||''}"
         title="How many reach this stage per month?"
@@ -460,7 +533,6 @@ function renderStages() {
     </div>`).join('');
 }
 
-// onchange fires on blur so it doesn't re-render while typing mid-word
 function updateStageName(id, val) {
   const s = stages.find(s=>s.id===id);
   if (s) { s.name = val; render(); }
@@ -496,8 +568,8 @@ function dragOver(e, id) {
   const fromIdx = stages.findIndex(s=>s.id===dragId);
   const toIdx   = stages.findIndex(s=>s.id===id);
   if (fromIdx === -1 || toIdx === -1) return;
-  const moved = stages.splice(fromIdx, 1)[0];
-  stages.splice(toIdx, 0, moved);
+  const moved = stages.splice(fromIdx,1)[0];
+  stages.splice(toIdx,0,moved);
   renderStages(); render();
 }
 
@@ -506,29 +578,26 @@ function dragEnd() {
   document.querySelectorAll('.stage-row').forEach(el => el.style.opacity = '1');
 }
 
-// ---- RENDER FUNNEL ----
+// ---- MAIN RENDER ----
 function render() {
-  updateConvRate();
-  const output = document.getElementById('funnel-output');
-  const activeSources = SOURCES.filter(s=>s.on);
-  const webLeads    = parseFloat(document.getElementById('web-leads').value)||0;
-  const webVisitors = parseFloat(document.getElementById('web-visitors').value)||0;
-  const srcLeads    = activeSources.reduce((a,s)=>a+(parseFloat(s.leads)||0),0);
-  const totalLeads  = srcLeads + webLeads;
-  const crmName     = document.getElementById('crm-name').value||'Your CRM';
-  const hasData     = totalLeads > 0 || stages.some(s=>parseFloat(s.count)>0);
+  updateSourceTotal();
+  const output     = document.getElementById('funnel-output');
+  const totalLeads = parseFloat(document.getElementById('total-leads').value)||0;
+  const crmName    = document.getElementById('crm-name').value||'Your CRM';
+  const activeSrcs = SOURCES.filter(s=>s.on && (parseFloat(s.leads)||0)>0);
+  const hasData    = totalLeads > 0 || stages.some(s=>parseFloat(s.count)>0);
 
   if (!hasData) {
-    output.innerHTML = `<div class="empty-funnel"><div class="empty-big">&#8595;</div><p style="font-size:0.9rem;line-height:1.65;max-width:280px;text-align:center">Turn on some lead sources and fill in your stage counts to see your funnel.</p></div>`;
+    output.innerHTML = `<div class="empty-funnel"><div class="empty-big">↓</div><p style="font-size:0.9rem;line-height:1.65;max-width:280px;text-align:center">Enter your total monthly leads and at least one stage count to see your funnel.</p></div>`;
     return;
   }
 
+  // Stage calculations
   const stageData = stages.map((s,i) => {
     const count = parseFloat(s.count)||0;
     const prev  = i===0 ? totalLeads : (parseFloat(stages[i-1].count)||0);
-    const pct   = prev > 0 ? Math.round((count/prev)*100) : 0;
     const drop  = prev > 0 ? Math.round(((prev-count)/prev)*100) : 0;
-    return { ...s, count, pct, drop, prev };
+    return { ...s, count, drop, prev };
   });
 
   const lastStage  = stageData[stageData.length-1];
@@ -536,48 +605,58 @@ function render() {
   const leadsLost  = totalLeads - lastStage.count;
   const worstStage = [...stageData].sort((a,b)=>b.drop-a.drop)[0];
 
-  const allSources = [];
-  if (webLeads > 0) allSources.push({ name:'Website', color:'#0f0f0f', leads:webLeads });
-  activeSources.filter(s=>parseFloat(s.leads)>0).forEach(s=>allSources.push({ name:s.name, color:s.color, leads:parseFloat(s.leads) }));
+  // PIE CHART SECTION
+  const hasSources = activeSrcs.length > 0;
+  const srcSum     = activeSrcs.reduce((a,s)=>a+(parseFloat(s.leads)||0),0);
 
-  const bubblesHTML = allSources.length > 0 ? `
-    <div class="bubbles-row">
-      ${allSources.map(s=>`
-        <div class="bubble">
-          <div class="bubble-circle" style="background:${s.color}">${s.leads}</div>
-          <span class="bubble-name">${s.name}</span>
-        </div>`).join('')}
-    </div>
-    <div class="funnel-arrow-down">&#8595;</div>` : '';
-
-  const formFillHTML = totalLeads > 0 ? `
-    <div class="crm-block" style="background:#2c2c2a">
-      <div class="crm-block-left">
-        <span class="crm-block-label">Top of funnel</span>
-        <span class="crm-block-name" style="font-size:1.3rem">Lead fills out a form</span>
+  const pieHTML = hasSources ? `
+    <div style="border-bottom:1.5px solid var(--black);padding:2rem;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:0.82rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;">
+        Lead sources
+        <span style="flex:1;height:1px;background:var(--gray-light);display:block"></span>
       </div>
-      <div class="crm-block-right">
-        <div class="crm-total-num">${totalLeads}</div>
-        <div class="crm-total-label">leads / month</div>
+      <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
+        <canvas id="pie-canvas" width="130" height="130" style="flex-shrink:0"></canvas>
+        <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;min-width:160px;">
+          ${activeSrcs.map(s => {
+            const leads = parseFloat(s.leads)||0;
+            const pct   = srcSum > 0 ? Math.round((leads/srcSum)*100) : 0;
+            const bench = SOURCE_BENCHMARKS[s.name];
+            return `<div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="display:flex;align-items:center;gap:0.5rem;">
+                <div style="width:10px;height:10px;border-radius:50%;background:${s.color};flex-shrink:0"></div>
+                <span style="font-size:0.8rem;font-weight:500;flex:1">${s.name}</span>
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem">${leads} <span style="font-size:0.7rem;color:var(--gray)">${pct}%</span></span>
+              </div>
+              ${bench ? `<div style="font-size:0.68rem;color:var(--gray);padding-left:1.25rem;line-height:1.45">Typical: ${bench.pct}</div>` : ''}
+            </div>`;
+          }).join('')}
+          ${totalLeads > 0 && Math.abs(srcSum - totalLeads) > 2 ? `
+            <div style="font-size:0.72rem;color:var(--yellow-dark);padding-top:0.25rem;border-top:1px solid var(--gray-light);margin-top:0.25rem">
+              ${srcSum < totalLeads ? `${totalLeads - srcSum} leads unaccounted for` : `${srcSum - totalLeads} over your total`}
+            </div>` : ''}
+        </div>
       </div>
-    </div>
-    <div class="stage-connector"></div>` : '';
+    </div>` : '';
 
+  // FUNNEL VISUAL
   const crmHTML = `
-    <div class="crm-block">
-      <div class="crm-block-left">
-        <span class="crm-block-label">Lead enters</span>
-        <span class="crm-block-name">${crmName}</span>
-      </div>
-      <div class="crm-block-right">
-        <div class="crm-total-num">${totalLeads>0?totalLeads:'?'}</div>
-        <div class="crm-total-label">total leads / month</div>
+    <div style="border-bottom:1.5px solid var(--black);">
+      <div class="crm-block">
+        <div class="crm-block-left">
+          <span class="crm-block-label">All leads enter</span>
+          <span class="crm-block-name">${crmName}</span>
+        </div>
+        <div class="crm-block-right">
+          <div class="crm-total-num">${totalLeads>0?totalLeads:'?'}</div>
+          <div class="crm-total-label">leads / month</div>
+        </div>
       </div>
     </div>`;
 
   const stagesHTML = stageData.map((s,i) => {
     const dropClass = s.drop >= 50 ? 'drop-leak' : s.drop <= 20 ? 'drop-ok' : 'drop-neutral';
-    const dropText  = s.prev > 0 ? `${s.drop}% dropped from previous step` : '';
+    const dropText  = s.prev > 0 && s.count > 0 ? `${s.drop}% dropped from previous step` : '';
     return `
       <div class="stage-connector"></div>
       <div class="funnel-stage">
@@ -604,7 +683,7 @@ function render() {
       <div class="insight-box">
         <div class="insight-label">Overall close rate</div>
         <div class="insight-val ${closeRate>=25?'good':closeRate<10?'warn':''}">${closeRate}%</div>
-        <div class="insight-sub">${closeRate>=25?'Strong. Industry average is 15 to 25%.' : closeRate>=10?'Room to grow. Aim for 25%+.' : 'Needs attention. Find the leak in your stages.'}</div>
+        <div class="insight-sub">${closeRate>=25?'Strong. Industry average is 15 to 25%.' : closeRate>=10?'Room to grow. Aim for 25%+.' : 'Needs attention. Find the leak.'}</div>
       </div>
       <div class="insight-box">
         <div class="insight-label">Leads lost per month</div>
@@ -614,26 +693,24 @@ function render() {
       <div class="insight-box">
         <div class="insight-label">Biggest drop-off</div>
         <div class="insight-val ${worstStage&&worstStage.drop>=40?'warn':''}">${worstStage?worstStage.drop+'%':'N/A'}</div>
-        <div class="insight-sub">${worstStage?'"'+worstStage.name+'" is your biggest leak. Start here.':''}</div>
+        <div class="insight-sub">${worstStage&&worstStage.drop>0?`"${worstStage.name}" is your biggest leak.`:''}</div>
       </div>
     </div>` : '';
 
   let calloutHTML = '';
-  if (worstStage&&worstStage.drop>=55&&totalLeads>0) {
+  if (worstStage&&worstStage.drop>=55&&totalLeads>0)
     calloutHTML = `<div class="hole-callout"><strong>You have a serious hole in your funnel.</strong> "${worstStage.name}" is dropping ${worstStage.drop}% of people. Fix this before spending another dollar on ads.</div>`;
-  } else if (worstStage&&worstStage.drop>=35&&totalLeads>0) {
+  else if (worstStage&&worstStage.drop>=35&&totalLeads>0)
     calloutHTML = `<div class="warn-callout"><strong>There is a leak worth fixing.</strong> "${worstStage.name}" drops ${worstStage.drop}% of people. A simple process tweak here could meaningfully move your close rate.</div>`;
-  } else if (closeRate>=30&&totalLeads>0) {
-    calloutHTML = `<div class="good-callout"><strong>Your funnel is working well.</strong> A ${closeRate}% overall close rate is genuinely strong. Now focus on getting more leads into the top without breaking what is working at the bottom.</div>`;
-  }
+  else if (closeRate>=30&&totalLeads>0)
+    calloutHTML = `<div class="good-callout"><strong>Your funnel is working well.</strong> A ${closeRate}% close rate is genuinely strong. Focus on getting more leads in the top without breaking what is working.</div>`;
 
   const steps = [];
-  if (worstStage&&worstStage.drop>=40) steps.push({ title:`Fix the "${worstStage.name}" step`, body:`You are losing ${worstStage.drop}% of people here. Map out exactly what happens at this step and find the friction. This one fix will move your close rate more than any ad spend change.` });
-  if (closeRate>0&&closeRate<15) steps.push({ title:'Diagnose your full pipeline', body:`A ${closeRate}% close rate means ${100-closeRate} out of 100 leads go nowhere. Before spending more on marketing, understand exactly where each one drops off.` });
-  if (webLeads>0&&webVisitors>0&&(webLeads/webVisitors)*100<2) steps.push({ title:'Improve your website conversion', body:`Your site converts at ${((webLeads/webVisitors)*100).toFixed(1)}%. One clearer CTA above the fold and faster mobile load time can move this without spending more on ads.` });
+  if (worstStage&&worstStage.drop>=40) steps.push({ title:`Fix "${worstStage.name}"`, body:`You are losing ${worstStage.drop}% of people here. Map out exactly what happens at this step and find the friction. This one fix will move your close rate more than any ad spend change.` });
+  if (closeRate>0&&closeRate<15) steps.push({ title:'Diagnose your full pipeline', body:`A ${closeRate}% close rate means ${100-closeRate} out of 100 leads go nowhere. Understand exactly where each one drops off before spending more on marketing.` });
+  if (!hasSources) steps.push({ title:'Track your lead sources', body:'You have not broken down where your leads come from. Knowing your source split is the difference between scaling what works and wasting money on what does not.' });
   if (steps.length<3) steps.push({ title:'Track every stage every month', body:'Trends tell you more than snapshots. Set a reminder to update this funnel at the end of each month and watch where numbers move.' });
   if (steps.length<3) steps.push({ title:'Check your speed to lead', body:'Responding within 5 minutes makes you 9x more likely to make contact. If your follow-up is slow that is probably your biggest hidden leak.' });
-  if (steps.length<3) steps.push({ title:'Compare your lead sources', body:'Not all leads close at the same rate. Head to the calculator to see your cost per lead by source and find out which dollar is working hardest.' });
 
   const nextStepsHTML = `
     <div class="next-steps-wrap">
@@ -649,14 +726,16 @@ function render() {
     </div>`;
 
   output.innerHTML = `
-    ${bubblesHTML}
-    ${formFillHTML}
+    ${pieHTML}
     ${crmHTML}
     ${stagesHTML}
     ${clientWinHTML}
     ${insightsHTML}
     ${calloutHTML}
     ${nextStepsHTML}`;
+
+  // Draw pie chart after DOM update
+  if (hasSources) drawPie(activeSrcs, totalLeads);
 }
 
 initSources();
