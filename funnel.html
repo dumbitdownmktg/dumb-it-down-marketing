@@ -32,21 +32,21 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .how-text strong { color: var(--white); font-weight: 500; }
 
 /* MAIN TOOL */
-.tool-wrap { display: grid; grid-template-columns: 340px 1fr; border-bottom: 1.5px solid var(--black); }
-.left-panel { border-right: 1.5px solid var(--black); display: flex; flex-direction: column; }
-.panel-section { padding: 2rem; border-bottom: 1px solid var(--gray-light); }
+.tool-wrap { display: grid; grid-template-columns: 300px 1fr; border-bottom: 1.5px solid var(--black); min-height: 80vh; }
+.left-panel { border-right: 1.5px solid var(--black); display: flex; flex-direction: column; overflow-y: auto; }
+.panel-section { padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--gray-light); }
 .panel-section:last-child { border-bottom: none; }
-.panel-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+.panel-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.6rem; }
 .panel-label::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
 
 /* SOURCES */
-.source-row { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 1px solid var(--gray-light); cursor: pointer; transition: all 0.15s; margin-bottom: 0.5rem; user-select: none; }
+.source-row { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.65rem; border: 1px solid var(--gray-light); cursor: pointer; transition: all 0.15s; margin-bottom: 0.35rem; user-select: none; }
 .source-row:last-child { margin-bottom: 0; }
 .source-row.active { border-color: var(--black); }
 .source-row:not(.active) { opacity: 0.45; }
 .src-left { display: flex; align-items: center; gap: 0.65rem; }
-.src-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.src-name { font-size: 0.88rem; font-weight: 500; }
+.src-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.src-name { font-size: 0.8rem; font-weight: 500; }
 .src-input { width: 64px; text-align: right; border: none; border-bottom: 1px solid var(--gray-light); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; color: var(--black); outline: none; padding: 0.1rem 0.2rem; -moz-appearance: textfield; }
 .src-input::-webkit-outer-spin-button, .src-input::-webkit-inner-spin-button { -webkit-appearance: none; }
 .src-input:focus { border-color: var(--black); }
@@ -70,8 +70,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .cb-bad { background: rgba(232,64,64,0.1); color: var(--red); }
 
 /* STAGES */
-.stage-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
-.stage-input { flex: 1; padding: 0.5rem 0.7rem; border: 1px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--black); outline: none; transition: border-color 0.2s; }
+.stage-row { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem; }
+.stage-input { flex: 1; padding: 0.38rem 0.55rem; border: 1px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--black); outline: none; transition: border-color 0.2s; min-width: 0; }
 .stage-input:focus { border-color: var(--black); }
 .stage-del { width: 28px; height: 28px; border: 1px solid var(--gray-light); background: transparent; cursor: pointer; font-size: 1rem; color: var(--gray); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
 .stage-del:hover { border-color: var(--red); color: var(--red); }
@@ -84,14 +84,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .count-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.6rem; }
 .count-row:last-child { margin-bottom: 0; }
 .count-label { font-size: 0.84rem; font-weight: 500; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.count-input { width: 80px; padding: 0.45rem 0.65rem; border: 1px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; text-align: right; color: var(--black); outline: none; transition: border-color 0.2s; -moz-appearance: textfield; }
+.count-input { width: 54px; padding: 0.38rem 0.4rem; border: 1px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; text-align: right; color: var(--black); outline: none; transition: border-color 0.2s; -moz-appearance: textfield; flex-shrink: 0; }
 .count-input::-webkit-outer-spin-button, .count-input::-webkit-inner-spin-button { -webkit-appearance: none; }
 .count-input:focus { border-color: var(--black); }
-.crm-input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; }
+.crm-input { width: 100%; padding: 0.45rem 0.65rem; border: 1px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; }
 .crm-input:focus { border-color: var(--black); }
 
 /* RIGHT FUNNEL OUTPUT */
-.right-panel { padding: 3rem; overflow-x: auto; }
+.right-panel { padding: 1.75rem 2rem; overflow-x: auto; }
 .empty-funnel { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; color: var(--gray); text-align: center; gap: 1rem; }
 .empty-big { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--gray-light); line-height: 1; }
 
@@ -251,26 +251,27 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
     <!-- STEP 1: TOTAL LEADS -->
     <div class="panel-section">
       <div class="panel-label">Step 1: Total leads per month</div>
-      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">How many leads come into your business each month across all sources combined?</p>
-      <div style="position:relative;">
-        <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gray);pointer-events:none">#</span>
+      <p style="font-size:0.72rem;color:var(--gray);margin-bottom:0.5rem;">All sources combined.</p>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gray)">#</span>
         <input type="number" id="total-leads" placeholder="100"
-          style="width:100%;padding:0.9rem 0.75rem 0.9rem 2.25rem;border:1.5px solid var(--black);background:var(--white);font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--black);outline:none;-moz-appearance:textfield;"
+          style="flex:1;padding:0.5rem 0.6rem;border:1.5px solid var(--black);background:var(--white);font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--black);outline:none;-moz-appearance:textfield;"
           oninput="render()">
+        <span style="font-size:0.72rem;color:var(--gray);white-space:nowrap">leads/mo</span>
       </div>
-      <div id="dont-know-callout" style="display:none;margin-top:0.85rem;padding:0.85rem 1rem;border-left:4px solid var(--red);background:rgba(232,64,64,0.07);font-size:0.82rem;color:var(--black);line-height:1.65;">
-        <strong style="font-weight:500">If you don't know this number, that's the first thing to fix.</strong> Not knowing where your leads come from means every dollar you spend on marketing is basically a guess. This is the most important number in your business right now.
+      <div id="dont-know-callout" style="display:none;margin-top:0.5rem;padding:0.6rem 0.75rem;border-left:3px solid var(--red);background:rgba(232,64,64,0.07);font-size:0.75rem;color:var(--black);line-height:1.55;">
+        <strong style="font-weight:500">Don't know this number?</strong> That's the real problem. Every marketing dollar you spend is a guess until you track this.
       </div>
     </div>
 
     <!-- STEP 2: LEAD SOURCES -->
     <div class="panel-section">
       <div class="panel-label">Step 2: Lead sources</div>
-      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Enter how many leads come from each source. Toggle sources on or off. It adds up to show your breakdown.</p>
+      <p style="font-size:0.72rem;color:var(--gray);margin-bottom:0.5rem;">Toggle on, enter counts. We'll show the split.</p>
       <div id="source-list"></div>
-      <button class="add-stage-btn" onclick="addCustomSource()" style="margin-top:0.75rem">+ Add a custom source</button>
+      <button class="add-stage-btn" onclick="addCustomSource()" style="margin-top:0.5rem;font-size:0.72rem;padding:0.4rem 0.75rem">+ Add a source</button>
       <div id="source-total-wrap" style="margin-top:0.85rem;display:none">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0.85rem;background:var(--gray-light);font-size:0.82rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0.65rem;background:var(--gray-light);font-size:0.75rem;">
           <span style="font-weight:500">Total from sources</span>
           <span id="source-total" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem"></span>
         </div>
@@ -281,17 +282,17 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
     <!-- STEP 3: FUNNEL STAGES -->
     <div class="panel-section">
       <div class="panel-label">Step 3: Your funnel stages</div>
-      <p style="font-size:0.75rem;color:var(--gray);margin-bottom:0.85rem;">Name each step from lead to client. Enter how many reach it per month. Drag to reorder.</p>
+      <p style="font-size:0.72rem;color:var(--gray);margin-bottom:0.5rem;">Name each step. Enter monthly counts. Drag to reorder.</p>
       <div id="stages-list"></div>
-      <button class="add-stage-btn" onclick="addStage()">+ Add a stage</button>
-      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;">Monthly averages are fine. Ballpark beats nothing.</p>
+      <button class="add-stage-btn" onclick="addStage()" style="font-size:0.72rem;padding:0.4rem 0.75rem">+ Add a stage</button>
+      <p style="font-size:0.72rem;color:var(--gray);margin-top:0.4rem;">Ballpark beats nothing.</p>
     </div>
 
     <!-- CRM -->
     <div class="panel-section">
       <div class="panel-label">Your CRM</div>
       <input class="crm-input" id="crm-name" type="text" placeholder="e.g. HubSpot, spreadsheet, gut feeling..." value="Your CRM" oninput="render()">
-      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;">What do you actually use to track your leads?</p>
+      
     </div>
 
   </div>
@@ -610,13 +611,13 @@ function render() {
   const srcSum     = activeSrcs.reduce((a,s)=>a+(parseFloat(s.leads)||0),0);
 
   const pieHTML = hasSources ? `
-    <div style="border-bottom:1.5px solid var(--black);padding:2rem;">
+    <div style="border-bottom:1.5px solid var(--black);padding:1.25rem 1.75rem;">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:0.82rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;">
         Lead sources
         <span style="flex:1;height:1px;background:var(--gray-light);display:block"></span>
       </div>
       <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
-        <canvas id="pie-canvas" width="130" height="130" style="flex-shrink:0"></canvas>
+        <canvas id="pie-canvas" width="100" height="100" style="flex-shrink:0"></canvas>
         <div style="flex:1;display:flex;flex-direction:column;gap:0.5rem;min-width:160px;">
           ${activeSrcs.map(s => {
             const leads = parseFloat(s.leads)||0;
