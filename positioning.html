@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Positioning Worksheet | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+/* PAGE HEADER */
+.page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.header-left { padding: 4rem 3rem; border-right: 1.5px solid var(--black); }
+.page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.25rem; }
+.page-title .accent { color: var(--yellow-dark); }
+.page-intro { font-size: 1rem; color: var(--gray); line-height: 1.75; max-width: 440px; }
+.page-intro strong { color: var(--black); font-weight: 500; }
+.header-right { background: var(--black); padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+.how-step { display: flex; gap: 1rem; align-items: flex-start; }
+.how-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 28px; height: 28px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.how-text { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.55; padding-top: 4px; }
+.how-text strong { color: var(--white); font-weight: 500; }
+
+/* PROGRESS BAR */
+.progress-bar { border-bottom: 1.5px solid var(--black); padding: 0; background: var(--gray-light); }
+.progress-inner { height: 4px; background: var(--yellow-dark); transition: width 0.4s ease; }
+.progress-label { padding: 0.75rem 3rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
+
+/* WORKSHEET */
+.worksheet-wrap { display: grid; grid-template-columns: 280px 1fr; border-bottom: 1.5px solid var(--black); min-height: 80vh; }
+
+/* STEP NAV */
+.step-nav { border-right: 1.5px solid var(--black); padding: 2rem 0; position: sticky; top: 72px; height: calc(100vh - 72px); overflow-y: auto; }
+.step-nav-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1.5rem; cursor: pointer; transition: background 0.15s; border-left: 3px solid transparent; }
+.step-nav-item:hover { background: var(--gray-light); }
+.step-nav-item.active { border-left-color: var(--black); background: var(--gray-light); }
+.step-nav-item.done { border-left-color: var(--green); }
+.step-nav-item.active.done { border-left-color: var(--black); }
+.step-num { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; width: 26px; height: 26px; border: 1.5px solid var(--gray-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; color: var(--gray); }
+.step-nav-item.active .step-num { background: var(--black); border-color: var(--black); color: var(--white); }
+.step-nav-item.done .step-num { background: var(--green); border-color: var(--green); color: var(--white); }
+.step-nav-item.active.done .step-num { background: var(--black); border-color: var(--black); }
+.step-nav-label { font-size: 0.82rem; font-weight: 500; color: var(--black); line-height: 1.3; }
+.step-nav-sub { font-size: 0.7rem; color: var(--gray); margin-top: 1px; }
+
+/* STEP CONTENT */
+.step-content-area { padding: 3rem; }
+.step-block { display: none; }
+.step-block.active { display: block; }
+
+.step-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.75rem; }
+.step-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; margin-bottom: 0.85rem; }
+.step-title .accent { color: var(--yellow-dark); }
+.step-why { font-size: 0.9rem; color: var(--gray); line-height: 1.75; margin-bottom: 2rem; max-width: 560px; }
+.step-why strong { color: var(--black); font-weight: 500; }
+
+/* QUESTION GROUPS */
+.question-group { margin-bottom: 2rem; }
+.question-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--black); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem; }
+.question-hint { font-size: 0.75rem; color: var(--gray); margin-bottom: 0.6rem; line-height: 1.5; }
+.ws-input { width: 100%; padding: 0.75rem; border: 1.5px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--black); outline: none; transition: border-color 0.2s; resize: vertical; line-height: 1.6; }
+.ws-input:focus { border-color: var(--black); }
+.ws-input::placeholder { color: #b0a99a; }
+textarea.ws-input { min-height: 80px; }
+
+/* MULTIPLE CHOICE */
+.mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.mc-option { padding: 0.75rem 1rem; border: 1.5px solid var(--gray-light); cursor: pointer; transition: all 0.15s; font-size: 0.85rem; font-weight: 500; text-align: left; background: var(--white); font-family: 'DM Sans', sans-serif; color: var(--black); }
+.mc-option:hover { border-color: var(--black); }
+.mc-option.selected { border-color: var(--black); background: var(--black); color: var(--white); }
+
+/* COMPETITOR TABLE */
+.comp-table { width: 100%; border-collapse: collapse; border: 1.5px solid var(--black); }
+.comp-table th { background: var(--black); color: var(--white); font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.08em; padding: 0.6rem 0.85rem; text-align: left; }
+.comp-table td { border: 1px solid var(--gray-light); padding: 0; }
+.comp-table td input { width: 100%; padding: 0.55rem 0.75rem; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--black); outline: none; }
+.comp-table td input::placeholder { color: #b0a99a; }
+
+/* NAV BUTTONS */
+.step-nav-btns { display: flex; gap: 0.75rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-light); }
+.btn-primary { padding: 0.85rem 2rem; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--black); cursor: pointer; transition: all 0.2s; }
+.btn-primary:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow-dark); }
+.btn-secondary { padding: 0.85rem 1.5rem; background: transparent; color: var(--black); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--gray-light); cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { border-color: var(--black); }
+
+/* RESULTS */
+.results-block { display: none; }
+.results-block.active { display: block; }
+
+.position-statement { border: 1.5px solid var(--black); margin-bottom: 2rem; }
+.ps-header { background: var(--black); padding: 1.25rem 1.75rem; }
+.ps-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.14em; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+.ps-headline { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.1; color: var(--yellow); }
+.ps-body { padding: 1.5rem 1.75rem; }
+.ps-copy { font-size: 1rem; color: var(--black); line-height: 1.8; font-weight: 300; }
+.ps-copy strong { font-weight: 500; }
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--black); border: 1.5px solid var(--black); margin-bottom: 1.5rem; }
+.result-box { background: var(--white); padding: 1.25rem 1.5rem; }
+.result-box-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.4rem; }
+.result-box-val { font-size: 0.92rem; color: var(--black); line-height: 1.65; }
+.result-box-val strong { font-weight: 500; }
+
+.usage-section { margin-bottom: 2rem; }
+.usage-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+.usage-items { display: flex; flex-direction: column; gap: 0.6rem; }
+.usage-item { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 1rem; border: 1px solid var(--gray-light); font-size: 0.85rem; line-height: 1.6; }
+.usage-item-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.usage-item strong { font-weight: 500; display: block; margin-bottom: 0.15rem; }
+.usage-item span { color: var(--gray); }
+
+.warning-box { padding: 1rem 1.25rem; border-left: 4px solid var(--red); background: rgba(232,64,64,0.06); font-size:0.85rem; line-height:1.7; margin-bottom:1.5rem; }
+.warning-box strong { font-weight:500; }
+
+.action-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; }
+.btn-download { padding: 0.85rem 1.75rem; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--black); cursor: pointer; transition: all 0.2s; }
+.btn-download:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow-dark); }
+.btn-restart { padding: 0.85rem 1.5rem; background: transparent; color: var(--black); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--gray-light); cursor: pointer; }
+.btn-restart:hover { border-color: var(--black); }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.25rem; }
+  .page-header { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
+  .header-right { padding: 2rem 1.5rem; }
+  .worksheet-wrap { grid-template-columns: 1fr; }
+  .step-nav { position: static; height: auto; display: flex; flex-wrap: wrap; padding: 0.75rem; border-right: none; border-bottom: 1.5px solid var(--black); gap: 0.25rem; }
+  .step-nav-item { padding: 0.5rem 0.85rem; border-left: none; border-bottom: 2px solid transparent; }
+  .step-nav-item.active { border-left-color: transparent; border-bottom-color: var(--black); }
+  .step-nav-sub { display: none; }
+  .step-content-area { padding: 2rem 1.5rem; }
+  .mc-grid { grid-template-columns: 1fr; }
+  .result-grid { grid-template-columns: 1fr; }
+  .progress-label { padding: 0.75rem 1.5rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+<style id="didm-nav-style">
+.dnav{display:flex;align-items:center;gap:0.5rem;}
+.dnav-dd{position:relative;}
+.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
+.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
+.dnav-btn.open .chev{transform:rotate(180deg);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:210px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.open{display:flex;}
+.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
+.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
+.dnav-menu a:last-child{border-bottom:none;}
+.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
+.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
+.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
+.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
+.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">Tool 06 / Positioning Worksheet</div>
+    <h1 class="page-title">Why should someone <span class="accent">choose you?</span></h1>
+    <p class="page-intro">Differentiation is the #1 challenge for small businesses. <strong>Not ads. Not social media. Not SEO.</strong> The businesses that convert best know exactly who they're for, what makes them different, and how to say it in one sentence. This worksheet gets you there.</p>
+  </div>
+  <div class="header-right">
+    <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Answer 6 sets of questions</strong> about your business, your customers, and what makes you different. Takes about 10 minutes.</div></div>
+    <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Get your positioning statement</strong> — a clear, specific sentence that explains why someone should choose you instead of everyone else.</div></div>
+    <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>See exactly where to use it</strong> — your homepage headline, your ads, your sales pitch, your Google Business profile.</div></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar">
+  <div class="progress-label">
+    <span id="progress-text">Step 1 of 6 — Your Business</span>
+    <span id="progress-pct">0% complete</span>
+  </div>
+  <div class="progress-inner" id="progress-inner" style="width:0%"></div>
+</div>
+
+<div class="worksheet-wrap">
+
+  <!-- STEP NAV -->
+  <div class="step-nav" id="step-nav">
+    <div class="step-nav-item active" onclick="goStep(0)">
+      <div class="step-num" id="sn-0">1</div>
+      <div><div class="step-nav-label">Your Business</div><div class="step-nav-sub">What you do and who you serve</div></div>
+    </div>
+    <div class="step-nav-item" onclick="goStep(1)">
+      <div class="step-num" id="sn-1">2</div>
+      <div><div class="step-nav-label">Your Customer</div><div class="step-nav-sub">Who you're really talking to</div></div>
+    </div>
+    <div class="step-nav-item" onclick="goStep(2)">
+      <div class="step-num" id="sn-2">3</div>
+      <div><div class="step-nav-label">Their Problem</div><div class="step-nav-sub">What keeps them up at night</div></div>
+    </div>
+    <div class="step-nav-item" onclick="goStep(3)">
+      <div class="step-num" id="sn-3">4</div>
+      <div><div class="step-nav-label">Your Competition</div><div class="step-nav-sub">Who else they're looking at</div></div>
+    </div>
+    <div class="step-nav-item" onclick="goStep(4)">
+      <div class="step-num" id="sn-4">5</div>
+      <div><div class="step-nav-label">Your Difference</div><div class="step-nav-sub">Why you, not them</div></div>
+    </div>
+    <div class="step-nav-item" onclick="goStep(5)">
+      <div class="step-num" id="sn-5">6</div>
+      <div><div class="step-nav-label">Your Proof</div><div class="step-nav-sub">Why should they believe you</div></div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="step-content-area">
+
+    <!-- STEP 0: YOUR BUSINESS -->
+    <div class="step-block active" id="step-0">
+      <div class="step-eyebrow">Step 1 of 6</div>
+      <h2 class="step-title">What do you <span class="accent">actually do?</span></h2>
+      <p class="step-why">Not the official version. Not what it says on your business license. What do you actually do for people? The clearer you are about this, the better everything else works. <strong>Vague businesses get vague results.</strong></p>
+
+      <div class="question-group">
+        <div class="question-label">Business name</div>
+        <input class="ws-input" type="text" id="q-biz-name" placeholder="e.g. Austin Plumbing Co." oninput="autosave()">
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What type of business is this?</div>
+        <div class="mc-grid">
+          <button class="mc-option" onclick="selectMC(this,'q-biz-type','Local service (plumber, HVAC, landscaping)')">Local service business</button>
+          <button class="mc-option" onclick="selectMC(this,'q-biz-type','Fitness or wellness (gym, martial arts, yoga, med spa)')">Fitness / wellness</button>
+          <button class="mc-option" onclick="selectMC(this,'q-biz-type','Restaurant or food business')">Restaurant / food</button>
+          <button class="mc-option" onclick="selectMC(this,'q-biz-type','Professional services (coaching, consulting, accounting)')">Professional services</button>
+          <button class="mc-option" onclick="selectMC(this,'q-biz-type','Retail or ecommerce')">Retail / ecommerce</button>
+          <button class="mc-option" onclick="selectMC(this,'q-biz-type','Real estate')">Real estate</button>
+        </div>
+        <input type="hidden" id="q-biz-type" value="">
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">In one sentence, what do you do for people?</div>
+        <div class="question-hint">Pretend you're explaining it to someone at a barbecue who just asked "what do you do?" Don't make it fancy.</div>
+        <textarea class="ws-input" id="q-biz-what" placeholder="e.g. We fix plumbing problems for homeowners in Austin, usually the same day they call." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What geography or market do you serve?</div>
+        <input class="ws-input" type="text" id="q-biz-geo" placeholder="e.g. Austin, TX and surrounding suburbs" oninput="autosave()">
+      </div>
+
+      <div class="step-nav-btns">
+        <button class="btn-primary" onclick="nextStep()">Next: Your Customer →</button>
+      </div>
+    </div>
+
+    <!-- STEP 1: YOUR CUSTOMER -->
+    <div class="step-block" id="step-1">
+      <div class="step-eyebrow">Step 2 of 6</div>
+      <h2 class="step-title">Who are you <span class="accent">really for?</span></h2>
+      <p class="step-why">Most businesses say "everyone." Everyone is not a customer. <strong>The more specific you are about who you're talking to, the more that person feels like you're talking directly to them.</strong> That feeling is what drives calls, clicks, and conversions.</p>
+
+      <div class="question-group">
+        <div class="question-label">Who is your best customer? Describe them specifically.</div>
+        <div class="question-hint">Age range, situation, what they own or do, what they care about. Not "homeowners" — "homeowners in Austin who have lived in their house 10+ years and want to fix it up before selling."</div>
+        <textarea class="ws-input" id="q-cust-who" placeholder="e.g. Parents of kids aged 6-14 in South Austin who want their child to learn discipline and self-confidence, not just fighting." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What does your best customer look like when they're doing well?</div>
+        <div class="question-hint">What outcome have they achieved? What does their life look like after working with you?</div>
+        <textarea class="ws-input" id="q-cust-outcome" placeholder="e.g. Their kid is more confident, more focused in school, and actually excited to go to class every week." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What does your worst-fit customer look like?</div>
+        <div class="question-hint">This is just as important. Who do you not want? Who's a bad match for what you offer?</div>
+        <textarea class="ws-input" id="q-cust-bad" placeholder="e.g. People who just want cheap babysitting or who will pull their kid at the first sign of a tough class." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="step-nav-btns">
+        <button class="btn-secondary" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" onclick="nextStep()">Next: Their Problem →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: THEIR PROBLEM -->
+    <div class="step-block" id="step-2">
+      <div class="step-eyebrow">Step 3 of 6</div>
+      <h2 class="step-title">What problem are you <span class="accent">actually solving?</span></h2>
+      <p class="step-why">People don't buy products or services. They buy solutions to problems. <strong>The business that best describes the customer's problem wins, because the customer assumes you also have the best solution.</strong></p>
+
+      <div class="question-group">
+        <div class="question-label">What is the practical problem your customer has?</div>
+        <div class="question-hint">The surface-level thing. What's broken, missing, or not working?</div>
+        <textarea class="ws-input" id="q-prob-practical" placeholder="e.g. Their pipe is leaking and they don't know how bad it is or who to trust to fix it." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What is the emotional problem underneath it?</div>
+        <div class="question-hint">What are they actually worried about, stressed by, or embarrassed about? This is usually what drives the decision.</div>
+        <textarea class="ws-input" id="q-prob-emotional" placeholder="e.g. They're worried about getting ripped off, not knowing if the quote is fair, and having someone in their house who they can't trust." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What happens if they do nothing?</div>
+        <div class="question-hint">What's the cost of inaction? This is your urgency lever.</div>
+        <textarea class="ws-input" id="q-prob-inaction" placeholder="e.g. A small leak becomes water damage, mold, and a $10,000 repair bill." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="step-nav-btns">
+        <button class="btn-secondary" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" onclick="nextStep()">Next: Your Competition →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: COMPETITION -->
+    <div class="step-block" id="step-3">
+      <div class="step-eyebrow">Step 4 of 6</div>
+      <h2 class="step-title">Who else are they <span class="accent">looking at?</span></h2>
+      <p class="step-why">You don't position yourself in a vacuum. You position yourself relative to the alternatives. <strong>If you don't know what your competitors say, you might be saying the exact same thing.</strong></p>
+
+      <div class="question-group">
+        <div class="question-label">Name your top 3 competitors</div>
+        <div class="question-hint">Could be specific businesses, general alternatives, or even "doing nothing."</div>
+        <table class="comp-table">
+          <thead><tr><th>Competitor</th><th>What they say about themselves</th><th>What they're known for</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><input type="text" id="comp-1-name" placeholder="Competitor 1" oninput="autosave()"></td>
+              <td><input type="text" id="comp-1-say" placeholder="e.g. 'Trusted since 1998'" oninput="autosave()"></td>
+              <td><input type="text" id="comp-1-known" placeholder="e.g. Cheapest price" oninput="autosave()"></td>
+            </tr>
+            <tr>
+              <td><input type="text" id="comp-2-name" placeholder="Competitor 2" oninput="autosave()"></td>
+              <td><input type="text" id="comp-2-say" placeholder="" oninput="autosave()"></td>
+              <td><input type="text" id="comp-2-known" placeholder="" oninput="autosave()"></td>
+            </tr>
+            <tr>
+              <td><input type="text" id="comp-3-name" placeholder="Competitor 3" oninput="autosave()"></td>
+              <td><input type="text" id="comp-3-say" placeholder="" oninput="autosave()"></td>
+              <td><input type="text" id="comp-3-known" placeholder="" oninput="autosave()"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What do they all have in common?</div>
+        <div class="question-hint">What does every competitor say? This is your white space — the thing none of them own that you could.</div>
+        <textarea class="ws-input" id="q-comp-common" placeholder="e.g. They all say 'experienced' and 'reliable' but nobody talks about transparent pricing or how long the job will actually take." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="step-nav-btns">
+        <button class="btn-secondary" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" onclick="nextStep()">Next: Your Difference →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: YOUR DIFFERENCE -->
+    <div class="step-block" id="step-4">
+      <div class="step-eyebrow">Step 5 of 6</div>
+      <h2 class="step-title">Why you, not <span class="accent">them?</span></h2>
+      <p class="step-why">This is the most important question in marketing. <strong>Your answer needs to be specific, true, and something your competition can't easily copy.</strong> "Great service" is not a differentiator. Everyone says it. Nobody believes it.</p>
+
+      <div class="question-group">
+        <div class="question-label">What do you do better than anyone else?</div>
+        <div class="question-hint">Be specific. Not "we care more." What is the actual thing you do differently — a process, a policy, a result, a specialization?</div>
+        <textarea class="ws-input" id="q-diff-better" placeholder="e.g. We're the only plumber in Austin that gives you a fixed price before we start — not an estimate. What we quote is what you pay." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What do your best customers say about you that surprises them?</div>
+        <div class="question-hint">The thing they didn't expect. What do you hear in reviews or testimonials that's specific to you?</div>
+        <textarea class="ws-input" id="q-diff-surprise" placeholder="e.g. They're always surprised that we call them back within 20 minutes and that the guy who shows up is the same person every time." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What would your customers lose if you disappeared tomorrow?</div>
+        <div class="question-hint">The thing only you provide. If a competitor could fill the gap perfectly, it's not your differentiator.</div>
+        <textarea class="ws-input" id="q-diff-unique" placeholder="e.g. The only person who actually explains what's wrong in plain English instead of just handing over a big invoice." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">If you could only say one thing about your business, what would it be?</div>
+        <textarea class="ws-input" id="q-diff-one" placeholder="e.g. We show up same day, we tell you the price upfront, and we clean up when we leave." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="step-nav-btns">
+        <button class="btn-secondary" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" onclick="nextStep()">Next: Your Proof →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: PROOF -->
+    <div class="step-block" id="step-5">
+      <div class="step-eyebrow">Step 6 of 6</div>
+      <h2 class="step-title">Why should they <span class="accent">believe you?</span></h2>
+      <p class="step-why">Anyone can claim anything. <strong>Proof turns a claim into a fact.</strong> Your positioning only works if there's something behind it that makes a skeptical customer stop scrolling and think "okay, this is different."</p>
+
+      <div class="question-group">
+        <div class="question-label">What numbers or results can you prove?</div>
+        <div class="question-hint">Reviews count, Google rating, years in business, jobs completed, clients served, response time. Real numbers, not estimates.</div>
+        <textarea class="ws-input" id="q-proof-numbers" placeholder="e.g. 4.9 stars on Google (127 reviews). In business 11 years. 500+ jobs completed in Austin." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What's a specific result you got for a customer you can share?</div>
+        <div class="question-hint">The more specific the better. "We helped a family avoid $8,000 in water damage by catching a slow leak early" beats "we've helped many homeowners."</div>
+        <textarea class="ws-input" id="q-proof-result" placeholder="e.g. Last month we found a hidden leak under the foundation that two other plumbers missed. Saved the homeowner $12,000 in potential damage." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="question-group">
+        <div class="question-label">What guarantees or policies back up your claims?</div>
+        <div class="question-hint">Warranties, satisfaction guarantees, fixed pricing policies, response time promises. These reduce the risk of saying yes.</div>
+        <textarea class="ws-input" id="q-proof-guarantee" placeholder="e.g. Fixed price guarantee — if it takes longer than we said, we eat the cost. No exceptions." oninput="autosave()"></textarea>
+      </div>
+
+      <div class="step-nav-btns">
+        <button class="btn-secondary" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" onclick="generateResults()">Generate my positioning →</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="step-block" id="step-results">
+      <div class="step-eyebrow">Your positioning</div>
+      <h2 class="step-title">Here's what you've <span class="accent">got to work with.</span></h2>
+      <p class="step-why" style="margin-bottom:2rem">This is built from your answers. <strong>It is a starting point, not a final draft.</strong> Read it out loud. If it sounds like you, use it. If something feels off, go back and sharpen that section.</p>
+
+      <!-- MAIN POSITIONING STATEMENT -->
+      <div class="position-statement" id="ps-output"></div>
+
+      <!-- BREAKDOWN GRID -->
+      <div class="result-grid" id="result-grid-output"></div>
+
+      <!-- WHERE TO USE IT -->
+      <div class="usage-section">
+        <div class="usage-title">Where to use this immediately</div>
+        <div class="usage-items">
+          <div class="usage-item"><div class="usage-item-icon">🌐</div><div><strong>Homepage headline</strong><span>The first thing someone reads when they land on your site. If your headline doesn't explain why you in 5 seconds, they leave.</span></div></div>
+          <div class="usage-item"><div class="usage-item-icon">📢</div><div><strong>Ad headline and first line</strong><span>Your Facebook or Google ad headline should be your core differentiator, not your business name. Nobody clicks because of your name.</span></div></div>
+          <div class="usage-item"><div class="usage-item-icon">📍</div><div><strong>Google Business profile description</strong><span>Most businesses leave this vague. Put your positioning statement here and you'll stand out from every competitor on the map.</span></div></div>
+          <div class="usage-item"><div class="usage-item-icon">💬</div><div><strong>Your sales pitch</strong><span>When someone asks "why should I go with you?" this is the answer. Specific, confident, no fluff.</span></div></div>
+          <div class="usage-item"><div class="usage-item-icon">✉️</div><div><strong>Email signature and subject lines</strong><span>Add your core differentiator to your email signature. Use it in subject lines when reaching out cold.</span></div></div>
+        </div>
+      </div>
+
+      <!-- WARNING -->
+      <div class="warning-box" id="warnings-output"></div>
+
+      <!-- NEXT STEPS -->
+      <div class="usage-section">
+        <div class="usage-title">What to do this week</div>
+        <div id="next-steps-output"></div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-download" onclick="downloadPositioning()">Download as PDF</button>
+        <button class="btn-restart" onclick="restartWorksheet()">Start over</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Honor system: $49 once &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+// ---- STATE ----
+let currentStep = 0;
+const TOTAL_STEPS = 6;
+
+const STEPS = [
+  { id:'step-0', label:'Your Business',    sub:'What you do and who you serve' },
+  { id:'step-1', label:'Your Customer',    sub:'Who you\'re really talking to' },
+  { id:'step-2', label:'Their Problem',    sub:'What keeps them up at night' },
+  { id:'step-3', label:'Your Competition', sub:'Who else they\'re looking at' },
+  { id:'step-4', label:'Your Difference',  sub:'Why you, not them' },
+  { id:'step-5', label:'Your Proof',       sub:'Why should they believe you' },
+];
+
+// ---- NAVIGATION ----
+function goStep(n) {
+  if (n < 0 || n >= TOTAL_STEPS) return;
+
+  // hide all
+  document.querySelectorAll('.step-block').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.step-nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('step-results').classList.remove('active');
+
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+  document.querySelectorAll('.step-nav-item')[n].classList.add('active');
+
+  updateProgress();
+  window.scrollTo(0, 0);
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS - 1) goStep(currentStep + 1);
+}
+
+function prevStep() {
+  if (currentStep > 0) goStep(currentStep - 1);
+}
+
+function updateProgress() {
+  const pct = Math.round((currentStep / TOTAL_STEPS) * 100);
+  document.getElementById('progress-inner').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = 'Step ' + (currentStep + 1) + ' of ' + TOTAL_STEPS + ' — ' + STEPS[currentStep].label;
+  document.getElementById('progress-pct').textContent = pct + '% complete';
+
+  // Mark done steps
+  document.querySelectorAll('.step-nav-item').forEach((item, i) => {
+    item.classList.toggle('done', i < currentStep);
+  });
+}
+
+// ---- MULTIPLE CHOICE ----
+function selectMC(btn, fieldId, value) {
+  btn.closest('.mc-grid').querySelectorAll('.mc-option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(fieldId).value = value;
+  autosave();
+}
+
+// ---- AUTOSAVE ----
+function autosave() {
+  // nothing needed, data lives in DOM inputs
+}
+
+// ---- GENERATE RESULTS ----
+function generateResults() {
+  const biz    = document.getElementById('q-biz-name').value.trim() || 'Your Business';
+  const type   = document.getElementById('q-biz-type').value || 'your type of business';
+  const what   = document.getElementById('q-biz-what').value.trim();
+  const geo    = document.getElementById('q-biz-geo').value.trim();
+  const who    = document.getElementById('q-cust-who').value.trim();
+  const outcome= document.getElementById('q-cust-outcome').value.trim();
+  const probP  = document.getElementById('q-prob-practical').value.trim();
+  const probE  = document.getElementById('q-prob-emotional').value.trim();
+  const compCommon = document.getElementById('q-comp-common').value.trim();
+  const diffBetter = document.getElementById('q-diff-better').value.trim();
+  const diffSurprise = document.getElementById('q-diff-surprise').value.trim();
+  const diffOne = document.getElementById('q-diff-one').value.trim();
+  const proofNums = document.getElementById('q-proof-numbers').value.trim();
+  const proofResult = document.getElementById('q-proof-result').value.trim();
+  const proofGuarantee = document.getElementById('q-proof-guarantee').value.trim();
+
+  // Build positioning statement
+  const core = diffOne || diffBetter;
+  const forWho = who ? who.split('.')[0].toLowerCase() : 'small business owners in ' + (geo || 'your area');
+  const headline = biz
+    ? `${biz} — ${core ? core.split('.')[0] : 'a different kind of ' + type}`
+    : `A different kind of ${type}`;
+
+  const para1 = `Most ${type.toLowerCase().replace('local service (plumber, hvac, landscaping)','local service businesses').replace('fitness or wellness (gym, martial arts, yoga, med spa)','fitness and wellness businesses')} all sound the same. ${compCommon ? '"' + compCommon.split('.')[0] + '."' : '"Experienced. Reliable. Trusted."'} ${biz} is different${geo ? ' in ' + geo : ''}.`;
+
+  const para2 = core
+    ? core.charAt(0).toUpperCase() + core.slice(1) + (core.endsWith('.') ? '' : '.')
+    : 'We believe our clients deserve straight answers, fair prices, and a team that actually shows up.';
+
+  const para3 = proofNums
+    ? proofNums.split('.')[0] + '.'
+    : outcome ? `The result: ${outcome.split('.')[0]}.` : '';
+
+  // Output
+  document.getElementById('ps-output').innerHTML = `
+    <div class="ps-header">
+      <div class="ps-label">Your core positioning statement</div>
+      <div class="ps-headline">${headline}</div>
+    </div>
+    <div class="ps-body">
+      <p class="ps-copy">${para1}</p>
+      <br>
+      <p class="ps-copy"><strong>${para2}</strong></p>
+      ${para3 ? '<br><p class="ps-copy">' + para3 + '</p>' : ''}
+    </div>`;
+
+  document.getElementById('result-grid-output').innerHTML = [
+    { label:'Who you\'re for', val: who || '—' },
+    { label:'Core differentiator', val: diffBetter || diffOne || '—' },
+    { label:'Their real problem', val: probE || probP || '—' },
+    { label:'The proof', val: proofNums || proofResult || '—' },
+    { label:'The outcome they want', val: outcome || '—' },
+    { label:'Your guarantee', val: proofGuarantee || '—' },
+  ].map(r => `
+    <div class="result-box">
+      <div class="result-box-label">${r.label}</div>
+      <div class="result-box-val">${r.val}</div>
+    </div>`).join('');
+
+  // Warnings
+  const warns = [];
+  if (!diffBetter && !diffOne) warns.push('Your differentiator section is empty. This is the most important part. Go back to Step 5 and push yourself to be specific.');
+  if (!who) warns.push('You didn\'t define your customer specifically. "Everyone" is not a target market. The more specific you get, the better your marketing converts.');
+  if (!proofNums && !proofResult) warns.push('You have no proof points. Claims without evidence get ignored. Even your Google star rating counts — add something specific.');
+  if (!compCommon) warns.push('You didn\'t analyze what your competitors say. If you don\'t know what they\'re claiming, you might be saying the exact same thing without knowing it.');
+
+  document.getElementById('warnings-output').innerHTML = warns.length
+    ? '<strong>Before you use this — a few gaps to close:</strong><br><br>' + warns.map((w,i) => `${i+1}. ${w}`).join('<br><br>')
+    : '<strong style="color:var(--green)">Solid work.</strong> You\'ve filled in enough to have a real positioning foundation. The statement above is a starting point — refine it until it sounds exactly like you.';
+  document.getElementById('warnings-output').style.borderLeftColor = warns.length ? 'var(--red)' : 'var(--green)';
+  document.getElementById('warnings-output').style.background = warns.length ? 'rgba(232,64,64,0.06)' : 'rgba(42,157,92,0.07)';
+
+  // Next steps
+  const steps = [
+    { t: 'Put it on your homepage today', d: 'Take your core differentiator from Step 5 and make it the first headline on your website. Not your business name. Not "welcome." The reason someone should choose you.' },
+    { t: 'Test it on your next ad', d: 'Run your next Facebook or Google ad using your positioning statement as the headline. Compare it against your current headline. See which one gets more clicks.' },
+    { t: 'Add it to your Google Business profile', d: 'Your business description is free real estate that most businesses waste. Put your positioning statement there. You\'ll stand out from every competitor on the map.' },
+  ];
+
+  document.getElementById('next-steps-output').innerHTML = `<div class="usage-items">${steps.map((s,i) => `
+    <div class="usage-item">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;width:26px;height:26px;background:var(--yellow);color:var(--black);display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+      <div><strong>${s.t}</strong><span>${s.d}</span></div>
+    </div>`).join('')}</div>`;
+
+  // Show results
+  document.querySelectorAll('.step-block').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.step-nav-item').forEach(i => i.classList.remove('active', 'done'));
+  document.querySelectorAll('.step-nav-item').forEach(i => i.classList.add('done'));
+  document.getElementById('step-results').classList.add('active');
+
+  document.getElementById('progress-inner').style.width = '100%';
+  document.getElementById('progress-text').textContent = 'Complete — Your positioning is ready';
+  document.getElementById('progress-pct').textContent = '100% complete';
+
+  window.scrollTo(0, 0);
+}
+
+function restartWorksheet() {
+  document.querySelectorAll('.ws-input').forEach(i => i.value = '');
+  document.querySelectorAll('.mc-option').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('input[type=hidden]').forEach(i => i.value = '');
+  goStep(0);
+}
+
+// ---- PDF DOWNLOAD ----
+function downloadPositioning() {
+  const btn = event.target;
+  btn.textContent = 'Generating...';
+  btn.disabled = true;
+
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+  script.onload = function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const W = 210, M = 18, CW = W - M * 2;
+    let y = 20;
+
+    function nl(n) { y += n || 6; }
+    function checkY(n) { if (y + n > 270) { doc.addPage(); y = 20; } }
+    function h1(t) { checkY(14); doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(15,15,15); doc.text(t, M, y); y += 10; }
+    function h2(t) { checkY(10); doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(15,15,15); doc.text(t, M, y); y += 7; }
+    function body(t, x) { doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(60,60,60); const lines = doc.splitTextToSize(t, CW - (x||0)); checkY(lines.length * 5); doc.text(lines, M + (x||0), y); y += lines.length * 5 + 1; }
+    function label(t) { doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(130,130,130); doc.text(t.toUpperCase(), M, y); y += 5; }
+
+    // COVER
+    doc.setFillColor(15,15,15);
+    doc.rect(0,0,W,60,'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(24);
+    doc.setTextColor(242,201,76);
+    doc.text('POSITIONING WORKSHEET', M, 28);
+    doc.setFontSize(11);
+    doc.setTextColor(255,255,255);
+    doc.text(document.getElementById('q-biz-name').value || 'Your Business', M, 40);
+    doc.setFontSize(9);
+    doc.setTextColor(120,120,120);
+    doc.text('Generated ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}), M, 52);
+    y = 75;
+
+    const fields = [
+      ['Business', document.getElementById('q-biz-name').value],
+      ['Type', document.getElementById('q-biz-type').value],
+      ['What you do', document.getElementById('q-biz-what').value],
+      ['Geography', document.getElementById('q-biz-geo').value],
+      ['Ideal customer', document.getElementById('q-cust-who').value],
+      ['Customer outcome', document.getElementById('q-cust-outcome').value],
+      ['Practical problem', document.getElementById('q-prob-practical').value],
+      ['Emotional problem', document.getElementById('q-prob-emotional').value],
+      ['Cost of inaction', document.getElementById('q-prob-inaction').value],
+      ['Competitor white space', document.getElementById('q-comp-common').value],
+      ['Your differentiator', document.getElementById('q-diff-better').value],
+      ['What surprises customers', document.getElementById('q-diff-surprise').value],
+      ['One thing about your business', document.getElementById('q-diff-one').value],
+      ['Proof — numbers', document.getElementById('q-proof-numbers').value],
+      ['Proof — result', document.getElementById('q-proof-result').value],
+      ['Guarantee', document.getElementById('q-proof-guarantee').value],
+    ];
+
+    fields.forEach(([lbl, val]) => {
+      if (!val) return;
+      checkY(16);
+      label(lbl);
+      body(val);
+      nl(3);
+    });
+
+    // Positioning statement
+    doc.addPage(); y = 20;
+    doc.setFillColor(15,15,15);
+    doc.rect(0,0,W,14,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(242,201,76);
+    doc.text('YOUR POSITIONING STATEMENT', M, 9);
+    y = 24;
+    const psEl = document.getElementById('ps-output');
+    if (psEl) {
+      const headline = psEl.querySelector('.ps-headline')?.textContent || '';
+      const paras = psEl.querySelectorAll('.ps-copy');
+      h1(headline);
+      nl(3);
+      paras.forEach(p => { body(p.textContent); nl(2); });
+    }
+
+    doc.save('Positioning_Worksheet_' + (document.getElementById('q-biz-name').value||'Business').replace(/\s+/g,'_') + '.pdf');
+    btn.textContent = 'Download as PDF';
+    btn.disabled = false;
+  };
+  document.head.appendChild(script);
+}
+</script>
+<script src="honor.js"></script>
+<script src="book.js"></script>
+<script src="themes.js"></script>
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+      <a href="funnel.html">Lead Funnel</a>
+      <a href="calculator.html">Cost Per Lead</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="budget.html">Budget Planner</a>
+      <a href="positioning.html" class="active">Positioning Worksheet</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html">Marketing Basics</a>
+      <a href="blog.html">Blog</a>
+    </div>
+  </div>
+  <a href="about.html" class="dnav-solo">About Zach</a>
+</div>
+<script>
+(function(){
+  var wrap=document.getElementById('didm-dnav');
+  var nav=document.querySelector('nav');
+  if(wrap&&nav){nav.appendChild(wrap);}
+})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(btnId,menuId){
+    var btn=document.getElementById(btnId),menu=document.getElementById(menuId);
+    if(!btn||!menu)return;
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isOpen=menu.classList.contains('open');
+      closeAll();
+      if(!isOpen){menu.classList.add('open');btn.classList.add('open');}
+    });
+  }
+  function closeAll(){
+    document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});
+    document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});
+  }
+  document.addEventListener('click',closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
+})();
+</script>
+</body>
+</html>
