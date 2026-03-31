@@ -182,7 +182,7 @@ body { background: #1a1a18; color: #f5f2eb; font-family: 'DM Sans', sans-serif; 
   <!-- HOW IT WORKS -->
   <div class="instructions">
     <div class="inst-title">How this works</div>
-    <div class="inst-step"><div class="inst-num">1</div><div class="inst-text">Gobii researches the topic, writes the post in the Dumb It Down voice, and emails the draft to <strong>Zachary.maldo@outlook.com</strong></div></div>
+    <div class="inst-step"><div class="inst-num">1</div><div class="inst-text">Gobii researches the topic, writes the post in the Dumb It Down voice, and emails the draft to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="075d66646f66757e296a666b6368476872736b68686c2964686a">[email&#160;protected]</a></strong></div></div>
     <div class="inst-step"><div class="inst-num">2</div><div class="inst-text">You read it, make any edits, then come to this page and paste the final version into the body field above</div></div>
     <div class="inst-step"><div class="inst-num">3</div><div class="inst-text">Hit Publish. The script creates <code>posts/[slug].html</code> using the post template, then updates <code>blog.html</code> to include the new post in the index</div></div>
     <div class="inst-step"><div class="inst-num">4</div><div class="inst-text">GitHub commits. Netlify detects the commit and auto-deploys. Post is live in about <strong>30 seconds</strong>.</div></div>
@@ -191,7 +191,7 @@ body { background: #1a1a18; color: #f5f2eb; font-family: 'DM Sans', sans-serif; 
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ---- CONFIG ----
 const REPO_OWNER = 'dumbitdownmktg';
 const REPO_NAME  = 'dumb-it-down-marketing';
@@ -263,7 +263,7 @@ async function getFileSHA(token, path) {
 }
 
 async function commitFile(token, path, content, message, sha) {
-  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: BRANCH };
+  const body = { message, content: btoa(String.fromCharCode(...new TextEncoder().encode(content))), branch: BRANCH };
   if (sha) body.sha = sha;
   const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
     method: 'PUT',
@@ -285,6 +285,7 @@ async function getFileContent(token, path) {
 
 // ---- PUBLISH ----
 async function publishPost() {
+  console.log('publishPost fired');
   const token    = document.getElementById('gh-token').value.trim();
   const title    = document.getElementById('post-title').value.trim();
   const slug     = document.getElementById('post-slug').value.trim();
@@ -296,10 +297,12 @@ async function publishPost() {
 
   const status   = document.getElementById('status-wrap');
 
-  if (!token)   { showStatus('error', 'Add your GitHub token at the top.'); return; }
-  if (!title)   { showStatus('error', 'Add a post title.'); return; }
-  if (!slug)    { showStatus('error', 'Add a URL slug.'); return; }
-  if (!bodyMd)  { showStatus('error', 'Add the post body.'); return; }
+  if (!token)   { showStatus('error', 'Missing: Add your GitHub token at the top.'); return; }
+  if (!title)   { showStatus('error', 'Missing: Add a post title.'); return; }
+  if (!slug)    { showStatus('error', 'Missing: Add a URL slug.'); return; }
+  if (!bodyMd)  { showStatus('error', 'Missing: Add the post body.'); return; }
+  
+  console.log('All fields present, token length:', token.length);
 
   document.querySelector('.publish-btn').disabled = true;
   showStatus('loading', 'Publishing... committing to GitHub');
@@ -498,6 +501,8 @@ function showStatus(type, msg) {
   const s = document.getElementById('status-wrap');
   s.className = 'status-wrap show ' + type;
   s.innerHTML = msg;
+  s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  console.log('Status:', type, msg);
 }
 </script>
 <div class="dnav" id="didm-dnav">
@@ -530,11 +535,4 @@ function showStatus(type, msg) {
 <script id="didm-nav-script">
 (function(){
   function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
-  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});}
-  document.addEventListener('click',closeAll);
-  setup('dnav-tools-btn','dnav-tools-menu');
-  setup('dnav-learn-btn','dnav-learn-menu');
-})();
-</script>
-</body>
-</html>
+  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAl
