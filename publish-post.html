@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publish Post | DIDM Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+body { background: #1a1a18; color: #f5f2eb; font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+.admin-nav { padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; }
+.admin-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; color: var(--yellow); }
+.admin-back { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-decoration: none; }
+.admin-back:hover { color: rgba(255,255,255,0.7); }
+.admin-wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
+.admin-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--yellow); margin-bottom: 0.4rem; }
+.admin-sub { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-bottom: 2.5rem; line-height: 1.6; }
+.section-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.6rem; display: block; }
+.field-group { margin-bottom: 1.5rem; }
+.admin-input, .admin-select { width: 100%; padding: 0.7rem 0.85rem; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.92rem; outline: none; transition: border-color 0.2s; border-radius: 0; }
+.admin-input:focus, .admin-select:focus { border-color: var(--yellow-dark); }
+.admin-input::placeholder { color: rgba(255,255,255,0.2); }
+.admin-select option { background: #1a1a18; }
+.admin-textarea { width: 100%; padding: 0.85rem; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none; resize: vertical; min-height: 400px; line-height: 1.7; transition: border-color 0.2s; border-radius: 0; }
+.admin-textarea:focus { border-color: var(--yellow-dark); }
+.admin-textarea::placeholder { color: rgba(255,255,255,0.2); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.token-wrap { position: relative; }
+.token-toggle { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 0.75rem; font-family: 'DM Sans', sans-serif; }
+.token-toggle:hover { color: rgba(255,255,255,0.6); }
+
+/* PREVIEW */
+.preview-section { margin-top: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+.preview-header { padding: 0.75rem 1rem; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
+.preview-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.preview-toggle { font-size: 0.75rem; color: var(--yellow-dark); cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; }
+.preview-body { padding: 1.5rem; background: var(--white); color: var(--black); display: none; }
+.preview-body.show { display: block; }
+.preview-body h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin: 1.5rem 0 0.75rem; }
+.preview-body p { margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.75; }
+.preview-body ul, .preview-body ol { margin: 0 0 1rem 1.5rem; }
+.preview-body li { font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.3rem; }
+.preview-body blockquote { border-left: 4px solid var(--yellow-dark); padding: 0.75rem 1rem; margin: 1rem 0; background: rgba(242,201,76,0.08); }
+.preview-body strong { font-weight: 500; }
+
+/* PUBLISH BUTTON */
+.publish-wrap { margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.publish-info { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
+.publish-info strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+.publish-btn { padding: 0.9rem 2.5rem; background: var(--yellow); color: var(--black); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.publish-btn:hover { background: var(--white); }
+.publish-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* STATUS */
+.status-wrap { margin-top: 1.5rem; padding: 1rem 1.25rem; border-left: 3px solid; display: none; font-size: 0.85rem; line-height: 1.65; }
+.status-wrap.show { display: block; }
+.status-wrap.success { border-color: var(--green); background: rgba(42,157,92,0.1); color: #5DCAA5; }
+.status-wrap.error { border-color: var(--red); background: rgba(232,64,64,0.1); color: #F09595; }
+.status-wrap.loading { border-color: var(--yellow-dark); background: rgba(242,201,76,0.08); color: var(--yellow); }
+.status-link { color: var(--yellow); text-decoration: none; font-weight: 500; }
+.status-link:hover { text-decoration: underline; }
+
+/* INSTRUCTIONS */
+.instructions { margin-top: 3rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); }
+.inst-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+.inst-step { display: flex; gap: 0.85rem; align-items: flex-start; margin-bottom: 0.85rem; }
+.inst-num { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; width: 22px; height: 22px; background: rgba(242,201,76,0.15); color: var(--yellow); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; }
+.inst-text { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
+.inst-text strong { color: rgba(255,255,255,0.65); font-weight: 500; }
+.inst-text code { background: rgba(255,255,255,0.08); padding: 0.1rem 0.4rem; font-size: 0.78rem; font-family: monospace; color: var(--yellow); }
+</style>
+<style id="didm-nav-style">
+.dnav{display:flex;align-items:center;gap:0.5rem;}
+.dnav-dd{position:relative;}
+.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
+.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
+.dnav-btn.open .chev{transform:rotate(180deg);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:210px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.open{display:flex;}
+.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
+.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
+.dnav-menu a:last-child{border-bottom:none;}
+.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
+.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
+.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
+.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
+.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
+</style>
+</head>
+<body>
+
+<div class="admin-nav">
+  <div class="admin-logo">DIDM — Publish Post</div>
+  <a href="index.html" class="admin-back">← Back to site</a>
+</div>
+
+<div class="admin-wrap">
+  <div class="admin-title">Publish a blog post</div>
+  <p class="admin-sub">Paste the draft Gobii emailed you, fill in the metadata, and hit Publish. It commits directly to GitHub and Netlify deploys in ~30 seconds.</p>
+
+  <!-- GITHUB TOKEN -->
+  <div class="field-group">
+    <label class="section-label">GitHub personal access token</label>
+    <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-bottom:0.5rem;line-height:1.5">Your token is never stored — it only lives in this browser tab. Get one at: github.com → Settings → Developer settings → Personal access tokens (classic) → scope: repo</p>
+    <div class="token-wrap">
+      <input class="admin-input" type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      <button class="token-toggle" onclick="toggleToken()">show</button>
+    </div>
+  </div>
+
+  <!-- POST METADATA -->
+  <div class="two-col">
+    <div class="field-group">
+      <label class="section-label">Post title</label>
+      <input class="admin-input" type="text" id="post-title" placeholder="Why your Facebook ads stopped working" oninput="updateSlug()">
+    </div>
+    <div class="field-group">
+      <label class="section-label">URL slug (auto-generated)</label>
+      <input class="admin-input" type="text" id="post-slug" placeholder="why-your-facebook-ads-stopped-working">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="section-label">Excerpt (1-2 sentences, shows on blog index)</label>
+    <input class="admin-input" type="text" id="post-excerpt" placeholder="The three real reasons most small business ad campaigns plateau after 4-6 weeks.">
+  </div>
+
+  <div class="three-col">
+    <div class="field-group">
+      <label class="section-label">Category</label>
+      <select class="admin-select" id="post-category">
+        <option value="lead-generation">Lead generation</option>
+        <option value="budgeting">Budgeting</option>
+        <option value="email-marketing">Email marketing</option>
+        <option value="positioning">Positioning</option>
+        <option value="reputation">Reputation</option>
+        <option value="case-study">Case study</option>
+        <option value="common-mistakes">Common mistakes</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="section-label">Read time (minutes)</label>
+      <input class="admin-input" type="number" id="post-readtime" placeholder="5" min="1" max="30">
+    </div>
+    <div class="field-group">
+      <label class="section-label">Publish date</label>
+      <input class="admin-input" type="date" id="post-date">
+    </div>
+  </div>
+
+  <!-- POST BODY -->
+  <div class="field-group">
+    <label class="section-label">Post body (paste from Gobii email — plain text or markdown)</label>
+    <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-bottom:0.5rem;line-height:1.5">Use ## for headings, **bold** for bold, > for blockquotes, - for bullet lists. The template handles the styling automatically.</p>
+    <textarea class="admin-textarea" id="post-body" placeholder="## Why this happens&#10;&#10;Most small businesses...&#10;&#10;## The three real reasons&#10;&#10;**Reason 1: Audience saturation**&#10;&#10;After 4-6 weeks..."></textarea>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-section">
+    <div class="preview-header">
+      <span class="preview-label">Preview</span>
+      <button class="preview-toggle" onclick="togglePreview()">Show preview</button>
+    </div>
+    <div class="preview-body" id="preview-body"></div>
+  </div>
+
+  <!-- PUBLISH -->
+  <div class="publish-wrap">
+    <div class="publish-info">
+      Publishing to: <strong>dumbitdownmktg/dumb-it-down-marketing</strong> → <strong>main</strong><br>
+      Post will be live at: <strong>dumbitdownmarketing.netlify.app/posts/[slug].html</strong>
+    </div>
+    <button class="publish-btn" onclick="publishPost()">Publish to GitHub →</button>
+  </div>
+
+  <div class="status-wrap" id="status-wrap"></div>
+
+  <!-- HOW IT WORKS -->
+  <div class="instructions">
+    <div class="inst-title">How this works</div>
+    <div class="inst-step"><div class="inst-num">1</div><div class="inst-text">Gobii researches the topic, writes the post in the Dumb It Down voice, and emails the draft to <strong>Zachary.maldo@outlook.com</strong></div></div>
+    <div class="inst-step"><div class="inst-num">2</div><div class="inst-text">You read it, make any edits, then come to this page and paste the final version into the body field above</div></div>
+    <div class="inst-step"><div class="inst-num">3</div><div class="inst-text">Hit Publish. The script creates <code>posts/[slug].html</code> using the post template, then updates <code>blog.html</code> to include the new post in the index</div></div>
+    <div class="inst-step"><div class="inst-num">4</div><div class="inst-text">GitHub commits. Netlify detects the commit and auto-deploys. Post is live in about <strong>30 seconds</strong>.</div></div>
+    <div class="inst-step"><div class="inst-num">5</div><div class="inst-text">Your GitHub token is <strong>never stored or sent anywhere except GitHub's API</strong>. It lives only in this browser tab and is cleared when you close it.</div></div>
+  </div>
+
+</div>
+
+<script>
+// ---- CONFIG ----
+const REPO_OWNER = 'dumbitdownmktg';
+const REPO_NAME  = 'dumb-it-down-marketing';
+const BRANCH     = 'main';
+
+// ---- HELPERS ----
+function toggleToken() {
+  const inp = document.getElementById('gh-token');
+  const btn = document.querySelector('.token-toggle');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? 'show' : 'hide';
+}
+
+function updateSlug() {
+  const title = document.getElementById('post-title').value;
+  const slug = title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 60);
+  document.getElementById('post-slug').value = slug;
+}
+
+function markdownToHtml(md) {
+  return md
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, m => '<ul>' + m + '</ul>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^(?!<[h|b|u|o|l])/gm, '')
+    .split('\n').filter(l => l.trim()).map(l => {
+      if (l.startsWith('<h') || l.startsWith('<ul') || l.startsWith('<blockquote')) return l;
+      return '<p>' + l + '</p>';
+    }).join('\n')
+    .replace(/<p><\/p>/g, '')
+    .replace(/<p>(<[h|u|b])/g, '$1')
+    .replace(/(<\/[h|u|b][^>]*>)<\/p>/g, '$1');
+}
+
+function togglePreview() {
+  const body = document.getElementById('preview-body');
+  const btn  = document.querySelector('.preview-toggle');
+  const md   = document.getElementById('post-body').value;
+  if (body.classList.contains('show')) {
+    body.classList.remove('show');
+    btn.textContent = 'Show preview';
+  } else {
+    body.innerHTML = markdownToHtml(md) || '<p style="color:#888">Nothing to preview yet.</p>';
+    body.classList.add('show');
+    btn.textContent = 'Hide preview';
+  }
+}
+
+// ---- SET DEFAULT DATE ----
+document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
+
+// ---- GITHUB API ----
+async function getFileSHA(token, path) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }
+    });
+    if (r.ok) { const d = await r.json(); return d.sha; }
+    return null;
+  } catch { return null; }
+}
+
+async function commitFile(token, path, content, message, sha) {
+  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: BRANCH };
+  if (sha) body.sha = sha;
+  const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
+  return await r.json();
+}
+
+async function getFileContent(token, path) {
+  const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`, {
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }
+  });
+  if (!r.ok) return null;
+  const d = await r.json();
+  return { content: decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))), sha: d.sha };
+}
+
+// ---- PUBLISH ----
+async function publishPost() {
+  const token    = document.getElementById('gh-token').value.trim();
+  const title    = document.getElementById('post-title').value.trim();
+  const slug     = document.getElementById('post-slug').value.trim();
+  const excerpt  = document.getElementById('post-excerpt').value.trim();
+  const category = document.getElementById('post-category').value;
+  const readtime = document.getElementById('post-readtime').value || '5';
+  const date     = document.getElementById('post-date').value;
+  const bodyMd   = document.getElementById('post-body').value.trim();
+
+  const status   = document.getElementById('status-wrap');
+
+  if (!token)   { showStatus('error', 'Add your GitHub token at the top.'); return; }
+  if (!title)   { showStatus('error', 'Add a post title.'); return; }
+  if (!slug)    { showStatus('error', 'Add a URL slug.'); return; }
+  if (!bodyMd)  { showStatus('error', 'Add the post body.'); return; }
+
+  document.querySelector('.publish-btn').disabled = true;
+  showStatus('loading', 'Publishing... committing to GitHub');
+
+  try {
+    // Format date nicely
+    const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+    // Build HTML body from markdown
+    const bodyHtml = markdownToHtml(bodyMd);
+
+    // Build TOC from h2 headings
+    const h2s = [...bodyMd.matchAll(/^## (.+)$/gm)].map(m => m[1]);
+    const tocHtml = h2s.map(h => `<a href="#${h.toLowerCase().replace(/\s+/g,'-')}">${h}</a>`).join('\n');
+
+    // Build sidebar tools based on category
+    const toolMap = {
+      'lead-generation': [['Lead Funnel Visualizer','../funnel.html'],['Cost Per Lead Calculator','../calculator.html']],
+      'budgeting':       [['Ad Budget Planner','../budget.html'],['Marketing ROI Calculator','../roi.html']],
+      'email-marketing': [['Marketing Basics','../basics.html'],['ROI Calculator','../roi.html']],
+      'positioning':     [['Positioning Worksheet','../positioning.html'],['The 5 P\'s Diagnostic','../5ps.html']],
+      'reputation':      [['Reviews & Reputation','../reviews.html'],['Lead Funnel Visualizer','../funnel.html']],
+      'case-study':      [['Lead Funnel Visualizer','../funnel.html'],['ROI Calculator','../roi.html']],
+      'common-mistakes': [['Ad Budget Planner','../budget.html'],['Positioning Worksheet','../positioning.html']],
+    };
+    const tools = toolMap[category] || toolMap['lead-generation'];
+    const sidebarToolsHtml = tools.map(([name, href]) => `
+      <a href="${href}" class="sidebar-tool">
+        <div class="sidebar-tool-name">${name}</div>
+        <div class="sidebar-tool-label">Try the free tool →</div>
+      </a>`).join('');
+
+    // Build sidebar stats (extract bold numbers from body)
+    const stats = [...bodyMd.matchAll(/\*\*(\d+[\d.,]*%?x?)\*\*/g)].slice(0,3);
+    const sidebarStatsHtml = stats.length ? stats.map(m => `
+      <div class="sidebar-stat">
+        <div class="sidebar-stat-num">${m[1]}</div>
+        <div class="sidebar-stat-text">Key stat from this post</div>
+      </div>`).join('') : '<p style="font-size:0.78rem;color:var(--gray)">See the post for the key numbers.</p>';
+
+    // Build post HTML using template placeholders
+    const postHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title} | Dumb It Down Marketing</title>
+<meta name="description" content="${excerpt}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../post-styles.css">
+<style id="didm-nav-style">
+.dnav{display:flex;align-items:center;gap:0.5rem;}
+.dnav-dd{position:relative;}
+.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
+.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
+.dnav-btn.open .chev{transform:rotate(180deg);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:210px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.open{display:flex;}
+.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
+.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
+.dnav-menu a:last-child{border-bottom:none;}
+.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
+.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
+.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
+.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
+.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-logo">Dumb It Down Marketing</a>
+  <a href="../blog.html" class="nav-back">← All posts</a>
+</nav>
+<div class="post-header">
+  <div class="post-header-left">
+    <div class="post-cat">${category.replace(/-/g,' ')}</div>
+    <h1 class="post-title">${title}</h1>
+    <p class="post-excerpt-large">${excerpt}</p>
+    <div class="post-meta-bar">
+      <span>By <strong>Zach Maldonado</strong></span>
+      <span>${dateFormatted}</span>
+      <span>${readtime} min read</span>
+    </div>
+  </div>
+  <div class="post-header-right">
+    <div class="post-toc-label">In this post</div>
+    <div class="post-toc">${tocHtml}</div>
+  </div>
+</div>
+<div class="post-wrap">
+  <div class="post-body">${bodyHtml}</div>
+  <div class="post-sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Related tools</div>
+      ${sidebarToolsHtml}
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Key stats from this post</div>
+      ${sidebarStatsHtml}
+    </div>
+  </div>
+</div>
+<div class="post-footer">
+  <div class="share-section">
+    <h3>If this helped, share it.</h3>
+    <p>Know a business owner who needs to read this? Send them the link.</p>
+    <button class="share-btn" onclick="sharePost()">Share this post</button>
+  </div>
+  <div class="next-section">
+    <h3>Put this into practice</h3>
+    <div class="next-tools">
+      ${tools.map(([name,href]) => `<a href="${href}" class="next-tool">${name} <span>→</span></a>`).join('')}
+    </div>
+  </div>
+</div>
+<footer>
+  <a href="../index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Honor system: $49 once &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+<script>function sharePost(){if(navigator.share){navigator.share({title:document.title,url:window.location.href});}else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.querySelector('.share-btn');b.textContent='Link copied!';setTimeout(()=>b.textContent='Share this post',2000);})}}<\/script>
+<script src="../honor.js"><\/script>
+<script src="../book.js"><\/script>
+<script src="../themes.js"><\/script>
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+      <a href="funnel.html">Lead Funnel</a>
+      <a href="calculator.html">Cost Per Lead</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="budget.html">Budget Planner</a>
+      <a href="positioning.html">Positioning Worksheet</a>
+      <a href="reviews.html">Reviews & Reputation</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html">Marketing Basics</a>
+      <a href="blog.html">Blog</a>
+    </div>
+  </div>
+  <a href="about.html" class="dnav-solo">About Zach</a>
+</div>
+<script>
+(function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
+  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});}
+  document.addEventListener('click',closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
+})();
+</script>
+</body>
+</html>`;
+
+    // Step 1: commit the post file
+    showStatus('loading', 'Step 1/2 — Creating post file...');
+    const postPath = `posts/${slug}.html`;
+    const postSHA  = await getFileSHA(token, postPath);
+    await commitFile(token, postPath, postHtml, `Add blog post: ${title}`, postSHA);
+
+    // Step 2: update blog.html to add post to registry
+    showStatus('loading', 'Step 2/2 — Updating blog index...');
+    const blogFile = await getFileContent(token, 'blog.html');
+    if (!blogFile) throw new Error('Could not fetch blog.html from GitHub');
+
+    const newEntry = `  { slug:'${slug}', title:'${title.replace(/'/g,"\\'")}', excerpt:'${excerpt.replace(/'/g,"\\'")}', category:'${category}', date:'${dateFormatted}', readTime:${readtime} },`;
+    const updatedBlog = blogFile.content.replace(
+      '  // POSTS_END',
+      `${newEntry}\n  // POSTS_END`
+    );
+
+    if (updatedBlog === blogFile.content) throw new Error('Could not find POSTS_END marker in blog.html. Make sure blog.html has the // POSTS_END comment.');
+    await commitFile(token, 'blog.html', updatedBlog, `Update blog index: add ${title}`, blogFile.sha);
+
+    // Done!
+    showStatus('success', `Post published! Netlify is deploying now — should be live at <a href="https://dumbitdownmarketing.netlify.app/posts/${slug}.html" target="_blank" class="status-link">dumbitdownmarketing.netlify.app/posts/${slug}.html</a> in about 30 seconds.`);
+    document.querySelector('.publish-btn').disabled = false;
+
+  } catch(err) {
+    showStatus('error', 'Error: ' + err.message + '. Check your GitHub token has repo scope and try again.');
+    document.querySelector('.publish-btn').disabled = false;
+  }
+}
+
+function showStatus(type, msg) {
+  const s = document.getElementById('status-wrap');
+  s.className = 'status-wrap show ' + type;
+  s.innerHTML = msg;
+}
+</script>
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+      <a href="funnel.html">Lead Funnel</a>
+      <a href="calculator.html">Cost Per Lead</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="budget.html">Budget Planner</a>
+      <a href="positioning.html">Positioning Worksheet</a>
+      <a href="reviews.html">Reviews & Reputation</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html">Marketing Basics</a>
+      <a href="blog.html">Blog</a>
+    </div>
+  </div>
+  <a href="about.html" class="dnav-solo">About Zach</a>
+</div>
+<script>
+(function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
+  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});}
+  document.addEventListener('click',closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
+})();
+</script>
+</body>
+</html>
