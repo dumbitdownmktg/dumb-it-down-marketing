@@ -72,24 +72,7 @@ body { background: #1a1a18; color: #f5f2eb; font-family: 'DM Sans', sans-serif; 
 .inst-text strong { color: rgba(255,255,255,0.65); font-weight: 500; }
 .inst-text code { background: rgba(255,255,255,0.08); padding: 0.1rem 0.4rem; font-size: 0.78rem; font-family: monospace; color: var(--yellow); }
 </style>
-<style id="didm-nav-style">
-.dnav{display:flex;align-items:center;gap:0.5rem;}
-.dnav-dd{position:relative;}
-.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
-.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
-.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
-.dnav-btn.open .chev{transform:rotate(180deg);}
-.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:210px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
-.dnav-menu.open{display:flex;}
-.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
-.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
-.dnav-menu a:last-child{border-bottom:none;}
-.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
-.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
-.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
-.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
-.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
-</style>
+
 </head>
 <body>
 
@@ -295,55 +278,56 @@ async function publishPost() {
   const date     = document.getElementById('post-date').value;
   const bodyMd   = document.getElementById('post-body').value.trim();
 
-  const status   = document.getElementById('status-wrap');
-
-  if (!token)   { showStatus('error', 'Missing: Add your GitHub token at the top.'); return; }
-  if (!title)   { showStatus('error', 'Missing: Add a post title.'); return; }
-  if (!slug)    { showStatus('error', 'Missing: Add a URL slug.'); return; }
-  if (!bodyMd)  { showStatus('error', 'Missing: Add the post body.'); return; }
-  
-  console.log('All fields present, token length:', token.length);
+  if (!token)  { showStatus('error','Missing: paste your GitHub token at the top.'); return; }
+  if (!title)  { showStatus('error','Missing: add a post title.'); return; }
+  if (!slug)   { showStatus('error','Missing: add a URL slug.'); return; }
+  if (!bodyMd) { showStatus('error','Missing: paste the post body.'); return; }
 
   document.querySelector('.publish-btn').disabled = true;
-  showStatus('loading', 'Publishing... committing to GitHub');
+  showStatus('loading','Publishing... connecting to GitHub');
 
   try {
-    // Format date nicely
-    const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-    // Build HTML body from markdown
-    const bodyHtml = markdownToHtml(bodyMd);
+    // Simple markdown to HTML
+    function mdToHtml(md) {
+      return md
+        .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+        .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+        .replace(/^> (.+)$/gm,'<blockquote><p>$1</p></blockquote>')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/^- (.+)$/gm,'<li>$1</li>')
+        .replace(/(<li>.*?<\/li>
+?)+/gs, m => '<ul>' + m + '</ul>')
+        .split(/
 
-    // Build TOC from h2 headings
-    const h2s = [...bodyMd.matchAll(/^## (.+)$/gm)].map(m => m[1]);
-    const tocHtml = h2s.map(h => `<a href="#${h.toLowerCase().replace(/\s+/g,'-')}">${h}</a>`).join('\n');
++/)
+        .map(block => {
+          if (block.match(/^<[hul]/)) return block;
+          return '<p>' + block.replace(/
+/g,' ') + '</p>';
+        })
+        .join('
+');
+    }
 
-    // Build sidebar tools based on category
+    const bodyHtml = mdToHtml(bodyMd);
+    const h2s = [...bodyMd.matchAll(/^## (.+)$/gm)].map(m=>m[1]);
+    const tocHtml = h2s.map(h=>`<a href="#${h.toLowerCase().replace(/\s+/g,'-')}">${h}</a>`).join('\n');
+
     const toolMap = {
       'lead-generation': [['Lead Funnel Visualizer','../funnel.html'],['Cost Per Lead Calculator','../calculator.html']],
       'budgeting':       [['Ad Budget Planner','../budget.html'],['Marketing ROI Calculator','../roi.html']],
       'email-marketing': [['Marketing Basics','../basics.html'],['ROI Calculator','../roi.html']],
-      'positioning':     [['Positioning Worksheet','../positioning.html'],['The 5 P\'s Diagnostic','../5ps.html']],
+      'positioning':     [['Positioning Worksheet','../positioning.html'],["The 5 P's Diagnostic",'../5ps.html']],
       'reputation':      [['Reviews & Reputation','../reviews.html'],['Lead Funnel Visualizer','../funnel.html']],
       'case-study':      [['Lead Funnel Visualizer','../funnel.html'],['ROI Calculator','../roi.html']],
       'common-mistakes': [['Ad Budget Planner','../budget.html'],['Positioning Worksheet','../positioning.html']],
     };
     const tools = toolMap[category] || toolMap['lead-generation'];
-    const sidebarToolsHtml = tools.map(([name, href]) => `
-      <a href="${href}" class="sidebar-tool">
-        <div class="sidebar-tool-name">${name}</div>
-        <div class="sidebar-tool-label">Try the free tool →</div>
-      </a>`).join('');
+    const toolsHtml = tools.map(([n,h])=>`<a href="${h}" class="sidebar-tool"><div class="sidebar-tool-name">${n}</div><div class="sidebar-tool-label">Try the free tool →</div></a>`).join('');
+    const nextHtml  = tools.map(([n,h])=>`<a href="${h}" class="next-tool">${n} <span>→</span></a>`).join('');
 
-    // Build sidebar stats (extract bold numbers from body)
-    const stats = [...bodyMd.matchAll(/\*\*(\d+[\d.,]*%?x?)\*\*/g)].slice(0,3);
-    const sidebarStatsHtml = stats.length ? stats.map(m => `
-      <div class="sidebar-stat">
-        <div class="sidebar-stat-num">${m[1]}</div>
-        <div class="sidebar-stat-text">Key stat from this post</div>
-      </div>`).join('') : '<p style="font-size:0.78rem;color:var(--gray)">See the post for the key numbers.</p>';
-
-    // Build post HTML using template placeholders
     const postHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -354,40 +338,15 @@ async function publishPost() {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../post-styles.css">
-<style id="didm-nav-style">
-.dnav{display:flex;align-items:center;gap:0.5rem;}
-.dnav-dd{position:relative;}
-.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
-.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
-.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
-.dnav-btn.open .chev{transform:rotate(180deg);}
-.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:210px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
-.dnav-menu.open{display:flex;}
-.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
-.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
-.dnav-menu a:last-child{border-bottom:none;}
-.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
-.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
-.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
-.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
-.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
-</style>
 </head>
 <body>
-<nav>
-  <a href="../index.html" class="nav-logo">Dumb It Down Marketing</a>
-  <a href="../blog.html" class="nav-back">← All posts</a>
-</nav>
+<nav><a href="../index.html" class="nav-logo">Dumb It Down Marketing</a><a href="../blog.html" class="nav-back">← All posts</a></nav>
 <div class="post-header">
   <div class="post-header-left">
     <div class="post-cat">${category.replace(/-/g,' ')}</div>
     <h1 class="post-title">${title}</h1>
     <p class="post-excerpt-large">${excerpt}</p>
-    <div class="post-meta-bar">
-      <span>By <strong>Zach Maldonado</strong></span>
-      <span>${dateFormatted}</span>
-      <span>${readtime} min read</span>
-    </div>
+    <div class="post-meta-bar"><span>By <strong>Zach Maldonado</strong></span><span>${dateFormatted}</span><span>${readtime} min read</span></div>
   </div>
   <div class="post-header-right">
     <div class="post-toc-label">In this post</div>
@@ -397,102 +356,38 @@ async function publishPost() {
 <div class="post-wrap">
   <div class="post-body">${bodyHtml}</div>
   <div class="post-sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Related tools</div>
-      ${sidebarToolsHtml}
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Key stats from this post</div>
-      ${sidebarStatsHtml}
-    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Related tools</div>${toolsHtml}</div>
   </div>
 </div>
 <div class="post-footer">
-  <div class="share-section">
-    <h3>If this helped, share it.</h3>
-    <p>Know a business owner who needs to read this? Send them the link.</p>
-    <button class="share-btn" onclick="sharePost()">Share this post</button>
-  </div>
-  <div class="next-section">
-    <h3>Put this into practice</h3>
-    <div class="next-tools">
-      ${tools.map(([name,href]) => `<a href="${href}" class="next-tool">${name} <span>→</span></a>`).join('')}
-    </div>
-  </div>
+  <div class="share-section"><h3>If this helped, share it.</h3><p>Know a business owner who needs to read this? Send them the link.</p><button class="share-btn" onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href});}else{navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Share this post',2000);})}">Share this post</button></div>
+  <div class="next-section"><h3>Put this into practice</h3><div class="next-tools">${nextHtml}</div></div>
 </div>
-<footer>
-  <a href="../index.html" class="footer-logo">Dumb It Down Marketing</a>
-  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Honor system: $49 once &nbsp;|&nbsp; No BS guaranteed</div>
-</footer>
-<script>function sharePost(){if(navigator.share){navigator.share({title:document.title,url:window.location.href});}else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.querySelector('.share-btn');b.textContent='Link copied!';setTimeout(()=>b.textContent='Share this post',2000);})}}<\/script>
-<script src="../honor.js"><\/script>
-<script src="../book.js"><\/script>
-<script src="../themes.js"><\/script>
-<div class="dnav" id="didm-dnav">
-  <div class="dnav-dd">
-    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
-    <div class="dnav-menu" id="dnav-tools-menu">
-      <div class="dnav-menu-label">The tools</div>
-      <a href="5ps.html">The 5 P's</a>
-      <a href="funnel.html">Lead Funnel</a>
-      <a href="calculator.html">Cost Per Lead</a>
-      <a href="roi.html">ROI Calculator</a>
-      <a href="budget.html">Budget Planner</a>
-      <a href="positioning.html">Positioning Worksheet</a>
-      <a href="reviews.html">Reviews & Reputation</a>
-    </div>
-  </div>
-  <div class="dnav-dd">
-    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
-    <div class="dnav-menu" id="dnav-learn-menu">
-      <div class="dnav-menu-label">Guides &amp; basics</div>
-      <a href="basics.html">Marketing Basics</a>
-      <a href="blog.html">Blog</a>
-    </div>
-  </div>
-  <a href="about.html" class="dnav-solo">About Zach</a>
-</div>
-<script>
-(function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
-</script>
-<script id="didm-nav-script">
-(function(){
-  function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
-  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});}
-  document.addEventListener('click',closeAll);
-  setup('dnav-tools-btn','dnav-tools-menu');
-  setup('dnav-learn-btn','dnav-learn-menu');
-})();
-</script>
+<footer><a href="../index.html" class="footer-logo">Dumb It Down Marketing</a><div class="footer-note">Built by Zach | Honor system: $49 once | No BS guaranteed</div></footer>
 </body>
 </html>`;
 
-    // Step 1: commit the post file
-    showStatus('loading', 'Step 1/2 — Creating post file...');
+    showStatus('loading','Step 1/2 — Creating post file...');
     const postPath = `posts/${slug}.html`;
     const postSHA  = await getFileSHA(token, postPath);
     await commitFile(token, postPath, postHtml, `Add blog post: ${title}`, postSHA);
 
-    // Step 2: update blog.html to add post to registry
-    showStatus('loading', 'Step 2/2 — Updating blog index...');
+    showStatus('loading','Step 2/2 — Updating blog index...');
     const blogFile = await getFileContent(token, 'blog.html');
-    if (!blogFile) throw new Error('Could not fetch blog.html from GitHub');
+    if (!blogFile) throw new Error('Could not fetch blog.html from GitHub. Check your token has repo scope.');
 
     const newEntry = `  { slug:'${slug}', title:'${title.replace(/'/g,"\\'")}', excerpt:'${excerpt.replace(/'/g,"\\'")}', category:'${category}', date:'${dateFormatted}', readTime:${readtime} },`;
-    const updatedBlog = blogFile.content.replace(
-      '  // POSTS_END',
-      `${newEntry}\n  // POSTS_END`
-    );
+    const updatedBlog = blogFile.content.replace('  // POSTS_END', newEntry + '\n  // POSTS_END');
 
-    if (updatedBlog === blogFile.content) throw new Error('Could not find POSTS_END marker in blog.html. Make sure blog.html has the // POSTS_END comment.');
+    if (updatedBlog === blogFile.content) throw new Error('Could not find // POSTS_END marker in blog.html on GitHub. Make sure you uploaded the new blog.html.');
     await commitFile(token, 'blog.html', updatedBlog, `Update blog index: add ${title}`, blogFile.sha);
 
-    // Done!
-    showStatus('success', `Post published! Netlify is deploying now — should be live at <a href="https://dumbitdownmarketing.netlify.app/posts/${slug}.html" target="_blank" class="status-link">dumbitdownmarketing.netlify.app/posts/${slug}.html</a> in about 30 seconds.`);
+    showStatus('success', `Post published! Live at <a href="https://dumbitdownmarketing.netlify.app/posts/${slug}.html" target="_blank" class="status-link">dumbitdownmarketing.netlify.app/posts/${slug}.html</a> in ~30 seconds.`);
     document.querySelector('.publish-btn').disabled = false;
 
   } catch(err) {
-    showStatus('error', 'Error: ' + err.message + '. Check your GitHub token has repo scope and try again.');
+    console.error(err);
+    showStatus('error', 'Error: ' + err.message);
     document.querySelector('.publish-btn').disabled = false;
   }
 }
@@ -501,38 +396,9 @@ function showStatus(type, msg) {
   const s = document.getElementById('status-wrap');
   s.className = 'status-wrap show ' + type;
   s.innerHTML = msg;
-  s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  s.scrollIntoView({ behavior:'smooth', block:'center' });
   console.log('Status:', type, msg);
 }
 </script>
-<div class="dnav" id="didm-dnav">
-  <div class="dnav-dd">
-    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
-    <div class="dnav-menu" id="dnav-tools-menu">
-      <div class="dnav-menu-label">The tools</div>
-      <a href="5ps.html">The 5 P's</a>
-      <a href="funnel.html">Lead Funnel</a>
-      <a href="calculator.html">Cost Per Lead</a>
-      <a href="roi.html">ROI Calculator</a>
-      <a href="budget.html">Budget Planner</a>
-      <a href="positioning.html">Positioning Worksheet</a>
-      <a href="reviews.html">Reviews & Reputation</a>
-    </div>
-  </div>
-  <div class="dnav-dd">
-    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
-    <div class="dnav-menu" id="dnav-learn-menu">
-      <div class="dnav-menu-label">Guides &amp; basics</div>
-      <a href="basics.html">Marketing Basics</a>
-      <a href="blog.html">Blog</a>
-    </div>
-  </div>
-  <a href="about.html" class="dnav-solo">About Zach</a>
-</div>
-<script>
-(function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
-</script>
-<script id="didm-nav-script">
-(function(){
-  function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
-  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAl
+</body>
+</html>
