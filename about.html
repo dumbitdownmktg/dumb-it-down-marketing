@@ -614,6 +614,63 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
 </div>
 
 <!-- VENMO -->
+<!-- HONOR SYSTEM SECTION -->
+<div style="border-bottom:1.5px solid var(--black);padding:4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+  <div>
+    <div style="display:inline-block;font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;background:var(--yellow);color:var(--black);padding:0.3rem 0.75rem;margin-bottom:1.25rem">The honest truth</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin-bottom:1.25rem">This costs about <span style="color:var(--yellow-dark)">$200 a month</span> to run.</h2>
+    <p style="font-size:0.95rem;color:var(--gray);line-height:1.8;margin-bottom:1rem">No ads. No paywalls. No VC money. No agency backing. Just me, paying out of pocket every month because I think small business owners deserve access to tools that actually work without having to hire a marketing consultant to explain what a CAC is.</p>
+    <p style="font-size:0.95rem;color:var(--gray);line-height:1.8;margin-bottom:1.5rem">So here is the deal. <strong style="color:var(--black);font-weight:500">This runs on the honor system.</strong> If something here saved you a bad decision, a wasted dollar, or 10 hours of Googling, there are three ways to pay it forward. Pick whichever one fits where you are right now.</p>
+    <div style="display:flex;flex-direction:column;gap:0.75rem">
+      <a href="https://venmo.com/u/zachary-maldonado-6" target="_blank"
+        style="display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;border:1.5px solid var(--black);background:var(--black);text-decoration:none;transition:background 0.2s">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;color:var(--yellow);min-width:40px">$49</div>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.2rem">Once on Venmo — access forever</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.5">Every tool, every update, for life. Honestly the best deal in marketing education. @zachary-maldonado-6</div>
+        </div>
+      </a>
+      <div style="display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;border:1.5px solid var(--black);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;color:var(--yellow-dark);min-width:40px">↗</div>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.2rem">Share it with one business owner</div>
+          <div style="font-size:0.78rem;color:var(--gray);line-height:1.5">Know someone who wastes money on marketing that doesn't work? Send them the link. That's honestly worth more than money to me.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;border:1.5px solid var(--gray-light);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;color:var(--gray);min-width:40px">ok</div>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.04em;margin-bottom:0.2rem">Keep using it for free</div>
+          <div style="font-size:0.78rem;color:var(--gray);line-height:1.5">Maybe you're just starting out. Maybe times are tight. Maybe you're a cheapskate. All three are valid. It's still here for you. The only thing that would actually sting is if you found this useful and never told anyone about it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:1.5rem">
+    <div style="border:1.5px solid var(--black)">
+      <div style="background:var(--black);padding:1rem 1.5rem">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;color:var(--yellow)">Download the full guide</div>
+        <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:0.25rem">Free PDF. Always up to date.</div>
+      </div>
+      <div style="padding:1.5rem">
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.7;margin-bottom:1.25rem">Every tool, every definition, every framework on this site in one PDF. Generated fresh every time you download it so it always includes the latest content. Print it. Share it. Keep it.</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.25rem">
+          <div style="font-size:0.78rem;color:var(--gray);display:flex;gap:0.5rem;align-items:flex-start"><span style="color:var(--green);font-weight:500">+</span> The complete marketing funnel guide</div>
+          <div style="font-size:0.78rem;color:var(--gray);display:flex;gap:0.5rem;align-items:flex-start"><span style="color:var(--green);font-weight:500">+</span> Every metric and what it actually means</div>
+          <div style="font-size:0.78rem;color:var(--gray);display:flex;gap:0.5rem;align-items:flex-start"><span style="color:var(--green);font-weight:500">+</span> Email marketing 101 with the rules that matter</div>
+          <div style="font-size:0.78rem;color:var(--gray);display:flex;gap:0.5rem;align-items:flex-start"><span style="color:var(--green);font-weight:500">+</span> Ad budget framework and channel timelines</div>
+          <div style="font-size:0.78rem;color:var(--gray);display:flex;gap:0.5rem;align-items:flex-start"><span style="color:var(--green);font-weight:500">+</span> The full marketing dictionary (60+ terms)</div>
+        </div>
+        <button id="download-book-btn" onclick="downloadBook()"
+          style="width:100%;padding:0.9rem;background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;border:1.5px solid var(--black);cursor:pointer;transition:all 0.2s">
+          Download the Book (Free PDF)
+        </button>
+        <p style="font-size:0.7rem;color:var(--gray);margin-top:0.6rem;text-align:center;line-height:1.5">Generated fresh. No email required. Actually free.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="venmo-section">
   <div class="venmo-left">
     <h3>If this helped, cool.</h3>
@@ -627,6 +684,8 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
   <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
 </footer>
 
+<script src="honor.js"></script>
+<script src="book.js"></script>
 <script src="themes.js"></script>
 
 
@@ -660,6 +719,7 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
     <div class="dnav-menu" id="dnav-learn-menu">
       <div class="dnav-menu-label">Guides &amp; basics</div>
       <a href="basics.html">Marketing Basics</a>
+      <a href="blog.html">Blog</a>
     </div>
   </div>
   <a href="about.html" class="dnav-solo active">About Zach</a>

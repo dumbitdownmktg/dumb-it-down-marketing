@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+.page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
+.header-left { padding: 4rem 3rem; border-right: 1.5px solid var(--black); }
+.page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.25rem; }
+.page-title .accent { color: var(--yellow-dark); }
+.page-intro { font-size: 1rem; color: var(--gray); line-height: 1.75; max-width: 440px; }
+.page-intro strong { color: var(--black); font-weight: 500; }
+.header-right { background: var(--black); padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+
+/* COMING SOON */
+.coming-wrap { padding: 6rem 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 50vh; text-align: center; border-bottom: 1.5px solid var(--black); }
+.coming-big { font-family: 'Bebas Neue', sans-serif; font-size: 6rem; color: var(--gray-light); line-height: 1; margin-bottom: 1rem; }
+.coming-badge { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.85rem; background: rgba(242,201,76,0.2); color: var(--yellow-dark); margin-bottom: 1rem; }
+.coming-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.04em; margin-bottom: 1rem; }
+.coming-sub { font-size: 0.95rem; color: var(--gray); line-height: 1.75; max-width: 500px; margin-bottom: 2rem; }
+.coming-sub strong { color: var(--black); font-weight: 500; }
+
+/* WHAT'S COMING */
+.preview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--black); border-top: 1.5px solid var(--black); border-bottom: 1.5px solid var(--black); }
+.preview-card { background: var(--white); padding: 2rem; }
+.preview-tag { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.75rem; }
+.preview-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 0.6rem; }
+.preview-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.65; }
+
+/* GOBII NOTE */
+.gobii-section { padding: 3rem; background: var(--black); color: var(--white); display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.gobii-left h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--yellow); margin-bottom: 0.5rem; }
+.gobii-left p { font-size: 0.85rem; color: rgba(255,255,255,0.5); max-width: 500px; line-height: 1.65; }
+.gobii-badge { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem; border: 1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.25rem; }
+  .page-header { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
+  .header-right { padding: 2rem 1.5rem; }
+  .preview-grid { grid-template-columns: 1fr; }
+  .coming-wrap { padding: 4rem 1.5rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+<style id="didm-nav-style">
+.dnav{display:flex;align-items:center;gap:0.5rem;}
+.dnav-dd{position:relative;}
+.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
+.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
+.dnav-btn.open .chev{transform:rotate(180deg);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:200px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.open{display:flex;}
+.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
+.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
+.dnav-menu a:last-child{border-bottom:none;}
+.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
+.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
+.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
+.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
+.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">The Blog</div>
+    <h1 class="page-title">Plain English.<br><span class="accent">No fluff.</span></h1>
+    <p class="page-intro">Real marketing insights for small business owners. <strong>No 3,000-word posts that bury the point. No "10 tips" lists where 9 of them are obvious.</strong> Just the stuff that actually moves the needle, explained so you can use it today.</p>
+  </div>
+  <div class="header-right">
+    <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.7">The blog is coming. Posts will cover the same topics as the tools but go deeper into the why. Tactics that work right now. Industry-specific breakdowns. Real numbers from real businesses.</p>
+    <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.7">Powered by <strong style="color:var(--white)">Gobii.ai</strong> for research and drafting, edited by Zach for accuracy and tone. The goal is one post a week that is actually worth reading.</p>
+  </div>
+</div>
+
+<div class="coming-wrap">
+  <div class="coming-big">&#9998;</div>
+  <div class="coming-badge">Coming soon</div>
+  <div class="coming-title">First posts dropping soon.</div>
+  <p class="coming-sub">The blog is being set up now. Every post will be tied directly to the tools on this site. Read the post, use the tool, understand the result. <strong>That's the whole point.</strong></p>
+</div>
+
+<div class="preview-grid">
+  <div class="preview-card">
+    <div class="preview-tag">Upcoming post</div>
+    <div class="preview-title">Why your Facebook ads stopped working (and it's not the algorithm)</div>
+    <p class="preview-desc">The real reason most small business ad campaigns plateau after 4 to 6 weeks and the one thing you can do this week to fix it.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-tag">Upcoming post</div>
+    <div class="preview-title">The $500/month marketing plan that actually works for local service businesses</div>
+    <p class="preview-desc">A real channel-by-channel breakdown for small budgets with exact spend recommendations, timelines, and what to cut first if it isn't working.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-tag">Upcoming post</div>
+    <div class="preview-title">You're losing 40% of your leads in the first 24 hours. Here's how to stop it.</div>
+    <p class="preview-desc">Speed to lead is the most underrated metric in local marketing. What the research says and how to build a follow-up system in one afternoon.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-tag">Upcoming post</div>
+    <div class="preview-title">The martial arts school funnel that moved close rate from 18% to 28% in 60 days</div>
+    <p class="preview-desc">A real case study. Real numbers. What changed, what didn't, and what any service business can steal from this.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-tag">Upcoming post</div>
+    <div class="preview-title">Email marketing for the business owner who hates writing emails</div>
+    <p class="preview-desc">A practical system for people who know they should be emailing their list but keep finding reasons not to. Templates included.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-tag">Upcoming post</div>
+    <div class="preview-title">What Alex Hormozi's 100-ad testing framework actually looks like for a $1,000 budget</div>
+    <p class="preview-desc">The principle scaled down to something a real small business can actually execute. One variable. One change. Always testing against the winner.</p>
+  </div>
+</div>
+
+<div class="gobii-section">
+  <div class="gobii-left">
+    <h3>Powered by Gobii.ai</h3>
+    <p>Research and first drafts generated by Gobii.ai, reviewed and edited by Zach for accuracy, tone, and the things AI tends to get wrong about real businesses. Every post is built around what small business owners actually ask, not what ranks well on Google.</p>
+  </div>
+  <div class="gobii-badge">Integration in progress</div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Free forever &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script src="honor.js"></script>
+<script src="book.js"></script>
+<script src="themes.js"></script>
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+      <a href="funnel.html">Lead Funnel</a>
+      <a href="calculator.html">Cost Per Lead</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="budget.html">Budget Planner</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html">Marketing Basics</a>
+      <a href="blog.html" class="active">Blog</a>
+    </div>
+  </div>
+  <a href="about.html" class="dnav-solo">About Zach</a>
+</div>
+<script>
+(function(){
+  var wrap=document.getElementById('didm-dnav');
+  var nav=document.querySelector('nav');
+  if(wrap&&nav){nav.appendChild(wrap);}
+})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(btnId,menuId){
+    var btn=document.getElementById(btnId),menu=document.getElementById(menuId);
+    if(!btn||!menu)return;
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isOpen=menu.classList.contains('open');
+      closeAll();
+      if(!isOpen){menu.classList.add('open');btn.classList.add('open');}
+    });
+  }
+  function closeAll(){
+    document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});
+    document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});
+  }
+  document.addEventListener('click',closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
+})();
+</script>
+</body>
+</html>
