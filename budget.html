@@ -160,6 +160,7 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
 }
 </style>
 
+
 <style id="didm-nav-style">
 .dnav{display:flex;align-items:center;gap:0.5rem;}
 .dnav-dd{position:relative;}
@@ -513,6 +514,8 @@ recalc();
 <script src="themes.js"></script>
 
 
+
+
 <div class="dnav" id="didm-dnav">
   <div class="dnav-dd">
     <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
@@ -524,6 +527,7 @@ recalc();
       <a href="roi.html">ROI Calculator</a>
       <a href="budget.html" class="active">Budget Planner</a>
       <a href="positioning.html">Positioning Worksheet</a>
+      <a href="reviews.html">Reviews & Reputation</a>
     </div>
   </div>
   <div class="dnav-dd">
@@ -537,28 +541,12 @@ recalc();
   <a href="about.html" class="dnav-solo">About Zach</a>
 </div>
 <script>
-(function(){
-  var wrap=document.getElementById('didm-dnav');
-  var nav=document.querySelector('nav');
-  if(wrap&&nav){nav.appendChild(wrap);}
-})();
+(function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
 </script>
 <script id="didm-nav-script">
 (function(){
-  function setup(btnId,menuId){
-    var btn=document.getElementById(btnId),menu=document.getElementById(menuId);
-    if(!btn||!menu)return;
-    btn.addEventListener('click',function(e){
-      e.stopPropagation();
-      var isOpen=menu.classList.contains('open');
-      closeAll();
-      if(!isOpen){menu.classList.add('open');btn.classList.add('open');}
-    });
-  }
-  function closeAll(){
-    document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});
-    document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});
-  }
+  function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
+  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});}
   document.addEventListener('click',closeAll);
   setup('dnav-tools-btn','dnav-tools-menu');
   setup('dnav-learn-btn','dnav-learn-menu');
