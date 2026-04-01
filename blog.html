@@ -9,10 +9,10 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
-body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
 .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
-
 .page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); }
 .header-left { padding: 4rem 3rem; border-right: 1.5px solid var(--black); }
 .page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
@@ -21,35 +21,41 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .page-intro { font-size: 1rem; color: var(--gray); line-height: 1.75; max-width: 440px; }
 .page-intro strong { color: var(--black); font-weight: 500; }
 .header-right { background: var(--black); padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
-
-/* COMING SOON */
-.coming-wrap { padding: 6rem 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 50vh; text-align: center; border-bottom: 1.5px solid var(--black); }
-.coming-big { font-family: 'Bebas Neue', sans-serif; font-size: 6rem; color: var(--gray-light); line-height: 1; margin-bottom: 1rem; }
-.coming-badge { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.85rem; background: rgba(242,201,76,0.2); color: var(--yellow-dark); margin-bottom: 1rem; }
-.coming-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.04em; margin-bottom: 1rem; }
-.coming-sub { font-size: 0.95rem; color: var(--gray); line-height: 1.75; max-width: 500px; margin-bottom: 2rem; }
-.coming-sub strong { color: var(--black); font-weight: 500; }
-
-/* WHAT'S COMING */
-.preview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--black); border-top: 1.5px solid var(--black); border-bottom: 1.5px solid var(--black); }
-.preview-card { background: var(--white); padding: 2rem; }
-.preview-tag { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.75rem; }
-.preview-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 0.6rem; }
-.preview-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.65; }
-
-/* GOBII NOTE */
-
+.header-right p { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+.header-right p strong { color: var(--white); font-weight: 500; }
+.filter-bar { padding: 1.25rem 3rem; border-bottom: 1.5px solid var(--black); background: var(--gray-light); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.filter-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; color: var(--gray); white-space: nowrap; }
+.filter-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filter-pill { padding: 0.3rem 0.85rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; border: 1.5px solid var(--gray); background: transparent; color: var(--gray); transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+.filter-pill:hover { border-color: var(--black); color: var(--black); }
+.filter-pill.active { border-color: var(--black); background: var(--black); color: var(--white); }
+.posts-section { padding: 3rem; }
+.posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1.5px solid var(--black); }
+.post-card { background: var(--white); padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; transition: background 0.15s; text-decoration: none; color: var(--black); }
+.post-card:hover { background: rgba(242,201,76,0.06); }
+.post-cat { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--yellow-dark); }
+.post-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.03em; line-height: 1.1; }
+.post-excerpt { font-size: 0.85rem; color: var(--gray); line-height: 1.65; flex: 1; }
+.post-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; color: var(--gray); margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--gray-light); }
+.post-read { font-weight: 500; color: var(--yellow-dark); }
+.no-posts { padding: 4rem 3rem; text-align: center; color: var(--gray); display: none; }
+.no-posts-big { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--gray-light); margin-bottom: 0.75rem; }
+.cs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--black); border: 1.5px solid var(--black); }
+.cs-card { background: var(--white); padding: 2rem; opacity: 0.5; }
+.cs-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--yellow-dark); margin-bottom: 0.5rem; }
+.cs-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.03em; line-height: 1.1; margin-bottom: 0.5rem; }
+.cs-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
 footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
 .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; text-decoration: none; color: var(--black); }
 .footer-note { font-size: 0.78rem; color: var(--gray); }
-
 @media (max-width: 900px) {
   nav { padding: 1rem 1.25rem; }
   .page-header { grid-template-columns: 1fr; }
   .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 2.5rem 1.5rem; }
   .header-right { padding: 2rem 1.5rem; }
-  .preview-grid { grid-template-columns: 1fr; }
-  .coming-wrap { padding: 4rem 1.5rem; }
+  .filter-bar { padding: 1.25rem 1.5rem; }
+  .posts-section { padding: 2rem 1.5rem; }
+  .posts-grid, .cs-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
 }
 </style>
@@ -60,93 +66,63 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
 .dnav-dd{position:relative;}
 .dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
 .dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn.dnav-btn-cta{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);border-color:var(--black,#0f0f0f);}
+.dnav-btn.dnav-btn-cta:hover,.dnav-btn.dnav-btn-cta.open{background:var(--yellow,#f2c94c);color:var(--black,#0f0f0f);border-color:var(--yellow,#f2c94c);}
 .dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
 .dnav-btn.open .chev{transform:rotate(180deg);}
-.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:210px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:200px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.right{left:auto;right:0;}
 .dnav-menu.open{display:flex;}
 .dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
 .dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
 .dnav-menu a:last-child{border-bottom:none;}
 .dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
 .dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
-.dnav-solo{display:block;padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border:1.5px solid var(--gray-light,#e8e4da);transition:all 0.15s;white-space:nowrap;}
-.dnav-solo:hover{border-color:var(--black,#0f0f0f);}
-.dnav-solo.active{border-color:var(--yellow-dark,#d4a800);color:var(--yellow-dark,#d4a800);}
 </style>
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
-</nav>
+<nav><a href="index.html" class="nav-logo">Dumb It Down Marketing</a></nav>
 
 <div class="page-header">
   <div class="header-left">
     <div class="page-tag">The Blog</div>
     <h1 class="page-title">Plain English.<br><span class="accent">No fluff.</span></h1>
-    <p class="page-intro">Real marketing insights for small business owners. <strong>No 3,000-word posts that bury the point. No "10 tips" lists where 9 of them are obvious.</strong> Just the stuff that actually moves the needle, explained so you can use it today.</p>
+    <p class="page-intro">Real marketing insights for small business owners. <strong>No 3,000-word posts that bury the point.</strong> Just the stuff that actually moves the needle, explained so you can use it today.</p>
   </div>
   <div class="header-right">
-    <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.7">The blog is coming. Posts will cover the same topics as the tools but go deeper into the why. Tactics that work right now. Industry-specific breakdowns. Real numbers from real businesses.</p>
-    <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.7">Every post is built around the real questions small business owners ask. Written by Zach. The goal is one post a week that is actually worth reading.</p>
+    <p>Every post is built around the real questions small business owners ask. Written by Zach. One post a week that is actually worth reading.</p>
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.3)">If something here helps your business, share it with another owner who needs it.</p>
   </div>
 </div>
 
-<div class="coming-wrap">
-  <div class="coming-big">&#9998;</div>
-  <div class="coming-badge">Coming soon</div>
-  <div class="coming-title">First posts dropping soon.</div>
-  <p class="coming-sub">The blog is being set up now. Every post will be tied directly to the tools on this site. Read the post, use the tool, understand the result. <strong>That's the whole point.</strong></p>
-</div>
-
-<div class="preview-grid">
-  <div class="preview-card">
-    <div class="preview-tag">Lead generation</div>
-    <div class="preview-title">Why your Facebook ads stopped working (and it's not the algorithm)</div>
-    <p class="preview-desc">Audience saturation, weak creative, and no follow-up system. The three real reasons most small business ad campaigns plateau after 4 to 6 weeks.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Budgeting</div>
-    <div class="preview-title">The $500/month marketing plan that actually works for local service businesses</div>
-    <p class="preview-desc">A real channel-by-channel breakdown with exact spend, timelines, and what to cut first if it isn't working. No fluff.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Lead generation</div>
-    <div class="preview-title">You're losing 40% of your leads in the first 24 hours. Here's how to stop it.</div>
-    <p class="preview-desc">Speed to lead is the most underrated metric in local marketing. What the data says and how to build a follow-up system in one afternoon.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Positioning</div>
-    <div class="preview-title">Why "we provide great service" is costing you clients</div>
-    <p class="preview-desc">Differentiation is the #1 challenge for small businesses in their first year. Here's the exact framework to figure out why someone should choose you over the other guy.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Reputation</div>
-    <div class="preview-title">85% of your potential clients check your reviews before calling. Here's what they're looking for.</div>
-    <p class="preview-desc">The research on how reviews actually influence purchase decisions, what response time consumers expect, and how to build a review system that runs itself.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Common mistakes</div>
-    <div class="preview-title">9 marketing beliefs that are costing small businesses real money</div>
-    <p class="preview-desc">Boosting a post is not the same as running an ad. SEO is not a one-time checklist. More tools will not fix a strategy problem. And six more that show up constantly.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Email marketing</div>
-    <div class="preview-title">Email marketing for the business owner who hates writing emails</div>
-    <p class="preview-desc">A practical system for people who know they should be emailing their list but keep finding reasons not to. Five automations, one framework, zero fluff.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Case study</div>
-    <div class="preview-title">The martial arts school funnel that moved close rate from 18% to 28% in 60 days</div>
-    <p class="preview-desc">Real numbers. Real changes. What broke, what got fixed, and what any service business can steal from this.</p>
-  </div>
-  <div class="preview-card">
-    <div class="preview-tag">Measurement</div>
-    <div class="preview-title">Only 18% of small business owners feel confident their marketing is working. Here's how to join that 18%.</div>
-    <p class="preview-desc">The five numbers every small business owner should track, how to set them up in under an hour, and how to read them without a marketing degree.</p>
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <div class="filter-pills">
+    <button class="filter-pill active" onclick="filterPosts('all',this)">All posts</button>
+    <button class="filter-pill" onclick="filterPosts('lead-generation',this)">Lead generation</button>
+    <button class="filter-pill" onclick="filterPosts('budgeting',this)">Budgeting</button>
+    <button class="filter-pill" onclick="filterPosts('email-marketing',this)">Email marketing</button>
+    <button class="filter-pill" onclick="filterPosts('positioning',this)">Positioning</button>
+    <button class="filter-pill" onclick="filterPosts('reputation',this)">Reputation</button>
+    <button class="filter-pill" onclick="filterPosts('case-study',this)">Case studies</button>
+    <button class="filter-pill" onclick="filterPosts('common-mistakes',this)">Common mistakes</button>
   </div>
 </div>
 
+<div class="posts-section">
+  <div class="posts-grid" id="posts-grid" style="display:none"></div>
+  <div class="no-posts" id="no-results"><div class="no-posts-big">¯\_(ツ)_/¯</div><p>No posts in that category yet. Check back soon.</p></div>
+  <div id="coming-soon" style="display:none">
+    <div class="cs-grid">
+      <div class="cs-card"><div class="cs-tag">Lead generation</div><div class="cs-title">Why your Facebook ads stopped working (and it's not the algorithm)</div><div class="cs-desc">Audience saturation, weak creative, and no follow-up system. The three real reasons most small business ad campaigns plateau.</div></div>
+      <div class="cs-card"><div class="cs-tag">Budgeting</div><div class="cs-title">The $500/month marketing plan that actually works for local service businesses</div><div class="cs-desc">A real channel-by-channel breakdown with exact spend recommendations and timelines.</div></div>
+      <div class="cs-card"><div class="cs-tag">Lead generation</div><div class="cs-title">You're losing 40% of your leads in the first 24 hours</div><div class="cs-desc">Speed to lead is the most underrated metric in local marketing. Here's how to fix it in one afternoon.</div></div>
+      <div class="cs-card"><div class="cs-tag">Positioning</div><div class="cs-title">Why "we provide great service" is costing you clients</div><div class="cs-desc">Differentiation is the #1 challenge for small businesses. The exact framework to answer "why you?"</div></div>
+      <div class="cs-card"><div class="cs-tag">Reputation</div><div class="cs-title">85% of your potential clients check your reviews before calling</div><div class="cs-desc">What they're looking for, what response time they expect, and how to build a review system.</div></div>
+      <div class="cs-card"><div class="cs-tag">Common mistakes</div><div class="cs-title">9 marketing beliefs costing small businesses real money</div><div class="cs-desc">Boosting a post is not the same as running an ad. SEO is not a one-time checklist. And seven more.</div></div>
+    </div>
+    <p style="text-align:center;font-size:0.82rem;color:var(--gray);margin-top:1.5rem">First posts dropping soon.</p>
+  </div>
 </div>
 
 <footer>
@@ -154,6 +130,48 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
   <div class="footer-note">Built by Zach &nbsp;|&nbsp; Honor system: $49 once &nbsp;|&nbsp; No BS guaranteed</div>
 </footer>
 
+<script>
+// ---- POSTS REGISTRY ----
+// Each entry added here automatically by publish-post.html
+// { slug, title, excerpt, category, date, readTime }
+const POSTS = [
+  // POSTS_START
+  // POSTS_END
+];
+
+function init() {
+  const grid = document.getElementById('posts-grid');
+  const cs   = document.getElementById('coming-soon');
+  const nr   = document.getElementById('no-results');
+  if (POSTS.length === 0) { cs.style.display = 'block'; return; }
+  grid.style.display = 'grid';
+  renderPosts('all');
+}
+
+function renderPosts(cat) {
+  const grid = document.getElementById('posts-grid');
+  const nr   = document.getElementById('no-results');
+  const filtered = cat === 'all' ? POSTS : POSTS.filter(p => p.category === cat);
+  if (!filtered.length) { grid.style.display='none'; nr.style.display='block'; return; }
+  nr.style.display = 'none';
+  grid.style.display = 'grid';
+  grid.innerHTML = filtered.map(p => `
+    <a href="posts/${p.slug}.html" class="post-card">
+      <div class="post-cat">${p.category.replace(/-/g,' ')}</div>
+      <div class="post-title">${p.title}</div>
+      <p class="post-excerpt">${p.excerpt}</p>
+      <div class="post-meta"><span>${p.date}</span><span class="post-read">${p.readTime} min read →</span></div>
+    </a>`).join('');
+}
+
+function filterPosts(cat, btn) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  renderPosts(cat);
+}
+
+init();
+</script>
 <script src="honor.js"></script>
 <script src="book.js"></script>
 <script src="themes.js"></script>
@@ -183,7 +201,14 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
       <a href="blog.html" class="active">Blog</a>
     </div>
   </div>
-  <a href="about.html" class="dnav-solo">About Zach</a>
+  <div class="dnav-dd">
+    <button class="dnav-btn dnav-btn-cta" id="dnav-zach-btn">Work with Zach <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu right" id="dnav-zach-menu">
+      <div class="dnav-menu-label">Zach Maldonado</div>
+      <a href="work-with-zach.html">Work with Zach</a>
+      <a href="about.html">About Zach</a>
+    </div>
+  </div>
 </div>
 <script>
 (function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
@@ -195,6 +220,7 @@ footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content
   document.addEventListener('click',closeAll);
   setup('dnav-tools-btn','dnav-tools-menu');
   setup('dnav-learn-btn','dnav-learn-menu');
+  setup('dnav-zach-btn','dnav-zach-menu');
 })();
 </script>
 </body>

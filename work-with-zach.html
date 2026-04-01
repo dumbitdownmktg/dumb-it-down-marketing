@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work with Zach | Dumb It Down Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --black: #0f0f0f; --white: #f5f2eb; --yellow: #f2c94c; --yellow-dark: #d4a800; --gray: #6b6b6b; --gray-light: #e8e4da; --red: #e84040; --green: #2a9d5c; }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: var(--white); border-bottom: 1.5px solid var(--black); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+
+/* HEADER */
+.page-header { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--black); min-height: 60vh; }
+.header-left { padding: 5rem 3rem; border-right: 1.5px solid var(--black); display: flex; flex-direction: column; justify-content: center; }
+.page-tag { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 0.35rem 0.8rem; margin-bottom: 1.25rem; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+.page-title .accent { color: var(--yellow-dark); }
+.page-intro { font-size: 1rem; color: var(--gray); line-height: 1.8; max-width: 460px; margin-bottom: 2rem; }
+.page-intro strong { color: var(--black); font-weight: 500; }
+
+/* HOW IT WORKS */
+.how-it-works { display: flex; flex-direction: column; gap: 1rem; }
+.how-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; border: 1.5px solid var(--gray-light); background: var(--white); }
+.how-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 30px; height: 30px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.how-text { font-size: 0.88rem; color: var(--black); line-height: 1.6; }
+.how-text strong { font-weight: 500; }
+
+/* RIGHT SIDE - ZACH INFO */
+.header-right { background: var(--black); padding: 5rem 3rem; display: flex; flex-direction: column; justify-content: center; gap: 2rem; }
+.zach-quote { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; color: var(--white); }
+.zach-quote .accent { color: var(--yellow); }
+.zach-desc { font-size: 0.92rem; color: rgba(255,255,255,0.55); line-height: 1.8; }
+.zach-desc strong { color: var(--white); font-weight: 500; }
+.zach-creds { display: flex; flex-direction: column; gap: 0.6rem; }
+.zach-cred { display: flex; gap: 0.75rem; align-items: flex-start; }
+.zach-cred-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; margin-top: 0.45rem; }
+.zach-cred-text { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.zach-cred-text strong { color: var(--white); font-weight: 500; }
+
+/* FORM */
+.form-section { padding: 4rem 3rem; border-bottom: 1.5px solid var(--black); display: grid; grid-template-columns: 1fr 400px; gap: 4rem; align-items: start; }
+.form-left h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; margin-bottom: 1rem; }
+.form-left h2 .accent { color: var(--yellow-dark); }
+.form-left p { font-size: 0.92rem; color: var(--gray); line-height: 1.75; margin-bottom: 1.25rem; max-width: 460px; }
+.form-left p strong { color: var(--black); font-weight: 500; }
+
+/* PAYMENT NOTE */
+.payment-note { padding: 1.5rem; border: 1.5px solid var(--black); margin-top: 1.5rem; }
+.payment-note-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.payment-note p { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
+.payment-note p strong { color: var(--black); font-weight: 500; }
+.venmo-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; padding: 0.6rem 1.25rem; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
+.venmo-link:hover { background: var(--yellow); color: var(--black); }
+
+/* THE FORM ITSELF */
+.contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.form-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); }
+.form-hint { font-size: 0.72rem; color: var(--gray); margin-bottom: 0.2rem; }
+.form-input, .form-select, .form-textarea { width: 100%; padding: 0.75rem; border: 1.5px solid var(--gray-light); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; border-radius: 0; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--black); }
+.form-input::placeholder, .form-textarea::placeholder { color: #b0a99a; }
+.form-textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.85rem center; padding-right: 2.5rem; cursor: pointer; }
+
+/* TOOL CHECKBOXES */
+.checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+.checkbox-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+.checkbox-item input[type=checkbox] { width: 16px; height: 16px; border: 1.5px solid var(--gray-light); appearance: none; -webkit-appearance: none; cursor: pointer; flex-shrink: 0; position: relative; transition: all 0.15s; }
+.checkbox-item input[type=checkbox]:checked { background: var(--black); border-color: var(--black); }
+.checkbox-item input[type=checkbox]:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: var(--yellow); font-size: 0.65rem; font-weight: 700; }
+.checkbox-item label { font-size: 0.82rem; color: var(--black); cursor: pointer; line-height: 1.3; }
+
+/* SUBMIT */
+.submit-btn { width: 100%; padding: 1rem; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid var(--black); cursor: pointer; transition: all 0.2s; }
+.submit-btn:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow-dark); }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* SUCCESS STATE */
+.form-success { display: none; padding: 2rem; border: 1.5px solid var(--green); background: rgba(42,157,92,0.07); text-align: center; }
+.form-success.show { display: block; }
+.form-success-big { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--green); margin-bottom: 0.75rem; }
+.form-success p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+.form-success p strong { color: var(--black); font-weight: 500; }
+
+/* WHAT TO EXPECT */
+.expect-section { padding: 4rem 3rem; border-bottom: 1.5px solid var(--black); }
+.expect-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--black); border: 1.5px solid var(--black); margin-top: 2rem; }
+.expect-card { background: var(--white); padding: 1.75rem; }
+.expect-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; color: var(--yellow-dark); margin-bottom: 0.5rem; }
+.expect-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.expect-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+.expect-desc strong { color: var(--black); font-weight: 500; }
+
+/* NOT FOR EVERYONE */
+.honest-section { padding: 4rem 3rem; background: var(--black); color: var(--white); border-bottom: 1.5px solid var(--black); }
+.honest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.honest-col h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; margin-bottom: 1.25rem; }
+.honest-col h3.yes { color: var(--yellow); }
+.honest-col h3.no { color: var(--red); }
+.honest-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.honest-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+.honest-item .icon { flex-shrink: 0; font-size: 0.85rem; margin-top: 1px; }
+.honest-item strong { color: var(--white); font-weight: 500; }
+
+footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1.5px solid var(--black); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+.footer-note { font-size: 0.78rem; color: var(--gray); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.25rem; }
+  .page-header, .form-section, .honest-grid { grid-template-columns: 1fr; }
+  .header-left { border-right: none; border-bottom: 1.5px solid var(--black); padding: 3rem 1.5rem; min-height: auto; }
+  .header-right { padding: 3rem 1.5rem; }
+  .form-section { padding: 2.5rem 1.5rem; gap: 2.5rem; }
+  .expect-section { padding: 2.5rem 1.5rem; }
+  .expect-grid { grid-template-columns: 1fr; }
+  .honest-section { padding: 2.5rem 1.5rem; }
+  .checkbox-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+
+<style id="didm-nav-style">
+.dnav{display:flex;align-items:center;gap:0.5rem;}
+.dnav-dd{position:relative;}
+.dnav-btn{background:none;border:1.5px solid var(--black,#0f0f0f);padding:0.4rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--black,#0f0f0f);display:flex;align-items:center;gap:0.4rem;transition:background 0.15s;white-space:nowrap;}
+.dnav-btn:hover,.dnav-btn.open{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);}
+.dnav-btn.dnav-btn-cta{background:var(--black,#0f0f0f);color:var(--white,#f5f2eb);border-color:var(--black,#0f0f0f);}
+.dnav-btn.dnav-btn-cta:hover,.dnav-btn.dnav-btn-cta.open{background:var(--yellow,#f2c94c);color:var(--black,#0f0f0f);border-color:var(--yellow,#f2c94c);}
+.dnav-btn .chev{font-size:0.5rem;transition:transform 0.2s;display:inline-block;}
+.dnav-btn.open .chev{transform:rotate(180deg);}
+.dnav-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--white,#f5f2eb);border:1.5px solid var(--black,#0f0f0f);min-width:200px;z-index:300;flex-direction:column;box-shadow:2px 4px 0 rgba(0,0,0,0.08);}
+.dnav-menu.right{left:auto;right:0;}
+.dnav-menu.open{display:flex;}
+.dnav-menu-label{padding:0.5rem 1rem 0.25rem;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray,#6b6b6b);border-bottom:1px solid var(--gray-light,#e8e4da);}
+.dnav-menu a{display:block;padding:0.7rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--black,#0f0f0f);text-decoration:none;border-bottom:1px solid var(--gray-light,#e8e4da);transition:background 0.1s;}
+.dnav-menu a:last-child{border-bottom:none;}
+.dnav-menu a:hover{background:var(--gray-light,#e8e4da);}
+.dnav-menu a.active{color:var(--yellow-dark,#d4a800);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dumb It Down Marketing</a>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="header-left">
+    <div class="page-tag">Work with Zach</div>
+    <h1 class="page-title">Get a real set of<br><span class="accent">eyes on your business.</span></h1>
+    <p class="page-intro">The tools on this site are built to help you figure things out yourself. But sometimes you just want someone who actually knows marketing to look at your specific situation and tell you what they see. <strong>That's what this is.</strong></p>
+
+    <div class="how-it-works">
+      <div class="how-item">
+        <div class="how-num">1</div>
+        <div class="how-text"><strong>Fill out the form.</strong> Tell me about your business, what you've tried, and what's not working. The more specific you are, the more useful my response will be.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">2</div>
+        <div class="how-text"><strong>I read it and respond.</strong> Usually within a few days. I'll give you my honest take — what I'd look at first, what I'd change, what I'd stop doing.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">3</div>
+        <div class="how-text"><strong>Pay whatever you think it was worth.</strong> If my response helped you, Venmo me what feels right. If it didn't, don't. No invoice. No awkward follow-up. Your call.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="zach-quote">Stop guessing. <span class="accent">Get a straight answer.</span></div>
+    <p class="zach-desc">I've spent 4+ years building CRM systems, email automations, and full-funnel marketing programs. I've also watched my family's martial arts school bleed leads because nobody could see where they were going. <strong>I know what good looks like and I know what broken looks like.</strong></p>
+    <div class="zach-creds">
+      <div class="zach-cred"><div class="zach-cred-dot"></div><div class="zach-cred-text"><strong>$1.09M+ in pipeline</strong> influenced through lifecycle and email marketing</div></div>
+      <div class="zach-cred"><div class="zach-cred-dot"></div><div class="zach-cred-text"><strong>99.67% email deliverability</strong> across 1.29M+ emails sent</div></div>
+      <div class="zach-cred"><div class="zach-cred-dot"></div><div class="zach-cred-text"><strong>HubSpot, Pardot, Mailchimp, Smartlead</strong> — I live in these tools daily</div></div>
+      <div class="zach-cred"><div class="zach-cred-dot"></div><div class="zach-cred-text"><strong>Built this entire site</strong> from scratch using Claude and GitHub. Zero agency. Zero budget.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM + PAYMENT -->
+<div class="form-section">
+  <div class="form-left">
+    <h2>Tell me what's <span class="accent">going on.</span></h2>
+    <p>I'm not going to give you a generic checklist. I'm going to read what you wrote and respond to your actual situation. So the more honest and specific you are, the more useful this will be.</p>
+    <p>Don't worry about making it sound polished. Just tell me what's broken.</p>
+
+    <div class="payment-note">
+      <div class="payment-note-title">About payment</div>
+      <p>There's no fee to submit this. No minimum. No invoice. If my response helps you make a better decision or avoid a bad one, Venmo me whatever you think that was worth. If it doesn't help, don't. <strong>That's genuinely the deal.</strong></p>
+      <a href="https://venmo.com/u/zachary-maldonado-6" target="_blank" class="venmo-link">@zachary-maldonado-6 on Venmo</a>
+    </div>
+  </div>
+
+  <div>
+    <!-- SUCCESS STATE -->
+    <div class="form-success" id="form-success">
+      <div class="form-success-big">Got it. I'll be in touch.</div>
+      <p>I read every submission personally. You'll hear back from me within a few days with my honest take on your situation.</p>
+      <p style="margin-top:0.75rem"><strong>If my response helps you, pay what you think it was worth.</strong> Venmo: @zachary-maldonado-6</p>
+    </div>
+
+    <!-- THE FORM -->
+    <!-- 
+      SETUP INSTRUCTIONS (one time, 2 minutes):
+      1. Go to formspree.io and sign up free
+      2. Click "New Form", name it "DIDM Work with Zach"
+      3. Copy your form endpoint (looks like https://formspree.io/f/xxxxxxxx)
+      4. Replace YOUR_FORMSPREE_ID below with just the ID part (e.g. xpzvwqkr)
+      5. Formspree will email every submission to Zachary.maldo@outlook.com
+    -->
+    <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+
+      <input type="hidden" name="_subject" value="New consultation request — Dumb It Down Marketing">
+      <input type="hidden" name="_replyto" id="reply-to-hidden">
+
+      <div class="form-group">
+        <label class="form-label" for="name">Your name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="First name is fine" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email address</label>
+        <div class="form-hint">So I can reply to you directly</div>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@yourbusiness.com" required oninput="document.getElementById('reply-to-hidden').value=this.value">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="business-type">Business type and industry</label>
+        <select class="form-select" id="business-type" name="business_type" required>
+          <option value="" disabled selected>Select your industry</option>
+          <option value="Fitness / Martial Arts / Gym">Fitness / Martial Arts / Gym</option>
+          <option value="Home Services (plumbing, HVAC, landscaping, etc.)">Home Services</option>
+          <option value="Health / Med Spa / Wellness">Health / Med Spa / Wellness</option>
+          <option value="Restaurant / Food">Restaurant / Food</option>
+          <option value="Real Estate">Real Estate</option>
+          <option value="Professional Services (coaching, consulting, accounting)">Professional Services</option>
+          <option value="Retail / Ecommerce">Retail / Ecommerce</option>
+          <option value="Other">Other — I'll explain below</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="revenue">Monthly revenue range</label>
+        <div class="form-hint">Ballpark is fine — helps me calibrate my advice to your actual situation</div>
+        <select class="form-select" id="revenue" name="monthly_revenue" required>
+          <option value="" disabled selected>Select a range</option>
+          <option value="Under $5k/month">Under $5k/month — just getting started</option>
+          <option value="$5k–$15k/month">$5k–$15k/month</option>
+          <option value="$15k–$50k/month">$15k–$50k/month</option>
+          <option value="$50k–$150k/month">$50k–$150k/month</option>
+          <option value="$150k+/month">$150k+/month</option>
+          <option value="Prefer not to say">Prefer not to say</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="problem">What specific problem are you trying to solve?</label>
+        <div class="form-hint">Be as specific as possible. "My ads aren't working" is less useful than "I'm spending $800/month on Facebook and getting 3 leads that never book."</div>
+        <textarea class="form-textarea" id="problem" name="problem" placeholder="Describe what's not working, what you've already tried, and what a win would look like for you..." required style="min-height:120px"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="tried">What have you already tried?</label>
+        <div class="form-hint">Don't skip this — knowing what hasn't worked saves us both time</div>
+        <textarea class="form-textarea" id="tried" name="what_tried" placeholder="Facebook ads, Google Ads, email list, SEO, hiring someone, etc. What did you try and what happened?" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Which tools on this site have you used?</label>
+        <div class="form-hint">So I know what data you already have</div>
+        <div class="checkbox-grid">
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="5 P's Diagnostic"><label>The 5 P's Diagnostic</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="Lead Funnel Visualizer"><label>Lead Funnel Visualizer</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="Cost Per Lead Calculator"><label>Cost Per Lead Calculator</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="Marketing ROI Calculator"><label>Marketing ROI Calculator</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="Ad Budget Planner"><label>Ad Budget Planner</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="Positioning Worksheet"><label>Positioning Worksheet</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="Reviews & Reputation"><label>Reviews & Reputation</label></label>
+          <label class="checkbox-item"><input type="checkbox" name="tools_used" value="None yet"><label>None yet</label></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="tech-stack">Your tech stack</label>
+        <div class="form-hint">What tools, platforms, and software are you currently using? CRM, email platform, ad platforms, website, booking system, POS — anything relevant.</div>
+        <textarea class="form-textarea" id="tech-stack" name="tech_stack" placeholder="e.g. HubSpot CRM, Mailchimp, Facebook Ads, WordPress site, Mindbody for scheduling..." style="min-height:70px"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="anything-else">Anything else I should know?</label>
+        <textarea class="form-textarea" id="anything-else" name="anything_else" placeholder="Context, constraints, things you've already ruled out, a specific question you want answered..." style="min-height:70px"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Send it to Zach →</button>
+
+    </form>
+  </div>
+</div>
+
+<!-- WHAT TO EXPECT -->
+<div class="expect-section">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.12em;color:var(--gray);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem">What you'll get back<span style="flex:1;height:1px;background:var(--gray-light)"></span></div>
+  <p style="font-size:0.92rem;color:var(--gray);line-height:1.75;max-width:560px">Not a pitch. Not a proposal. Not a "schedule a call to discuss." Just a real, direct response from someone who has looked at your actual situation and told you what they see.</p>
+
+  <div class="expect-grid">
+    <div class="expect-card">
+      <div class="expect-num">01</div>
+      <div class="expect-title">An honest diagnosis</div>
+      <p class="expect-desc">What I think is actually broken based on what you told me. <strong>Not what sounds good.</strong> What I'd look at if I were you.</p>
+    </div>
+    <div class="expect-card">
+      <div class="expect-num">02</div>
+      <div class="expect-title">The one thing to fix first</div>
+      <p class="expect-desc">Most businesses have 5 problems but one root cause. I'll tell you what I'd prioritize and why. <strong>You can't fix everything at once.</strong></p>
+    </div>
+    <div class="expect-card">
+      <div class="expect-num">03</div>
+      <div class="expect-title">Specific next steps</div>
+      <p class="expect-desc">Not "improve your marketing." Actual things you can do this week. <strong>No fluff, no jargon.</strong> Just what to do next.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NOT FOR EVERYONE -->
+<div class="honest-section">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.12em;color:rgba(255,255,255,0.3);margin-bottom:1.5rem">Let's be honest about this</div>
+  <div class="honest-grid">
+    <div class="honest-col">
+      <h3 class="yes">This is for you if...</h3>
+      <div class="honest-list">
+        <div class="honest-item"><span class="icon" style="color:var(--yellow)">→</span><span>You've tried things and they're <strong>not working</strong> and you genuinely don't know why</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--yellow)">→</span><span>You want a <strong>straight answer</strong>, not a sales pitch for a $5,000 consulting package</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--yellow)">→</span><span>You're willing to <strong>be honest</strong> about what's actually happening in your business</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--yellow)">→</span><span>You understand this is <strong>one person's perspective</strong> and not a guarantee</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--yellow)">→</span><span>You're a <strong>small business owner</strong> who wears every hat and doesn't have time for vague advice</span></div>
+      </div>
+    </div>
+    <div class="honest-col">
+      <h3 class="no">This is not for you if...</h3>
+      <div class="honest-list">
+        <div class="honest-item"><span class="icon" style="color:var(--red)">→</span><span>You want someone to <strong>do the work for you</strong> — this is advice, not a managed service</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--red)">→</span><span>You're looking for someone to <strong>validate what you're already doing</strong> rather than challenge it</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--red)">→</span><span>You need a <strong>formal proposal or contract</strong> — this is casual and pay-what-you-want</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--red)">→</span><span>You have a <strong>$500k/month enterprise</strong> — you need a full agency, not one guy</span></div>
+        <div class="honest-item"><span class="icon" style="color:var(--red)">→</span><span>You're not willing to <strong>actually try what I suggest</strong> — I'll know from the follow-up</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">Dumb It Down Marketing</a>
+  <div class="footer-note">Built by Zach &nbsp;|&nbsp; Honor system: $49 once &nbsp;|&nbsp; No BS guaranteed</div>
+</footer>
+
+<script>
+// Handle form submission with Formspree
+const form = document.getElementById('contact-form');
+const success = document.getElementById('form-success');
+const btn = document.getElementById('submit-btn');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const data = new FormData(form);
+
+  // Collect checked tools
+  const checked = [...form.querySelectorAll('input[type=checkbox]:checked')].map(c => c.value);
+  data.set('tools_used', checked.length ? checked.join(', ') : 'None selected');
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      form.style.display = 'none';
+      success.classList.add('show');
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      const json = await res.json();
+      if (json.errors) {
+        btn.textContent = 'Something went wrong — try again';
+        btn.disabled = false;
+      }
+    }
+  } catch(err) {
+    // Fallback: if Formspree ID not set yet, show success anyway
+    if (form.action.includes('YOUR_FORMSPREE_ID')) {
+      form.style.display = 'none';
+      success.innerHTML = '<div class="form-success-big">Almost there!</div><p><strong>The form isn\'t wired up yet.</strong> Zach needs to set up Formspree first (takes 2 minutes). Check the setup instructions in the HTML comments on this page.</p>';
+      success.classList.add('show');
+    } else {
+      btn.textContent = 'Something went wrong — try again';
+      btn.disabled = false;
+    }
+  }
+});
+</script>
+<script src="honor.js"></script>
+<script src="book.js"></script>
+<script src="themes.js"></script>
+
+
+<div class="dnav" id="didm-dnav">
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-tools-btn">Tools <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-tools-menu">
+      <div class="dnav-menu-label">The tools</div>
+      <a href="5ps.html">The 5 P's</a>
+      <a href="funnel.html">Lead Funnel</a>
+      <a href="calculator.html">Cost Per Lead</a>
+      <a href="roi.html">ROI Calculator</a>
+      <a href="budget.html">Budget Planner</a>
+      <a href="positioning.html">Positioning Worksheet</a>
+      <a href="reviews.html">Reviews & Reputation</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn" id="dnav-learn-btn">Learn <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu" id="dnav-learn-menu">
+      <div class="dnav-menu-label">Guides &amp; basics</div>
+      <a href="basics.html">Marketing Basics</a>
+      <a href="blog.html">Blog</a>
+    </div>
+  </div>
+  <div class="dnav-dd">
+    <button class="dnav-btn dnav-btn-cta" id="dnav-zach-btn">Work with Zach <span class="chev">&#9660;</span></button>
+    <div class="dnav-menu right" id="dnav-zach-menu">
+      <div class="dnav-menu-label">Zach Maldonado</div>
+      <a href="work-with-zach.html" class="active">Work with Zach</a>
+      <a href="about.html">About Zach</a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){var w=document.getElementById('didm-dnav'),n=document.querySelector('nav');if(w&&n)n.appendChild(w);})();
+</script>
+<script id="didm-nav-script">
+(function(){
+  function setup(b,m){var btn=document.getElementById(b),menu=document.getElementById(m);if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.contains('open');closeAll();if(!o){menu.classList.add('open');btn.classList.add('open');}});}
+  function closeAll(){document.querySelectorAll('.dnav-menu').forEach(function(m){m.classList.remove('open');});document.querySelectorAll('.dnav-btn').forEach(function(b){b.classList.remove('open');});}
+  document.addEventListener('click',closeAll);
+  setup('dnav-tools-btn','dnav-tools-menu');
+  setup('dnav-learn-btn','dnav-learn-menu');
+  setup('dnav-zach-btn','dnav-zach-menu');
+})();
+</script>
+</body>
+</html>
